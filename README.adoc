@@ -18,11 +18,8 @@ This talks about contiguous sequence. Imagine this like some kind of sort.
 Hopefully a single pass i.e O(N) is enough
 
 ==== When to include & when to avoid negatives
-All we need is the max sum. So think from max sum perspective. Use the 
-canonical Comparison & Swap logic FIRST to determine the max sum. 
-
-NOTE: Include Every Item Including Negative. Exclude the same after using it.
-Exclude based on some condition.
+Relax. Try solving the max sum part. Use the canonical Comparison & Swap logic 
+FIRST to make a headstart.
 
 ==== Should this be a sliding window like solution
 This is more than slide. It becomes longer till the sum grows as well as
@@ -33,9 +30,31 @@ that this problem offers. Only one combination can be the final solution.
 
 ==== Is there any Trick?
 Consider two variables Max_SUM & Current_SUM
-Reset when Current_SUM < 0 Within A Loop
+Do not let the Current_SUM to be less than 0 Within A Loop
 
 NOTE: This helps us manage multitude of combinations
+
+==== Remember
+[source,go]
+----
+func MaxSum(given []int) int {
+  if len(given) == 0 return 0
+  if len(given) == 1 return given[0]
+  
+  // IMP - no need to init MIN INT
+  var maxSum = given[0]
+  var currMax = 0
+  for (i:=0;i<len(given)-1;i++) {
+    currMax += given[i]
+    if maxSum < currMax {
+      maxSum = currMax
+    } else if currMax < 0 { // else if is IMP
+      currMax = 0
+    }
+  }
+  return maxSum
+}
+----
 
 == Inspirations
 - https://github.com/bbatsov/clojure-style-guide[clojure-style-guide] has inspired this styling
