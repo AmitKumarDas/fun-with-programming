@@ -4,6 +4,9 @@
 
 == Arrays can twist your brain
 === Find the Max Sum of a Contiguous Sequence
+
+[source,bash]
+----
 Input - [1, -1, 0]
 Result - 1
 
@@ -12,29 +15,41 @@ Result - 0
 
 Input - [1, 1, 1, -2, 4, 5]
 Result - 10
+----
 
 ==== How to solve in a single loop
-This talks about contiguous sequence. Imagine this like some kind of sort. 
+[source, bash]
+----
+This talks about contiguous sequence. 
+Imagine this like some kind of sort. 
 Hopefully a single pass i.e O(N) is enough
+----
 
 ==== When to include & when to avoid negatives
-Relax. Try solving the max sum part. Use the canonical Comparison & Swap logic 
-FIRST to make a headstart.
+[source,bash]
+----
+Relax. 
+Try solving the max sum part. 
+Use the canonical Comparison & Swap logic FIRST to make a headstart.
+----
 
-==== Should this be a sliding window like solution
-This is more than slide. It becomes longer till the sum grows as well as
-reduces. Who knows the next item will grow the sum further. 
-
-NOTE: It becomes tricky when one starts to think about multiple combinations
-that this problem offers. Only one combination can be the final solution.
+==== Handling Multiple Combinations is Tricky
+[source,bash]
+----
+Sum can grow as well as reduce. 
+Who knows the next item will grow the sum further.
+----
 
 ==== Is there any Trick?
+[source,bash]
+----
 Consider two variables Max_SUM & Current_SUM
-Do not let the Current_SUM to be less than 0 Within A Loop
 
-NOTE: This helps us manage multitude of combinations
+NOTE: Do not let the Current_SUM to be less than 0 @ a Special Condition
+NOTE: This helps us manage many many combinations easily
+----
 
-==== Remember
+==== Source Code
 [source,go]
 ----
 func MaxSum(given []int) int {
@@ -48,7 +63,7 @@ func MaxSum(given []int) int {
     currMax += given[i]
     if maxSum < currMax {
       maxSum = currMax
-    } else if currMax < 0 { // else if is IMP
+    } else if currMax < 0 { // else if is VERY IMP
       currMax = 0
     }
   }
