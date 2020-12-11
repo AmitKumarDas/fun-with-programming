@@ -1,4 +1,41 @@
-# fun-with-programming
+= Programming meets story telling
 
-## Inspirations
-- [clojure-style-guide](https://github.com/bbatsov/clojure-style-guide) has inspired the styling
+== Introduction
+
+== Arrays can twist your brain
+=== Find the Max Sum of a Contiguous Sequence
+Input - [1, -1, 0]
+Result - 1
+
+Input - [-1, -6, -5, 0]
+Result - 0
+
+Input - [1, 1, 1, -2, 4, 5]
+Result - 10
+
+==== How to solve in a single loop
+This talks about contiguous sequence. Imagine this like some kind of sort. 
+Hopefully a single pass i.e O(N) is enough
+
+==== When to include & when to avoid negatives
+All we need is the max sum. So think from max sum perspective. Use the 
+canonical Comparison & Swap logic FIRST to determine the max sum. 
+
+NOTE: Include Every Item Including Negative. Exclude the same after using it.
+Exclude based on some condition.
+
+==== Should this be a sliding window like solution
+This is more than slide. It becomes longer till the sum grows as well as
+reduces. Who knows the next item will grow the sum further. 
+
+NOTE: It becomes tricky when one starts to think about multiple combinations
+that this problem offers. Only one combination can be the final solution.
+
+==== Is there any Trick?
+Consider two variables Max_SUM & Current_SUM
+Reset when Current_SUM < 0 Within A Loop
+
+NOTE: This helps us manage multitude of combinations
+
+== Inspirations
+- https://github.com/bbatsov/clojure-style-guide[clojure-style-guide] has inspired this styling
