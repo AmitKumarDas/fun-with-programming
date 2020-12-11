@@ -1,0 +1,4 @@
+# fun-with-programming
+
+## Inspirations
+- [clojure-style-guide](https://github.com/bbatsov/clojure-style-guide) has inspired the styling
