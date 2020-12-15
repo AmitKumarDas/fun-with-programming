@@ -2,6 +2,84 @@
 
 == Introduction
 
+== Medium
+
+=== Find the smallest lexicographical string from a given string & swap indices
+
+==== Description
+[source, bash]
+----
+The smallest lexicographical order is an order relation where string s
+is smaller than t, given the first character of s (s1) is smaller than
+the first character of t (t1), or in case they are equivalent, the 
+second character, etc.
+----
+
+==== Samples
+[source, bash]
+----
+Input: s = "dba", pairs = [[0,1],[1,2]]
+Output: "abd"
+Explanation:
+Swap s[0] and s[1], s = "bda"
+Swap s[1] and s[2], s = "bad"
+Swap s[0] and s[1], s = "abd"
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+type Pair struct {
+  SrcIdx int
+  DestIdx int
+}
+
+type PairList struct {
+  Items []Pair
+}
+
+func toPairList(pairs [][]int) PairList {
+  var list = &PairList{}
+  for _, outer := range pairs {
+    for src, dest := range outer {
+      list.Items = append(
+        list.Items,
+        Pair{SrcIdx: src, DestIdx: dest},
+      )
+    }
+  }
+  return *list
+}
+
+func (p PairList) getDestIdxListBySrcIdx(index int) []int {
+  var dests []int
+  for _, item := range p.Items {
+    if item.SrcIdx == index {
+      dests = append(dests, item.DestIdx)
+    }
+  }
+  return dests
+}
+
+func SmallestLexString(given string, swaps [][]int) string {
+  if len(given) <= 1 return given
+  
+  swapPairs := toPairList(swaps)
+  
+  for idx, c := range given {
+    eligibleSwaps := swappairs.getDestIdxListBySrcIdx(idx)
+    for _, swpIdx := range eligibleSwaps {
+      if c > given[swpIdx] {
+        tmp = given[swpIdx]
+        given[swpIdx] = c
+        given[idx] = tmp
+      }
+    }
+  }
+  return given
+}
+----
+
 == Easy
 
 === Find if Each item has Unique number of Occurrences
