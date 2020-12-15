@@ -322,7 +322,8 @@ func MaxSum(given []int) int {
 ----
 
 == References
-==== https://github.com/bbatsov/clojure-style-guide[clojure-style-guide] has inspired this styling
-==== https://github.com/mrekucci/epi/
-==== https://github.com/de-cryptor/Must-Do-Coding-Questions
-==== https://github.com/halfrost/LeetCode-Go
+==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
+==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
+==== https://github.com/mrekucci/epi/[Elements of Programming Interviews In Go]
+==== https://github.com/de-cryptor/Must-Do-Coding-Questions[Must Do Coding Questions]
+==== https://github.com/halfrost/LeetCode-Go[Halfrost's LeetCode In Go]
