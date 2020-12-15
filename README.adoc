@@ -4,6 +4,42 @@
 
 == Easy
 
+=== Find if Each item has Unique number of Occurrences
+
+==== Samples
+[source, bash]
+----
+Input: arr = [1,3,2,1,1,3]
+Output: true
+Reason: 
+- 1 is found 3 times, 
+- 2 is found 1 time &
+- 3 is found 2 times
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+// O(n) space
+// O(n^2) runtime
+
+func IsUniqueOccurrences(given []int) bool {
+  if len(given) <= 1 return true
+
+  var times = map[int]int{}
+  for _, item := range given {
+    times[item] = times[item]++
+  }
+  for k, v := range times {
+    for k1, v1 := range times {
+      if k == k1 continue
+      if v == v1 return false
+    }
+  }
+  return true
+}
+----
+
 === Find Max number of Balanced Strings from a string having L & R chars
 
 ==== Samples
@@ -11,11 +47,11 @@
 ----
 Input: = "RLRRLLRLRL"
 Output: 4
-NOTE: Input can be split into 
-"RL", 
-"RRLL", 
-"RL", 
-"RL", 
+Reason: Input can be split into 
+- "RL", 
+- "RRLL", 
+- "RL", 
+- "RL", 
 where each substring contains same number of 'L' and 'R'
 ----
 
