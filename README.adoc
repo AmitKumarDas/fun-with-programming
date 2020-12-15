@@ -26,6 +26,7 @@ Reason:
 func IsUniqueOccurrences(given []int) bool {
   if len(given) <= 1 return true
 
+  // item to count mapping
   var times = map[int]int{}
   for _, item := range given {
     times[item] = times[item]++
