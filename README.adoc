@@ -2,9 +2,7 @@
 
 == Introduction
 
-== Medium
-
-=== Find the smallest lexicographical string from a given string & swap indices
+=== [Medium] Find the smallest lexicographical string from a given string & swap indices
 
 ==== Description
 [source, bash]
@@ -86,7 +84,9 @@ func SmallestLexString(given string, swaps [][]int) string {
 [source, bash]
 ----
 Input: [1,1,2,3,3,4]
-Result: [1,2,3,4,,,]
+Result: [1,2,3,4,3,4] // we dont care the last two duplicates
+Result: [1,2,3,4,0,0] // needs O(n^2) runtime
+
 ----
 
 ==== Source Code - Attempt 1
