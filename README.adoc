@@ -21,7 +21,7 @@ Reason:
 [source, go]
 ----
 // O(n) space
-// O(n^2) runtime
+// O(n^2) runtime - BAD
 
 func IsUniqueOccurrences(given []int) bool {
   if len(given) <= 1 return true
@@ -29,13 +29,40 @@ func IsUniqueOccurrences(given []int) bool {
   // item to count mapping
   var times = map[int]int{}
   for _, item := range given {
-    times[item] = times[item]++
+    times[item] = times[item]++ // !!! WRONG !!!
   }
   for k, v := range times {
     for k1, v1 := range times {
       if k == k1 continue
       if v == v1 return false
     }
+  }
+  return true
+}
+----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+// O(n) space
+// O(n) runtime - GOOD
+
+func IsUniqueOccurrences(given []int) bool {
+  if len(given) <= 1 return true
+  
+  // map item to its freq
+  var times = make(map[int]int, len(given))
+  for _, item := range given {
+    times[item]++ // !!! CORRECT !!!
+  }
+
+  if len(times) == 1 return true
+  
+  // map frequency to truth
+  var seen = make(map[int]bool, len(times))
+  for _, count := range times{
+    if seen[count] return false
+    seen[count] = true
   }
   return true
 }
