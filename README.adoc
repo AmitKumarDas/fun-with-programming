@@ -1,4 +1,4 @@
-= Programming meets story telling
+= Fun With Programming
 
 == Introduction
 
@@ -80,9 +80,7 @@ func SmallestLexString(given string, swaps [][]int) string {
 }
 ----
 
-== Easy
-
-=== Delete Duplicates from a Sorted Slice of Ints
+=== [Easy] Delete Duplicates from a Sorted Slice of Ints
 
 ==== Samples
 [source, bash]
@@ -155,7 +153,7 @@ func DeleteDuplicates(sorted []int) []int {
 ----
 
 
-=== Find if Each item has Unique number of Occurrences
+=== [Easy] Find if Each item has Unique number of Occurrences
 
 ==== Samples
 [source, bash]
@@ -219,7 +217,7 @@ func IsUniqueOccurrences(given []int) bool {
 }
 ----
 
-=== Find Max number of Balanced Strings from a string having L & R chars
+=== [Easy] Find Max number of Balanced Strings from a string having L & R chars
 
 ==== Samples
 [source, bash]
@@ -282,8 +280,7 @@ func MaxBalStrings(given string) int {
 }
 ----
 
-== Arrays can twist your brain
-=== Find the Max Sum of a Contiguous Sequence
+=== [Easy] Find the Max Sum of a Contiguous Sequence
 
 [source,bash]
 ----
@@ -351,5 +348,6 @@ func MaxSum(given []int) int {
 }
 ----
 
-== Inspirations
+== References
 - https://github.com/bbatsov/clojure-style-guide[clojure-style-guide] has inspired this styling
+- https://github.com/mrekucci/epi/
