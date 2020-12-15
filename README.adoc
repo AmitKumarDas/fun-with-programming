@@ -2,6 +2,41 @@
 
 == Introduction
 
+== Easy
+=== Find Max number of Balanced Strings from a string having L & R chars
+[source, bash]
+----
+Input: = "RLRRLLRLRL"
+Output: 4
+NOTE: Input can be split into 
+"RL", 
+"RRLL", 
+"RL", 
+"RL", 
+where each substring contains same number of 'L' and 'R'
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func MaxBalStrings(given string) int {
+  if len(given) <= 1 return 0
+
+  var max int
+  var lCount, rCount int
+  for _, c := range given {
+    if c == 'L' lCount++
+    if c == 'R' rCount++
+    if lCount == rCount {
+      max++
+      lCount=0 // reset
+      rCount=0 // reset
+    }
+  }
+  return max
+}
+----
+
 == Arrays can twist your brain
 === Find the Max Sum of a Contiguous Sequence
 
