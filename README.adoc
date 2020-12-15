@@ -26,7 +26,7 @@ Swap s[1] and s[2], s = "bad"
 Swap s[0] and s[1], s = "abd"
 ----
 
-==== Source Code - Attempt 1 - Wrong !!!
+==== Source Code - Attempt 1 - WRONG !!!
 [source, go]
 ----
 type Pair struct {
@@ -81,6 +81,79 @@ func SmallestLexString(given string, swaps [][]int) string {
 ----
 
 == Easy
+
+=== Delete Duplicates from a Sorted Slice of Ints
+
+==== Samples
+[source, bash]
+----
+Input: [1,1,2,3,3,4]
+Result: [1,2,3,4,,,]
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+// O(1) space
+// O(n^2) runtime - BAD
+
+func DeleteDuplicates(sorted []int) []int {
+  for j := len(sorted)-1; j > 0; j-- {
+    if sorted[j] != sorted[j-1] {
+      continue
+    }
+    tmp := j
+    for tmp < len(sorted) {
+      var rightVal
+      if tmp+1 < len(sorted) {
+        rightVal = sorted[tmp+1]
+      }
+      sorted[tmp]=rightVal
+      tmp++
+    }
+  }
+  return sorted
+}
+----
+
+==== Source Code - Attempt 2 - WRONG !!!
+[source, go]
+----
+func DeleteDuplicates(sorted []int) []int {
+  for i := 0; i < len(sorted)-1; i++ {
+    if sorted[i] != sorted[i+1] {
+      continue
+    }
+    if i+2 <= len(sorted)-1 {
+      sorted[i+1]=sorted[i+2]
+    } else {
+      sorted[i+1]=0
+    }
+  }
+  return sorted
+}
+----
+
+==== Source Code - Attempt 3
+[source, go]
+----
+// O(n) space
+// O(n) runtime - GOOD
+// SLOW MOVING POINTER
+// SLOW ++ WHEN CURRENT ITEM != NEXT ITEM
+
+func DeleteDuplicates(sorted []int) []int {
+  var slow = 1 // SLOW LOW starts from 1
+  for i := 1; i < len(sorted); i++ { // i starts from 1 as well
+    if sorted[i] != sorted[i-1] {
+      sorted[slow] = sorted[i]
+      slow++
+    }
+  }
+  return sorted[:slow]
+}
+----
+
 
 === Find if Each item has Unique number of Occurrences
 
