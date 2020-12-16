@@ -33,3 +33,41 @@ func DeleteDuplicates(sorted []int) []int {
   return sorted
 }
 ----
+
+==== Source Code - Attempt 2 - WRONG !!!
+[source, go]
+----
+func DeleteDuplicates(sorted []int) []int {
+  for i := 0; i < len(sorted)-1; i++ {
+    if sorted[i] != sorted[i+1] {
+      continue
+    }
+    if i+2 <= len(sorted)-1 {
+      sorted[i+1]=sorted[i+2]
+    } else {
+      sorted[i+1]=0
+    }
+  }
+  return sorted
+}
+----
+
+==== Source Code - Attempt 3
+[source, go]
+----
+// O(n) space
+// O(n) runtime - GOOD
+// SLOW MOVING POINTER
+// SLOW ++ WHEN CURRENT ITEM != NEXT ITEM
+
+func DeleteDuplicates(sorted []int) []int {
+  var slow = 1 // SLOW LOW starts from 1
+  for i := 1; i < len(sorted); i++ { // i starts from 1 as well
+    if sorted[i] != sorted[i-1] {
+      sorted[slow] = sorted[i]
+      slow++
+    }
+  }
+  return sorted[:slow]
+}
+----
