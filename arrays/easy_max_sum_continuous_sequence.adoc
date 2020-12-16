@@ -1,0 +1,40 @@
+=== [Easy] Find the Max Sum of a Contiguous Sequence
+
+[source,bash]
+----
+Input - [1, -1, 0]
+Result - 1
+
+Input - [-1, -6, -5, 0]
+Result - 0
+
+Input - [1, 1, 1, -2, 4, 5]
+Result - 10
+----
+
+==== Source Code
+[source,go]
+----
+// NOTE: if contiguous then single loop logic
+
+func MaxSum(given []int) int {
+  if len(given) == 0 return 0 // !! SMART INIT !!
+  if len(given) == 1 return given[0] // !! SMART INIT !!
+  
+  // !! NO NEED TO FIND MIN INT !!
+  var maxSum = given[0] // !! SMART INIT AVOIDS COMPLEX CONDS LATER
+  var currMax = 0
+
+  for (i:=0;i<len(given)-1;i++) {
+    currMax += given[i] // !! JUST ADD TO GET CURRENT SUM !!
+    
+    if maxSum < currMax { // !! SIMPLE LOGIC IF ALL ITEMS WERE +VE !!
+      maxSum = currMax
+    } else if currMax < 0 { // !! SPECIAL CASE FOR -VEs !! ELSE IF
+      currMax = 0  // !! REMOVES TRICKY COMBINATIONS !!
+    }
+  }
+  
+  return maxSum
+}
+----
