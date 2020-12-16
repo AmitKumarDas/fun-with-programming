@@ -1,0 +1,94 @@
+=== [Easy] Find minimum absolute difference between pairs from an array
+
+==== Notes
+[source, bash]
+----
+- Items are distinct
+- Multiple pairs are possible
+- A pair (a,b) must have a < b
+- Resulting pairs should be in ascending order
+----
+
+==== Sample 1
+[source, bash]
+----
+Input: [2,1,3]
+Result: [[1,2],[2,3]]
+----
+
+==== Sample 2
+[source, bash]
+----
+Input: [2,1,3,-2,0,-1]
+Result: [[-2,-1],[-1,0],[0,1],[1,2],[2,3]]
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+// O(NlogN) - runtime
+// O(N) - space
+
+type Pair struct {
+  First int
+  Second int
+}
+
+type PairList struct {
+  Items []Pair
+}
+
+func (l PairList) Print() {
+  for _, pair := range PairList.Items {
+    fmt.Printf("[%d,%d]", pair.First, pair.Second)
+  }
+}
+
+func printPairs(items []int) {
+  list := &PairList{}
+  for i:=0; i<len(items)-1; i+=2 { // !! IMP - NO ; @ END !!
+    list.Items = append(
+      list.Items, 
+      Pair{First: items[i], Second: items[i+1]},
+    )
+  }
+  list.Print()
+}
+
+func Abs(given int) int {
+  if given < 0 {
+    return -given
+  }
+  return given
+}
+
+func MinAbsDiff(given []int) []Pair {
+  if len(given) <= 1 {
+    return nil
+  }
+  
+  sort.Ints(given)
+  var minDiff = Abs(given[1] - given[0]) // !! SMART INIT !!
+  
+  // map the diff with corresponding pairs
+  var store = map[int][]int{}
+  
+  for idx := range sorted {
+    if idx == 0 {
+      continue
+    }
+    
+    diff := Abs(given[idx] - given[idx-1])
+    if diff <= minDiff {
+      minDiff = diff // !! if diff is LESS than minDiff !!
+
+      store[minDiff] = append(
+        store[minDiff],
+        sorted[idx-1], // !! ASC PRINT !!
+        sorted[idx],
+      )
+    }
+  }
+  printPairs(store[minDiff])
+}
+----
