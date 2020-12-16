@@ -93,3 +93,41 @@ func MinAbsDiff(given []int) []Pair {
   printPairs(store[minDiff])
 }
 ----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+// We focus more on returning the Pair(s)
+// Pairs will be returned in ASC order
+// Inner Array has two items representing a Pair
+// Outer Array represents Pairs in ASC ORDER
+
+func MinAbsDiff(given []int) [][]int {
+  if len(given) <= 1 {
+    return nil
+  }
+  
+  // sort the array
+  sort.Ints(given)
+  n := len(given)
+  
+  minDiff := given[1] - given[0] // !! SMART INIT !!
+  for i:=1; i<n; i++ {
+    diff := given[i] - given[i-1] // !! DIFF IS ABSOLUTE; FOR SORTED ARRAY !!
+    if diff < minDiff {
+      minDiff = diff
+    }
+  }
+  
+  var resp [][]int
+  for i:=1; i<n; i++ {
+    if minDiff == given[i] - given[i-1] {
+      resp = append(
+        resp,
+        []int{given[i-1], given[i]},
+      )
+    }
+  }
+  return resp
+}
+----
