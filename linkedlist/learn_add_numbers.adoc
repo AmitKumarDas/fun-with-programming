@@ -15,6 +15,9 @@ Output: 3 -> 8 -> 5 i.e. 583
 ==== Source Code - Attempt 1
 [source, go]
 ----
+// !! How do you handle arithmetic overflows !!
+// TODO - IMPROVE BY REMOVING THE NOT NEEDED PARTS !!
+
 type NumLL struct {
   Val int
   Next *NumLL
@@ -26,7 +29,7 @@ func PowOf10(pow int) int {
   }
   var result int = 1
   for pow > 0 {
-    result = result * 10
+    result = result * 10 // !! Can this be BETTER !!
     pow--
   }
   return result
@@ -59,7 +62,7 @@ func (n *NumLL) ToNumber() int {
 }
 
 func AddLL(val1, val2 NumLL) NumLL {
-  sum := val1.ToNumber() + val2.ToNumber()
+  sum := val1.ToNumber() + val2.ToNumber() // !! ADD WITHOUT THIS STEP !!
 
   var result *NumLL
   for sum > 0 {
