@@ -16,9 +16,20 @@ Output: 3 -> 8 -> 5 i.e. 583
 [source, go]
 ----
 type NumLL struct {
-  IsHead bool
   Val int
   Next *NumLL
+}
+
+func PowOf10(pow int) int {
+  if pow == 0 {
+    return 1
+  }
+  var result int = 1
+  for pow > 0 {
+    result = result * 10
+    pow--
+  }
+  return result
 }
 
 func (n *NumLL) Add(num int) {
@@ -32,18 +43,17 @@ func (n *NumLL) Add(num int) {
 }
 
 func (n *NumLL) ToNumber() int {
-  var num = map[int]int{}
+  var num []int
   tmp := n
-  
-  var counter int
+
   for tmp != nil {
-    num[counter++]=tmp.Val
+    num = append(num, tmp.Val)
     tmp = tmp.Next
   }
   
   var result int
-  for k,v := range num  {
-    result = result + v*(10^k)
+  for i:=0; i<len(sum); i++  {
+    result = result + sum[i]*PoweOf10(i)
   }
   return result
 }
