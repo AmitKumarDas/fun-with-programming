@@ -55,6 +55,7 @@ func printPairs(items []int) {
   list.Print()
 }
 
+// !! NOT REQUIRED IF sort.Ints IS USED !!
 func Abs(given int) int {
   if given < 0 {
     return -given
@@ -68,7 +69,7 @@ func MinAbsDiff(given []int) []Pair {
   }
   
   sort.Ints(given)
-  var minDiff = Abs(given[1] - given[0]) // !! SMART INIT !!
+  var minDiff = Abs(given[1] - given[0]) // !! SMART INIT !! ABS NOT REQUIRED !!
   
   // map the diff with corresponding pairs
   var store = map[int][]int{}
