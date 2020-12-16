@@ -1,0 +1,62 @@
+=== [Easy] Find Max Count of Balanced Strings from a string having L & R chars
+
+==== Samples
+[source, bash]
+----
+Input: = "RLRRLLRLRL"
+Output: 4
+Reason: Input can be split into 
+- "RL", 
+- "RRLL", 
+- "RL", 
+- "RL", 
+where each substring contains same number of 'L' and 'R'
+----
+
+==== Tips
+[source,bash]
+----
+- Single counter does the trick
+- EITHER 'Increment' OR 'Decrement' the counter
+- Note logic is based around 2 chars 'L' & 'R'
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func MaxBalStrings(given string) int {
+  if len(given) <= 1 return 0
+
+  var max int
+  var lCount, rCount int
+  for _, c := range given {
+    if c == 'L' lCount++
+    if c == 'R' rCount++
+    if lCount == rCount {
+      max++
+      lCount=0 // reset
+      rCount=0 // reset
+    }
+  }
+  return max
+}
+----
+
+==== Source Code - Attempt 2
+[source,go]
+----
+func MaxBalStrings(given string) int {
+  if len(given) <= 1 return 0
+  var max, counter int
+  for _, c := range given {
+    if c == 'L' {
+      counter++ // use of single counter
+    }
+    if c == 'R' {
+      counter-- // R is used to decrement / reset
+    }
+    if counter == 0 max++
+  }
+  return max
+}
+----
