@@ -1,0 +1,65 @@
+=== Add 2 Numbers represented as LinkedList in Reverse Order
+
+==== Notes
+[source, bash]
+----
+Input:  1 -> 3 -> 4 i.e. 431
+Input:  2 -> 5 -> 1 i.e. 152
+Output: 3 -> 8 -> 5 i.e. 583
+
+# Each node of LinkedList can contain a single digit only
+# Inputs are non-negative integers
+# There will not be any leading zero except the number 0 itself
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+type NumLL struct {
+  IsHead bool
+  Val int
+  Next *NumLL
+}
+
+func (n *NumLL) Add(num int) {
+  orig := n
+  tmp := orig.Next
+  for tmp != nil {
+    orig = tmp
+    tmp = tmp.Next
+  }
+  orig.Next = &NumLL{Val: num}
+}
+
+func (n *NumLL) ToNumber() int {
+  var num = map[int]int{}
+  tmp := n
+  
+  var counter int
+  for tmp != nil {
+    num[counter++]=tmp.Val
+    tmp = tmp.Next
+  }
+  
+  var result int
+  for k,v := range num  {
+    result = result + v*(10^k)
+  }
+  return result
+}
+
+func AddLL(val1, val2 NumLL) NumLL {
+  sum := val1.ToNumber() + val2.ToNumber()
+
+  var result *NumLL
+  for sum > 0 {
+    rem := sum%10
+    if result == nil {
+      result = &NumLL{Val: rem}
+    } else {
+      result.Add(rem)
+    }
+    sum = sum/10
+  }
+}
+----
