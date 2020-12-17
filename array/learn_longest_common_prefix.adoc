@@ -12,6 +12,8 @@ Ouput: "amit"
 ----
 // O(n^2) runtime
 // O(1) space
+// str[idx] is bytes
+// rune(str[idx]) is needed when compared against val inside range loop
 
 func LongestCommonPrefix(given []string) string {
   if len(given) == 0 {
@@ -35,7 +37,7 @@ func LongestCommonPrefix(given []string) string {
       if idx > llcp - 1 {
         break
       }
-      if rune(lcp[idx]) != c {
+      if rune(lcp[idx]) != c { // !! LEARN !!
         lcp = lcp[0:idx]
         break
       }
