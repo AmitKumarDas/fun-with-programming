@@ -21,8 +21,15 @@ func LongestCommonPrefix(given []string) string {
     return given[0]
   }
   var lcp = given[0] // !! SMART INIT !!
-  
+  if lcp == "" {
+    return "" // !! IMP CHECK !!
+  }
+
   for _, item := range given {
+    if item == "" {
+      return "" // !! IMP CHECK !!
+    }
+    
     var llcp = len(lcp)
     for idx, c := range item {
       if idx > llcp - 1 {
