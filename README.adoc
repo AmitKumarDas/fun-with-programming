@@ -1,7 +1,7 @@
 = Fun With Programming
 
 == Introduction
-In this journey, I try to practice programming and keep my brain sharp.
+In this journey, I practice programming and keep my brain sharp.
 I will try to put more common sense information that in turn lets the brain
 frame the logic fast.
 
@@ -18,9 +18,9 @@ frame the logic fast.
 ----
 - map[int]bool as seen
 - map[rune]bool as seen
-- if seen then when to reset
-- if reset to empty
-- if reset to current element
+- if seen then reset
+- reset to empty?
+- reset to current element?
 ----
 
 [source, bash]
