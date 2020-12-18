@@ -30,6 +30,17 @@ frame the logic fast.
 - if arithmetic overflow
 ----
 
+[source, bash]
+----
+- rune is an alias for int32 
+  - mnemonic - ruined international man
+- byte is an alias for unit8
+  - mnemonic - bye to unify
+- unit implies all positive numbers including 0
+- uint ranges from 0 to 4294967295  
+- int ranges from –2147483648 to 2147483647 
+----
+
 == References
 ==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
