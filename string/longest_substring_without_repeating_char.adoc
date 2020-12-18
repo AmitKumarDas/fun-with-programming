@@ -81,6 +81,43 @@ func LongestSubStrNonRepeating(given string) string {
       lowest = low
     }
   }
-  return given[lowest:highest+1] // !! RIGHT + 1 !!
+  return given[lowest:highest+1] // !! RIGHT + 1 IF ORIGINS FROM IDX !!
+}
+----
+
+
+==== Source Code - Attempt 3
+[source, go]
+----
+// rune is an alias for int32
+// byte is an alias for unit8
+// unit implies all positive numbers including 0
+// uint ranges from 0 to 4294967295  
+// int ranges from –2147483648 to 2147483647 
+
+func LongestSubStrNonRepeating(given string) string {
+  if given == "" {
+    return ""
+  }
+  
+  var seen = [256]uint8{}
+  
+  var lowest, highest int
+  var low, high int
+  
+  for _, c := range given {
+    if seen[c] == 0 {
+      seen[c] = 1
+    } else if seen[c] == 1 { // ELSE IF & NOT JUST IF
+      low++
+    }
+    high++
+    
+    if highest - lowest  < high - low {
+      highest = high
+      lowest = low
+    }
+  }
+  return given[lowest:highest] // !! JUST RIGHT IF ORIGINS FROM ++ !!
 }
 ----
