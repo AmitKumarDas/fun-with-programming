@@ -74,16 +74,18 @@ func ThreeSumZero(given []int) {
 ==== Source Code - Attempt 3
 [source, go]
 ----
+// THREE POINTER SOLVES 3 SUM
+
 func ThreeSumZero(given []int) {
   if len(given) <= 2 {
     return
   }
   
   sort.Ints(given)
-  var low, med, high int
+  var low, mid, high int
   var seen = map[string]bool{}
   
-  med = low + 1
+  mid = low + 1
   high = len(given) - 1
   
   for low < high {
@@ -91,21 +93,21 @@ func ThreeSumZero(given []int) {
       return
     }
     
-    sum := given[low] + given[med] + given[high]
-    seenStr := fmt.Sprintf("[%d %d %d]", given[low], given[med], given[high])
+    sum := given[low] + given[mid] + given[high]
+    seenStr := fmt.Sprintf("[%d %d %d]", given[low], given[mid], given[high])
     
     if sum == 0 {
-      if !seen[seenStr] {
+      if !seen[seenStr] { // !! REMOVES DUPLICATES !!
         fmt.Printf(seenStr)
         seen[seenStr] = true
       }
       low++
-      med = low + 1
+      mid = low + 1
     } else {
-      med++
-      if med >= high {
+      mid++
+      if mid >= high { // !! RESET !!
         low++
-        med = low + 1
+        mid = low + 1
         high--
       }
     }
