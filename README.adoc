@@ -3,8 +3,32 @@
 == Introduction
 In this journey, I try to practice programming and keep my brain sharp.
 I will try to put more common sense information that in turn lets the brain
-frame its own patterns.
+frame the logic fast.
 
+== Connect The Dots - Golang
+[source, bash]
+----
+- str[idx] is bytes
+- rune(str[idx]) is rune
+- str[left:right+1] is the substring
+- sometimes str[left:right] based on the logic
+----
+
+[source, bash]
+----
+- map[int]bool as seen
+- map[rune]bool as seen
+- if seen then when to reset
+- if reset to empty
+- if reset to current element
+----
+
+[source, bash]
+----
+- 10^i will not work
+- try PowerOf10(pow int) int
+- if arithmetic overflow
+----
 
 == References
 ==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
