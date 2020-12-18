@@ -1,1 +1,52 @@
 === Longest Palindromic Substring
+
+==== Samples
+[source, bash]
+----
+Input: "pananasa"
+Output: "anana"
+----
+
+==== Source Code - Attempt 1 - WRONG
+[source, go]
+----
+func LongPalinSubstr(given string) string {
+  if len(given) <= 1 {
+    return given
+  }
+  
+  var lowest, highest int
+  var low, high, idx int
+  var tmpl, tmpr int
+  
+  var max int = 1
+  
+  high = len(given) - 1
+  
+  for low < len(given) - 1 {
+    if (len(given) - 1 - low) < highest - lowest {
+      break
+    }
+  
+    if given[idx] != given[high-idx] {
+      high--
+      tmpl = idx
+      tmpr = high - idx
+    }
+    idx++
+    
+    if idx == high {
+      high = len(given)
+      low++
+      idx=low
+      if tmpr - tmpl > max {
+        lowest = tmpl
+        highest = tmpr
+        max = highest - lowest
+      }
+    }
+  }
+  
+  return given[lowest:highest+1]
+}
+----
