@@ -1,5 +1,5 @@
 === Three Elements of an Array Sum to 0
-Find all unique triplets that sum to 0
+Find all **Unique Triplets** that sum to 0
 
 ==== Samples
 [source, bash]
@@ -66,6 +66,48 @@ func ThreeSumZero(given []int) {
       negIdx++
     } else {
       low++
+    }
+  }
+}
+----
+
+==== Source Code - Attempt 3
+[source, go]
+----
+func ThreeSumZero(given []int) {
+  if len(given) <= 2 {
+    return
+  }
+  
+  sort.Ints(given)
+  var low, med, high int
+  var seen = map[string]bool{}
+  
+  med = low + 1
+  high = len(given) - 1
+  
+  for low < high {
+    if given[low] > 0 {
+      return
+    }
+    
+    sum := given[low] + given[med] + given[high]
+    seenStr := fmt.Sprintf("[%d %d %d]", given[low], given[med], given[high])
+    
+    if sum == 0 {
+      if !seen[seenStr] {
+        fmt.Printf(seenStr)
+        seen[seenStr] = true
+      }
+      low++
+      med = low + 1
+    } else {
+      med++
+      if med >= high {
+        low++
+        med = low + 1
+        high--
+      }
     }
   }
 }
