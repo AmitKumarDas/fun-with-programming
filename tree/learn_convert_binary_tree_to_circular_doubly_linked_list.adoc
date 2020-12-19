@@ -16,8 +16,8 @@
 [source, bash]
 ----
 - Circular:
--- head -> tail
--- tail -> head
+-- head -> tail i.e. head connected to tail
+-- tail -> head i.e. tail connected to head
 ----
 
 ==== Source Code - Attempt 1
