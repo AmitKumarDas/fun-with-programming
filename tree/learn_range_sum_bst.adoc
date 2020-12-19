@@ -184,13 +184,13 @@ func RangeSum(b *BST, l, r int32) int32 {
 
   var sum int32
   if b.Val < l {
-    sum += RangeSum(b.Right, l, r)
+    sum += RangeSum(b.Right, l, r)  // JUST RIGHT
   } else if b.Val > r {
-    sum += RangeSum(b.Left, l, r)
+    sum += RangeSum(b.Left, l, r)   // JUST LEFT
   } else {
-    sum += b.Val
-    sum += RangeSum(b.Left, l, r)
-    sum += RangeSum(b.Right, l, r)
+    sum += b.Val                    // --------------
+    sum += RangeSum(b.Left, l, r)   // LIKE RECURSION
+    sum += RangeSum(b.Right, l, r)  // --------------
   }
   return sum
 }
