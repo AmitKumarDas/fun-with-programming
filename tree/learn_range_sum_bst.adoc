@@ -171,3 +171,30 @@ func RangeSum(root *BST, l, r int32) int32 {
   return sum
 }
 ----
+
+==== Source Code - Attempt 3
+[source, go]
+----
+// Optimise - DO NOT INVOKE UN-NEEDED RECURSIONS
+
+func RangeSum(b *BST, l, r, int32) int32 {
+  if b == nil {
+    return 0
+  }
+
+  var sum int32
+  if b.Val < l {
+    sum += RangeSum(b.Right, l, r)
+  } else if b.Val > r {
+    sum += RangeSum(b.Left, l, r)
+  } else {
+    sum += b.Val
+    sum += RangeSum(b.Left, l, r)
+    sum += RangeSum(b.Right, l, r)
+  }
+  return sum
+}
+----
+
+
+
