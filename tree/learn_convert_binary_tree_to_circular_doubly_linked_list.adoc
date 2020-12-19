@@ -207,6 +207,7 @@ func (b *BT) toCirDoubleLL(l *LL) (next *LL){
       Val: b.Val,
     }
     l.Next = l
+    l.Prev = l
     return l
   }
   
