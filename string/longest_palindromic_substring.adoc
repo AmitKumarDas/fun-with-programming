@@ -50,3 +50,120 @@ func LongPalinSubstr(given string) string {
   return given[lowest:highest+1]
 }
 ----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+// Consider multiple permutations i.e. substrings of the string
+// Check if the substring is palindrome
+// Is that longest ever
+
+func isPalin(given string) bool {
+  if len(given) <= 1 {
+    return true
+  }
+
+  var low, high int
+  high = len(given) - 1
+  
+  for low < high {
+    if given[low] != given[high] {
+      return false
+    }
+    low++
+    high--
+  }
+  return true
+}
+
+func LongestPalinSubstr(given string) string {
+  if len(given) <= 1 {
+    return given
+  }
+  
+  var longestPalin string
+  var low, high int
+  high = len(given) - 1
+  
+  for low < high {
+    if high - low < len(longestPalin) {
+      break // !! WE HAVE LONGEST ALREADY !!
+    }
+  
+    tmplow := low
+    for tmplow < high {
+      substr := given[tmplow:high+1]
+      if len(substr) < len(longestPalin) {
+        break // !! WE HAVE LONGEST ALREADY !!
+      }
+      
+      yes := isPalin(substr)
+      if yes && len(substr) > len(longestPalin) {
+        longestPalin = substr
+      }
+      tmplow++ // !! INSIDE - LEFT MOVES FORWARD !!
+    }
+    
+    high--  // !! OUTSIDE - RIGHT MOVES BACKWARD !!
+  }
+  return longestPalin
+}
+----
+
+==== Source Code - Attempt 3
+[source, go]
+----
+// Consider multiple permutations i.e. substrings of the string
+// Check if the substring is palindrome
+// Is that longest ever
+
+func isPalin(given string) bool {
+  if len(given) <= 1 {
+    return true
+  }
+
+  var low, high int
+  high = len(given) - 1
+  
+  for low < high {
+    if given[low] != given[high] {
+      return false
+    }
+    low++
+    high--
+  }
+  return true
+}
+
+func LongestPalinSubstr(given string) string {
+  if len(given) <= 1 {
+    return given
+  }
+  
+  var longestPalin string
+  var high = len(given) - 1
+  
+  for high > 0 {
+    if high < len(longestPalin) {
+      break // !! WE HAVE LONGEST ALREADY !!
+    }
+  
+    low := 0
+    for low < high {
+      substr := given[low:high+1]
+      if len(substr) < len(longestPalin) {
+        break // !! WE HAVE LONGEST ALREADY !!
+      }
+      
+      yes := isPalin(substr)
+      if yes && len(substr) > len(longestPalin) {
+        longestPalin = substr
+      }
+      low++ // !! INSIDE - LEFT MOVES FORWARD !!
+    }
+    
+    high--  // !! OUTSIDE - RIGHT MOVES BACKWARD !!
+  }
+  return longestPalin
+}
+----
