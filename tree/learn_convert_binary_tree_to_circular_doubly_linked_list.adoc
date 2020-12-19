@@ -199,7 +199,7 @@ func (b *BT) ToCirDoubleLL(head *LL) {
   }
 }
 
-func (b *BT) toCirDoubleLL(l *LL) (tail *LL){
+func (b *BT) toCirDoubleLL(l *LL) (next *LL){
   if l == nil {
     l = &LL{
       IsHead: true,
@@ -217,6 +217,7 @@ func (b *BT) toCirDoubleLL(l *LL) (tail *LL){
   }
   l.Next = new
   l.IsTail = false
+
   return new
 }
 
