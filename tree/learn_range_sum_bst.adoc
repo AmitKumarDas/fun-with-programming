@@ -1,5 +1,8 @@
 === Sum of values of all nodes with value between L and R (inclusive)
+[source, bash]
+----
 Also known as "Range Sum of BST"
+----
 
 ==== Notes
 [source, bash]
