@@ -1,0 +1,84 @@
+=== Convert a Binary Tree to a Circular Doubly Linked List
+[source, bash]
+----
+- Tree should be converted IN PLACE to circular Doubly LinkedList
+----
+
+==== Queries
+[source, bash]
+----
+- What is the data type of values?
+- Do we construct the Binary Tree?
+- What is circular?
+----
+
+==== Notes
+[source, bash]
+----
+- Circular:
+-- head -> tail
+-- tail -> head
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+type BT struct {
+  Val    int
+  Left   *BT
+  Right  *BT
+}
+
+func (b *BT) String() string {
+  if b == nil {
+    return ""
+  }
+  
+  var vals []string
+  if b.Left != nil {
+    vals = append(vals, b.Left.String())
+  }
+  
+  vals = append(vals, fmt.Sprintf("%d", b.Val))
+  
+  if b.Right != nil {
+    vals = append(vals, b.Right.String())
+  }
+  
+  return strings.Join(vals, " ")
+}
+
+func (b *BT) Add(val int) {
+  if b == nil {
+    b := &BT{
+      IsHead: true,
+      Val: val,
+    }
+    return
+  }
+  
+  new := &BT{Val: val}
+  if b.Left == nil {
+    b.Left = new
+    return
+  }
+  
+  if b.Right == nil {
+    b.Right = new
+    return
+  }
+  
+  if b.Left.Left == nil || b.Left.Right == nil {
+    b.Left.Add(val)
+    return
+  }
+  
+  if b.Right.Left == nil || b.Right.Right == nil {
+    b.Right.Add(val)
+    return
+  }
+  
+  b.Left.Add(val)
+}
+----
+
