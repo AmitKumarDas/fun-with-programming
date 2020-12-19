@@ -49,10 +49,10 @@ func (b *BT) String() string {
 }
 
 func (b *BT) Add(val int) {
-  if b == nil {
-    b = &BT{Val: val}
-    return
-  }
+  //if b == nil {          // ---------------
+    //b = &BT{Val: val}    // AVOID THIS INIT
+    //return               // ---------------
+  //}
   
   new := &BT{Val: val}
   if b.Left == nil {
