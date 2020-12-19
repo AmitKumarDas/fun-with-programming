@@ -37,6 +37,23 @@ type LL struct {
   Next *LL
 }
 
+func (l *LL) String() string {
+  if l == nil {
+    return ""
+  }
+  
+  var vals []string
+  tmp := l
+  for tmp != nil && !tmp.IsTail {
+    vals = append(vals, fmt.Sprintf("%d", l.Val))
+    tmp = tmp.Next
+  }
+  if tmp != nil {
+    vals = append(vals, fmt.Sprintf("%d", l.Val))
+  }
+  return strings.Join(vals, " ")
+}
+
 func (b *BT) ToCirDoubleLL(l *LL) *LL {
   if b == nil {
     return nil
