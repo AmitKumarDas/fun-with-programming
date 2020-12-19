@@ -29,6 +29,54 @@ type BT struct {
   Right  *BT
 }
 
+type LL struct {
+  IsHead bool
+  IsTail bool
+  Val    int
+  Prev *LL
+  Next *LL
+}
+
+func (b *BT) ToCirDoubleLL(l *LL) *LL {
+  if b == nil {
+    return nil
+  }
+  
+  if b.Left != nil {
+    b.Left.ToCirDoubleLL(l)
+  }
+  
+  tail := b.toCirDoubleLL(l)
+  
+  if b.Right != nil {
+    b.Right.ToCirDoubleLL(l)
+  }
+  
+  if l != nil && tail != nil {
+    tail.IsTail = true
+    tail.Next = l
+    l.Prev = tail
+  }
+  return l
+}
+
+func (b *BT) toCirDoubleLL(l *LL) (tail *LL){
+  if l == nil {
+    l = &LL{
+      IsHead: true,
+      Val: b.Val,
+    }
+    return l
+  }
+  
+  new := &LL{
+    Prev: l,
+    Val: b.Val,
+  }
+  l.Next = new
+  return new
+}
+
 func (b *BT) String() string {
   if b == nil {
     return ""
