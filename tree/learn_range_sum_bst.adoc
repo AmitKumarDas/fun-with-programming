@@ -177,7 +177,7 @@ func RangeSum(root *BST, l, r int32) int32 {
 ----
 // Optimise - DO NOT INVOKE UN-NEEDED RECURSIONS
 
-func RangeSum(b *BST, l, r, int32) int32 {
+func RangeSum(b *BST, l, r int32) int32 {
   if b == nil {
     return 0
   }
