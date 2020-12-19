@@ -50,7 +50,7 @@ func (b *BT) String() string {
 
 func (b *BT) Add(val int) {
   if b == nil {
-    b := &BT{Val: val}
+    b = &BT{Val: val}
     return
   }
   
