@@ -1,0 +1,170 @@
+=== Sum of values of all nodes with value between L and R (inclusive)
+Also known as "Range Sum of BST"
+
+==== Notes
+[source, bash]
+----
+- Binary Search Tree - BST
+- Input: Root node of BST
+----
+
+==== Queries
+[source, bash]
+----
+- Is it a custom BST structure?
+- Do we define / implement this custom BST structure?
+- Does it have negatives?
+- Can the entire data be represented in memory?
+- What is L? Is it a int value?
+- What is R? Is it a int value?
+- Is L < R?
+- Can L == R?
+- Can there be duplicates?
+----
+
+==== Source Code - Attempt 1 - WRONG
+[source, go]
+----
+type BST struct {
+  val int32
+  left *BST
+  right *BST
+}
+
+func (b *BST) String() string {
+  if b == nil {
+    return ""
+  }
+  
+  var vals []string
+  if b.left != nil {
+    vals = append(vals, b.left.String())
+  }
+  if b.right != nil {
+    vals = append(vals, b.right.String())
+  }
+  vals = append(vals, b.String())  // !! WRONG !!
+  return strings.Join(vals, " ")
+}
+
+func (b *BST) Add(val int32) {
+  new := &BST{val: val}
+  if b == nil {
+    b = new
+    return
+  }
+  
+  prev := b
+  node := b
+
+  for node != nil {
+    prev = node
+    if node.val >= val {  
+      node = node.left
+    } else {
+      node = node.right
+    }
+  }
+  
+  if prev.val >= val {
+    prev.left = new
+  } else {
+    prev.right = new
+  }
+}
+
+func RangeSum(root *BST, l, r int32) int32 {
+  if root == nil {
+    return 0
+  }
+
+  var sum int32
+  if root.val >= l && root.val <= r {
+    sum += root.val
+  } else {
+    return 0 // !! WRONG !!
+  }
+  
+  if root.left != nil && root.left.val >= l && root.left.val <= r { // !! WRONG !!
+    sum += RangeSum(root.left, l, r)
+  }
+  if root.right != nil && root.right.val >=l && root.right.val <= r { // !! WRONG !!
+    sum += RangeSum(root.right, l, r)
+  }
+  return sum
+}
+----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+type BST struct {
+  Val int32  // ALL CAPs // IDIOMATIC
+  Left *BST
+  Right *BST
+}
+
+func (b *BST) String() string {
+  if b == nil {
+    return ""
+  }
+  
+  var vals []string
+  if b.Left != nil {
+    vals = append(vals, b.Left.String())
+  }
+  
+  vals = append(vals, fmt.Sprintf("%d", b.Val))
+  
+  if b.Right != nil {
+    vals = append(vals, b.Right.String())
+  }
+  
+  return strings.Join(vals, " ")
+}
+
+func (b *BST) Add(val int32) {
+  new := &BST{Val: val}
+  if b == nil {
+    b = new
+    return
+  }
+  
+  prev := b
+  node := b
+
+  for node != nil {
+    prev = node
+    if node.Val >= val {  
+      node = node.Left
+    } else {
+      node = node.Right
+    }
+  }
+  
+  if prev.Val >= val {
+    prev.Left = new
+  } else {
+    prev.Right = new
+  }
+}
+
+func RangeSum(root *BST, l, r int32) int32 {
+  if root == nil {
+    return 0
+  }
+
+  var sum int32
+  if root.Val >= l && root.Val <= r {
+    sum += root.Val
+  }
+  
+  if root.Left != nil {
+    sum += RangeSum(root.Left, l, r)
+  }
+  if root.Right != nil {
+    sum += RangeSum(root.Right, l, r)
+  }
+  return sum
+}
+----
