@@ -44,9 +44,14 @@ func ProdExceptSelf(given []int) []int {
 ----
 - Solve without division
 - Solve in O(n)
+- Solve in constant space
 
-- Which means no nested for loops
-- Which implies use PREV INFO as you go
+- O(n) runtime means:
+  - no nested for loops
+  - use PREV ELEM as you iterate
+
+- O(1) space means:
+  - use the output array only
 ----
 
 [source, bash]
