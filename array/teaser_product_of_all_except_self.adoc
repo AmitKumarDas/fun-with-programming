@@ -38,3 +38,23 @@ func ProdExceptSelf(given []int) []int {
   return op
 }
 ----
+
+==== Visualize - Attempt 2
+[source, bash]
+----
+Input: [10, 20, 30, 40]
+Output: [24000, 12000, 8000, 6000]
+
+pass 1: o/p [1, 10*1, 20*10*1, 30*20*10*1]
+pass 1 includes all LEFTs by looping left to right
+
+pass 2: o/p [pass1*40*30*20, pass1*40*30, pass1*40, pass1*1]
+pass 2 inlcudes all RIGHTS by looping right to left
+
+pass 1 & pass 2 are different loops
+pass 1 & pass 2 use slightly different logic
+----
+
+
+
+
