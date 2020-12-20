@@ -1,0 +1,40 @@
+=== Return an Array has Product of All Elems of input Array Excluding Self Index
+
+==== Samples
+[source, bash]
+----
+Input: [10, 20, 30, 40]
+Output: [24000, 12000, 8000, 6000]
+----
+
+==== Queries
+[source, bash]
+----
+- What is the data type of input?
+- Can data type of output be same as input?
+- Can we store the product & make use of division?
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func ProdExceptSelf(given []int) []int {
+  var prod int = 1
+  for _, i := range given {
+    prod *= i
+  }
+  
+  // -------------
+  // NOT USING MAKE SEEMS BETTER FOR SMALL ARRAY
+  // -------------
+  
+  // var op = make([]int, len(given))
+  var op []int
+  
+  for _, i := range given {
+    val := int(prod/i)
+    op = append(op, val)
+  }
+  return op
+}
+----
