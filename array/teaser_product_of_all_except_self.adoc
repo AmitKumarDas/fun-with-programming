@@ -42,6 +42,15 @@ func ProdExceptSelf(given []int) []int {
 ==== Visualize - Attempt 2
 [source, bash]
 ----
+- Solve without division
+- Solve in O(n)
+
+- Which means no nested for loops
+- Which implies use PREV INFO as you go
+----
+
+[source, bash]
+----
 Input: [10, 20, 30, 40]
 Output: [24000, 12000, 8000, 6000]
 
@@ -54,7 +63,4 @@ pass 2 inlcudes all RIGHTS by looping right to left
 pass 1 & pass 2 are different loops
 pass 1 & pass 2 use slightly different logic
 ----
-
-
-
 
