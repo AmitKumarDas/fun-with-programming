@@ -286,21 +286,23 @@ type LL struct {
 
 func (l *LL) String() string {
   if l == nil {
-    return ""
+    return "NIL"
   }
   
   var vals []string
   tmp := l
   
   // Iterate Till Tail
+  var counter int
   for tmp != nil && !tmp.IsTail {
-    vals = append(vals, fmt.Sprintf("%d", l.Val))
+    vals = append(vals, fmt.Sprintf("[%d]=%d", counter, l.Val))
     tmp = tmp.Next
+    counter++
   }
   
   // Add the Last Item if Any
   if tmp != nil {
-    vals = append(vals, fmt.Sprintf("%d", l.Val))
+    vals = append(vals, fmt.Sprintf("[%d]=%d", counter, l.Val))
   }
   
   return strings.Join(vals, " ")
@@ -311,8 +313,8 @@ func (b *BT) ToCirDoubleLL() *LL {
     return nil
   }
 
-  head := &LL{IsHead: true}
-  tail := ToCirDoubleLLWithHead(head)
+  var head *LL
+  tail := b.toCirDoubleLLWithHead(head)
   if tail != nil {
     tail.IsTail = true
     tail.Next = head
@@ -354,10 +356,9 @@ func (b *BT) toCirDoubleLLWithHead(head *LL) (tail *LL) {
 }
 
 func (b *BT) setHeadOrTail(l *LL) (next *LL){
-  if l == nil || l.IsHead {
+  if l == nil {
     l = &LL{
       IsHead: true,
-      IsTail: true,
       Val: b.Val,
     }
     return l
