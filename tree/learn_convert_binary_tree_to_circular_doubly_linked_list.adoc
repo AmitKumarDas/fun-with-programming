@@ -267,13 +267,16 @@ func (b *BT) Add(val int) {
 }
 ----
 
-==== Source Code - Attempt 3 - !!! WRONG AGAIN !!!
+==== Source Code - Attempt 3, 4 - !! WRONG AGAIN !!
 [source, go]
 ----
 type BT struct {
   Val    int
   Left   *BT
   Right  *BT
+  
+  head *LL // attempt 4 - LL as field
+  tail *LL // attempt 4 - LL as field
 }
 
 type LL struct {
@@ -313,64 +316,89 @@ func (b *BT) ToCirDoubleLL() *LL {
     return nil
   }
 
-  var head *LL
-  tail := b.toCirDoubleLLWithHead(head)
-  if tail != nil {
-    tail.IsTail = true
-    tail.Next = head
-    head.Prev = tail
-  } else {
-    head.Next = head
-    head.Prev = head
-    head.IsTail = true
-  }
+  // RESET THE LL BEFORE CALC
+  b.head = nil
+  b.tail = nil
   
-  return head
+  b.toCirDoubleLL()
+
+  if b.head == nil {
+    return nil
+  }
+
+  if b.tail != nil {
+    b.tail.Next = b.head // circular setting
+    b.head.Prev = b.tail // circular setting
+  } else {
+    b.head.Next = b.head // next is self when no tail
+    b.head.Prev = b.head // prev is self when no tail
+  }
+
+  return b.head
 }
 
-func (b *BT) toCirDoubleLLWithHead(head *LL) (tail *LL) {
+// ------------------------------
+// attempt 4 - no passing or returning args in RECURSIVE calls
+// ------------------------------
+func (b *BT) toCirDoubleLL() {
   if b == nil {
-    return head
+    return
   }
   
   // -----------------
-  // RECURSE AT LEFT
+  // RECURSE AT LEFT - NO CALC
   // -----------------
   if b.Left != nil {
-    tail = b.Left.ToCirDoubleLL(head)
+    b.Left.ToCirDoubleLL() // Wrong Method !!
   }
   
   // -----------
-  // SET AT SELF
+  // SET AT SELF - ACTUAL CALC
   // -----------
-  tail = b.setHeadOrTail(tail)
+  b.addToLL()
   
   // -----------------
-  // RECURSE AT RIGHT
+  // RECURSE AT RIGHT - NO CALC
   // -----------------
   if b.Right != nil {
-    tail = b.Right.ToCirDoubleLL(tail)
+    b.Right.ToCirDoubleLL() // Wrong Method !!
   }
-
-  return tail
 }
 
-func (b *BT) setHeadOrTail(l *LL) (next *LL){
-  if l == nil {
-    l = &LL{
+// ------------------------------
+// attempt 4 - head & tail calculations
+// ------------------------------
+func (b *BT) addToLL() {
+  // --------------
+  // INIT
+  // --------------
+  if b.head == nil {
+    new := &LL{
       IsHead: true,
+      IsTail: true,
       Val: b.Val,
     }
-    return l
+    
+    // ----------------
+    // head is same as tail
+    // ----------------
+    b.head = new // init
+    b.tail = new // init
+    
+    return
   }
   
+  // ------------------
+  // calc the new tail
+  // ------------------
   new := &LL{
-    Prev: l,
+    IsTail: true,
+    Prev: b.tail,
     Val: b.Val,
   }
-  l.Next = new
-
-  return new
+  b.tail.Next = new
+  b.tail.IsTail = false
+  b.tail = new
 }
 
 func (b *BT) String() string {
@@ -379,12 +407,219 @@ func (b *BT) String() string {
   }
   
   var vals []string
+  
+  // ------------------
+  // RECURSE LEFT
+  // ------------------
   if b.Left != nil {
     vals = append(vals, b.Left.String())
   }
   
+  // -------------------
+  // NO RECURSE - LOGIC AGAINST SELF VALUE
+  // -------------------
   vals = append(vals, fmt.Sprintf("%d", b.Val))
   
+  // ------------------
+  // RECURSE RIGHT
+  // ------------------
+  if b.Right != nil {
+    vals = append(vals, b.Right.String())
+  }
+  
+  return strings.Join(vals, " ")
+}
+
+// -----------------
+// Add tries to do a BALANCED ADD
+// -----------------
+func (b *BT) Add(val int) {  
+  new := &BT{Val: val}
+  if b.Left == nil {
+    b.Left = new
+    return
+  }
+  
+  if b.Right == nil {
+    b.Right = new
+    return
+  }
+  
+  if b.Left.Left == nil || b.Left.Right == nil {
+    b.Left.Add(val)
+    return
+  }
+  
+  if b.Right.Left == nil || b.Right.Right == nil {
+    b.Right.Add(val)
+    return
+  }
+  
+  b.Left.Add(val)
+}
+----
+
+
+==== Source Code - Attempt 5
+[source, go]
+----
+// ------------------------------
+// CURSE OF RECURSION - LL CREATED IN ISOLATION
+// ------------------------------
+type LLBuilder struct {
+  InUse bool
+  Head *LL
+  Tail *LL
+}
+
+var globeLL = &LLBuilder{}
+
+type BT struct {
+  Val    int
+  Left   *BT
+  Right  *BT
+}
+
+type LL struct {
+  IsHead bool
+  IsTail bool
+  Val    int
+  Prev *LL
+  Next *LL
+}
+
+func (l *LL) String() string {
+  if l == nil {
+    return "NIL"
+  }
+  
+  var vals []string
+  tmp := l
+  
+  // Iterate Till Tail
+  var counter int
+  for tmp != nil && !tmp.IsTail {
+    vals = append(vals, fmt.Sprintf("[%d]=%d", counter, tmp.Val))
+    tmp = tmp.Next
+    counter++
+  }
+  
+  // Add the Last Item if Any
+  if tmp != nil {
+    vals = append(vals, fmt.Sprintf("[%d]=%d", counter, tmp.Val))
+  }
+  
+  return strings.Join(vals, " ")
+}
+
+func (b *BT) ToCirDoubleLL() *LL {
+  if b == nil {
+    return nil
+  }
+
+  // RESET THE LL BUILDER BEFORE CALC
+  globeLL.InUse = true
+  globeLL.Head = nil
+  globeLL.Tail = nil
+  
+  b.toCirDoubleLL()
+
+  globeLL.Tail.Next = globeLL.Head // circular setting
+  globeLL.Head.Prev = globeLL.Tail // circular setting
+  
+  return globeLL.Head
+}
+
+// ------------------------------
+// attempt 4 - no passing or returning args in RECURSIVE calls
+// ------------------------------
+func (b *BT) toCirDoubleLL() {
+  if b == nil {
+    return
+  }
+  
+  // -----------------
+  // RECURSE AT LEFT - NO CALC
+  // -----------------
+  if b.Left != nil {
+    b.Left.toCirDoubleLL()
+  }
+  
+  // -----------
+  // SET AT SELF - ACTUAL CALC
+  // -----------
+  b.addToLL()
+  
+  // -----------------
+  // RECURSE AT RIGHT - NO CALC
+  // -----------------
+  if b.Right != nil {
+    b.Right.toCirDoubleLL()
+  }
+}
+
+// ------------------------------
+// attempt 5 - global calculations
+// ------------------------------
+func (b *BT) addToLL() {
+  // --------------
+  // INIT
+  // --------------
+  if globeLL.Head == nil {
+    new := &LL{
+      IsHead: true,
+      IsTail: true,
+      Val: b.Val,
+    }
+    
+    // ----------------
+    // head is same as tail
+    // ----------------
+    globeLL.Head = new // init
+    globeLL.Tail = new // init
+    
+    return
+  }
+  
+  // ------------------
+  // calc the new tail
+  // ------------------
+  new := &LL{
+    IsTail: true,
+    Prev: globeLL.Tail,
+    Val: b.Val,
+  }
+  
+  // old tail settings
+  globeLL.Tail.Next = new
+  globeLL.Tail.IsTail = false
+  
+  // new tail settings
+  globeLL.Tail = new
+}
+
+func (b *BT) String() string {
+  if b == nil {
+    return ""
+  }
+  
+  var vals []string
+  
+  // ------------------
+  // RECURSE LEFT - NO CALCS
+  // ------------------
+  if b.Left != nil {
+    vals = append(vals, b.Left.String())
+  }
+  
+  // -------------------
+  // NO RECURSE - LOGIC AGAINST SELF VALUE
+  // -------------------
+  vals = append(vals, fmt.Sprintf("%d", b.Val))
+  
+  // ------------------
+  // RECURSE RIGHT - NO CALCS
+  // ------------------
   if b.Right != nil {
     vals = append(vals, b.Right.String())
   }
