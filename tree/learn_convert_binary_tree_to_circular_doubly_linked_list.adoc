@@ -267,3 +267,156 @@ func (b *BT) Add(val int) {
 }
 ----
 
+==== Source Code - Attempt 3
+[source, go]
+----
+type BT struct {
+  Val    int
+  Left   *BT
+  Right  *BT
+}
+
+type LL struct {
+  IsHead bool
+  IsTail bool
+  Val    int
+  Prev *LL
+  Next *LL
+}
+
+func (l *LL) String() string {
+  if l == nil {
+    return ""
+  }
+  
+  var vals []string
+  tmp := l
+  
+  // Iterate Till Tail
+  for tmp != nil && !tmp.IsTail {
+    vals = append(vals, fmt.Sprintf("%d", l.Val))
+    tmp = tmp.Next
+  }
+  
+  // Add the Last Item if Any
+  if tmp != nil {
+    vals = append(vals, fmt.Sprintf("%d", l.Val))
+  }
+  
+  return strings.Join(vals, " ")
+}
+
+func (b *BT) ToCirDoubleLL() *LL {
+  if b == nil {
+    return nil
+  }
+
+  head := &LL{IsHead: true}
+  tail := ToCirDoubleLLWithHead(head)
+  if tail != nil {
+    tail.IsTail = true
+    tail.Next = head
+    head.Prev = tail
+  } else {
+    head.Next = head
+    head.Prev = head
+    head.IsTail = true
+  }
+  
+  return head
+}
+
+func (b *BT) toCirDoubleLLWithHead(head *LL) (tail *LL) {
+  if b == nil {
+    return head
+  }
+  
+  // -----------------
+  // RECURSE AT LEFT
+  // -----------------
+  if b.Left != nil {
+    tail = b.Left.ToCirDoubleLL(head)
+  }
+  
+  // -----------
+  // SET AT SELF
+  // -----------
+  tail = b.setHeadOrTail(tail)
+  
+  // -----------------
+  // RECURSE AT RIGHT
+  // -----------------
+  if b.Right != nil {
+    tail = b.Right.ToCirDoubleLL(tail)
+  }
+
+  return tail
+}
+
+func (b *BT) setHeadOrTail(l *LL) (next *LL){
+  if l == nil || l.IsHead {
+    l = &LL{
+      IsHead: true,
+      IsTail: true,
+      Val: b.Val,
+    }
+    return l
+  }
+  
+  new := &LL{
+    Prev: l,
+    Val: b.Val,
+  }
+  l.Next = new
+
+  return new
+}
+
+func (b *BT) String() string {
+  if b == nil {
+    return ""
+  }
+  
+  var vals []string
+  if b.Left != nil {
+    vals = append(vals, b.Left.String())
+  }
+  
+  vals = append(vals, fmt.Sprintf("%d", b.Val))
+  
+  if b.Right != nil {
+    vals = append(vals, b.Right.String())
+  }
+  
+  return strings.Join(vals, " ")
+}
+
+// -----------------
+// Add tries to do a BALANCED ADD
+// -----------------
+func (b *BT) Add(val int) {  
+  new := &BT{Val: val}
+  if b.Left == nil {
+    b.Left = new
+    return
+  }
+  
+  if b.Right == nil {
+    b.Right = new
+    return
+  }
+  
+  if b.Left.Left == nil || b.Left.Right == nil {
+    b.Left.Add(val)
+    return
+  }
+  
+  if b.Right.Left == nil || b.Right.Right == nil {
+    b.Right.Add(val)
+    return
+  }
+  
+  b.Left.Add(val)
+}
+----
+
