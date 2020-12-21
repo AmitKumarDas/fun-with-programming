@@ -1,5 +1,11 @@
 === Given a String Delete at most one char to make it a Palindrome
 
+==== LeetCode Problem
+[source, bash]
+----
+Valid Palindrome II
+----
+
 ==== Samples
 [source, bash]
 ----
