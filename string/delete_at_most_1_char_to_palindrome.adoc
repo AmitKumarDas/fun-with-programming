@@ -1,0 +1,57 @@
+=== Given a String Delete at most one char to make it a Palindrome
+
+==== Samples
+[source, bash]
+----
+Input: sasabit
+Output: false
+
+
+Input: saasb
+Output: true // remove b
+----
+
+==== Queries
+[source, bash]
+----
+- Will there be any special chars
+- Will there be spaces? What to do if spaces
+- Can spaces be trimmed/ignored?
+- Does the string fit into memory?
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func IsPalin(given string) bool {
+  if len(given) <= 1 {
+    return true
+  }
+  
+  var low, high int
+  high = len(given) - 1
+  
+  for low < high {
+    if given[low] != given[high] {
+      return false
+    }
+    low++
+    high--
+  }
+  return true
+}
+
+func IsPalinOnDelete(given string) bool {
+  for idx := range given {
+    str1 := given[idx:idx]
+    str2 := given[idx:len(given)]
+    if IsPalin(str1 + str2) {
+      return true
+    }
+  }
+  return false
+}
+----
+
+
+
