@@ -1,0 +1,26 @@
+=== A string s containing just the chars '(', ')', '{', '}', '[' and ']'; determine if string is valid
+
+==== Samples
+[source, bash]
+----
+Input: [{{()}}]
+Ouput: true // valid
+----
+
+[source, bash]
+----
+Input: [{{()}}][]{}
+Ouput: true // valid
+----
+
+[source, bash]
+----
+Input: [{{}]
+Ouput: false // invalid
+----
+
+[source, bash]
+----
+Input: ][{{()}}]
+Ouput: false // invalid
+----
