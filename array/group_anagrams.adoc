@@ -11,14 +11,22 @@ Ouput: [
 ]
 ----
 
-==== How
+==== Queries
 [source, bash]
 ----
 - Are all valid words?
 - Are all words of same length?
-- loop
-  - store the word index with word's length -> []int
-  - map word index with map[rune]bool -> map[int]map[rune]bool
-- match
-  - use the map[rune]bool for each char of word
+----
+
+==== How
+[source, bash]
+----
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func GroupAnagrams(given []string) [][]string {
+  
+}
 ----
