@@ -23,6 +23,8 @@ Output: true // remove b
 ==== Source Code - Attempt 1
 [source, go]
 ----
+// O(n^2) runtime
+
 func IsPalin(given string) bool {
   if len(given) <= 1 {
     return true
@@ -57,5 +59,67 @@ func IsPalinOnDelete(given string) bool {
 }
 ----
 
+==== Source Code - Attempt 2
+[source, bash]
+----
+Input: abcdba
+Output: true // char c or d can be removed to get a Palindrome
 
+pass 1 - a - ok
+pass 2 - b - ok
+pass 3 - c - no -> mismatches++
+  pass 3 - rm c & compare - low++ == high - ok
+
+Input: saast
+Ouput: true // char t can be removed
+
+pass 1 - s - no -> mismatches++
+  pass 1'    - rm s & compare - low++ == high   -> no
+  or pass 1' - rm t & compare - low   == high-- -> ok
+----
+
+[source, go]
+----
+// O(n) runtime
+// O(1) space
+
+func IsPalinOnDel(given string) bool {
+  if len(given) <= 1 {
+    return true
+  }
+  
+  var low, high int
+  high = len(given) - 1
+  var mismatches int
+  
+  for low < high {
+    if given[low] == given[high] {
+      low++
+      high--
+      continue
+    }
+    
+    mismatches++
+    if mismatches > 1 {
+      return false
+    }
+    
+    if given[low+1] == given[high] {
+      low = low + 2
+      high--
+    } else if given[low] == given[high-1] {
+      low++
+      high = high - 2
+    } else {
+      mismatches++
+    }
+    
+    if mismatches > 1 {
+      return false
+    }
+  }
+  
+  return true
+}
+----
 
