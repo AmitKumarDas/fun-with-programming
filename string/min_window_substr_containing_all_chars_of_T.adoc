@@ -39,15 +39,17 @@ func MinWinSubstr(S, T string) string {
     seenT[c] = true
   }
  
+  var seenS = map[rune]bool{}
   var start, end int
   var currentStart, currentEnd int
   var matches int
 
   for idx, c := range S {
-    if !seenT[c] {
+    if !(seenT[c] && !seenS[c]) {
       continue
     }
-
+    
+    seenS[c] = true
     matches++
 
     // FIRST MATCH
@@ -68,6 +70,7 @@ func MinWinSubstr(S, T string) string {
       }
 
       matches = 0 // RESET
+      seenS = map[rune]bool{} // RESET
     }
 
     if (end - start) == len(seenT) {
