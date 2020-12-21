@@ -42,9 +42,13 @@ func IsPalin(given string) bool {
 }
 
 func IsPalinOnDelete(given string) bool {
+  if IsPalin(given) {
+    return true
+  }
+
   for idx := range given {
-    str1 := given[idx:idx]
-    str2 := given[idx:len(given)]
+    str1 := given[0:idx]
+    str2 := given[idx+1:len(given)]
     if IsPalin(str1 + str2) {
       return true
     }
