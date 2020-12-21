@@ -1,0 +1,24 @@
+=== Given an array of strings, group the Anagrams together
+
+==== Samples
+[source, bash]
+----
+Input: ["eat", "ate", "hat", "tea", "bat"]
+Ouput: [
+  ["eat", "tea", "ate"],
+  ["hat"],
+  ["bat"],
+]
+----
+
+==== How
+[source, bash]
+----
+- Are all valid words?
+- Are all words of same length?
+- loop
+  - store the word index with word's length -> []int
+  - map word index with map[rune]bool -> map[int]map[rune]bool
+- match
+  - use the map[rune]bool for each char of word
+----
