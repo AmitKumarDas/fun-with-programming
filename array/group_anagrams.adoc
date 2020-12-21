@@ -21,12 +21,50 @@ Ouput: [
 ==== How
 [source, bash]
 ----
+- calculate the sum of all chars of a word
+- store the sum & word's index in a map if sum does not exist
+- store the word against the index corresponding to its sum found in the map
 ----
 
 ==== Source Code - Attempt 1
 [source, go]
 ----
-func GroupAnagrams(given []string) [][]string {
+func code(word string) int32 {
+  var sum int32
+  for _, c := range word {
+    sum += int32(c)
+  }
   
+  fmt.Printf("%s - %d\n", word, sum)
+  return sum
+}
+
+func GroupAnagrams(given []string) [][]string {
+  if len(given) == 0 {
+    return nil
+  }
+  
+  // RESULT
+  var res [][]string
+  if len(given) == 1 {
+    res = append(res, []string{given[0]})
+    return res
+  }
+  
+  var seen = map[int32]int{}
+  for _, word := range given {
+    cde := code(word)
+    idx, found := seen[cde]
+    if !found {
+      seen[cde] = len(seen)    // SET SEEN[c] TO SEEN LEN
+      new := []string{word}
+      res = append(res, new)
+    } else {
+      exists := res[idx]     
+      exists = append(exists, word)
+      res[idx] = exists
+    }
+  }
+  return res
 }
 ----
