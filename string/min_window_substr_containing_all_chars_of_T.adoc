@@ -30,9 +30,11 @@ Output: deftg vs ftgd & answer is ftgd
   - init highest to 0
 ----
 
-==== Source Code - Attempt 1
+==== Source Code - Attempt 1 - WRONG
 [source, go]
 ----
+// This does not give the minimum sub string
+
 func MinWinSubstr(S, T string) string {
   var seenT = map[rune]bool{}
   for _, c := range T {
@@ -69,8 +71,69 @@ func MinWinSubstr(S, T string) string {
         end = currentEnd
       }
 
+      if (end - start) == len(seenT) {
+        // ---------------------------------
+        // NO FURTHER MINIMISATION POSSIBLE
+        // ---------------------------------
+        return S[start:end+1]
+      }
+
       matches = 0 // RESET
       seenS = map[rune]bool{} // RESET
+    }
+  }
+  return S[start:end+1]
+}
+----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+func MinWinSubstr(S, T string) string {
+  var seenT = map[rune]bool{}
+  for _, c := range T {
+    seenT[c] = true
+  }
+ 
+  var seenS = map[rune]bool{}
+  var start, end int
+  var currentStart, currentEnd int
+  var matches int
+
+  var idx int
+  for idx < len(S) {
+    c := rune(S[idx])
+
+    if !(seenT[c] && !seenS[c]) {
+      idx++
+      continue
+    }
+    
+    seenS[c] = true
+    matches++
+
+    // FIRST MATCH
+    if matches == 1 {
+      currentStart = idx
+    }
+
+    // ALL MATCHES DONE
+    if matches == len(seenT) {
+      currentEnd = idx
+
+      if start == 0 && end == 0 {
+        start = currentStart
+        end = currentEnd
+      } else if (end - start) > (currentEnd - currentStart) {
+        start = currentStart
+        end = currentEnd
+      }
+
+      matches = 0             // RESET
+      seenS = map[rune]bool{} // RESET
+      idx = currentStart + 1  // RESET TO NEXT LOW
+    } else {
+      idx++
     }
 
     if (end - start) == len(seenT) {
