@@ -32,7 +32,8 @@ Ouput: [
 func code(word string) int32 {
   var sum int32
   for _, c := range word {
-    sum += int32(c)
+    fmt.Printf("%c - %T\n", c, c)
+    sum += c
   }
   
   fmt.Printf("%s - %d\n", word, sum)
