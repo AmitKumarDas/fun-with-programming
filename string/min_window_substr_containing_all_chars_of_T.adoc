@@ -1,0 +1,84 @@
+=== Given strings S and T, find minimum window in S that contains all characters in T
+
+==== Notes
+[source, bash]
+----
+- Solve in O(n)
+- LeetCode Problem - Minimum Window Substring
+----
+
+==== Queries
+[source, bash]
+----
+- Should space be considered
+- What about space complexity
+- Will return be the smallest substring found in S
+- What should be returned if no substring is found
+- What about repeating characters in T? Are they unique?
+  - Do we need to bother about fequency of chars in T
+----
+
+==== Samples
+[source, bash]
+----
+Input: abdeftgdef, dgfg
+Output: deftg vs ftgd & answer is ftgd
+
+- iterate T & store in map[rune]bool
+- iterate S & if match store in map[rune]int // for duplicates choose int index closer to highest
+  - also store highest matching index
+  - init highest to 0
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func MinWinSubstr(S, T string) string {
+  var seenT = map[rune]bool{}
+  for _, c := range T {
+    seenT[c] = true
+  }
+ 
+  var start, end int
+  var currentStart, currentEnd int
+  var matches int
+
+  for idx, c := range S {
+    if !seenT[c] {
+      continue
+    }
+
+    matches++
+
+    // FIRST MATCH
+    if matches == 1 {
+      currentStart = idx
+    }
+
+    // ALL MATCHES DONE
+    if matches == len(seenT) {
+      currentEnd = idx
+
+      if start == 0 && end == 0 {
+        start = currentStart
+        end = currentEnd
+      } else if (end - start) > (currentEnd - currentStart) {
+        start = currentStart
+        end = currentEnd
+      }
+
+      matches = 0 // RESET
+    }
+
+    if (end - start) == len(seenT) {
+      // ---------------------------------
+      // NO FURTHER MINIMISATION POSSIBLE
+      // ---------------------------------
+      return S[start:end+1]
+    }
+  }
+  return S[start:end+1]
+}
+----
+
+
