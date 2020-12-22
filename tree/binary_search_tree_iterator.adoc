@@ -115,3 +115,18 @@ func main() {
 }
 
 ----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+// O(1) runtime
+// O(h) space where h = height of tree
+//
+// How?
+// Store only the Left nodes i.e. height of tree
+// Iterator will be tightly coupled with BST
+
+type BSTIter struct {
+	
+}
+----
