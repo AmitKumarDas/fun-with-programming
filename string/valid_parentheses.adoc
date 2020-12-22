@@ -1,4 +1,4 @@
-=== A string s containing just the chars '(', ')', '{', '}', '[' and ']'; determine if string is valid
+=== A string containing just the chars '(', ')', '{', '}', '[' and ']'; determine if string is valid
 
 ==== Samples
 [source, bash]
@@ -23,4 +23,82 @@ Ouput: false // invalid
 ----
 Input: ][{{()}}]
 Ouput: false // invalid
+----
+
+[source, bash]
+----
+Input: "([)]"
+Output: false // invalid !! incorrect ordering !!
+----
+
+==== How
+[source, bash]
+----
+# Try 1
+- iterate each char of the string
+- if open bracket then store it as a map of rune against index
+- if close bracket then remove the last rune & check compatibility i.e. if ) then (
+- if compatibility fails then fail
+
+- last rune cannot be done via map since its not ordered
+
+# Try 2
+- if open bracket then push to stack
+- if close bracket then pop & check compatibility
+
+- how to build a stack in go?
+----
+
+==== Source Code - Attempt 1
+----
+type Stack struct {
+  Items []rune
+  Last int
+}
+
+func (s *Stack) Push(c rune) {
+  s.Items = append(s.Items, c)
+  s.Last++
+}
+
+func (s *Stack) IsEmpty() bool {
+  return s.Last == 0
+}
+
+func (s *Stack) Pop() rune {
+  if s.Last == 0 {
+    return 0
+  }
+  r := s.Items[s.Last - 1]
+  s.Last--
+  return r
+}
+
+func IsValidParenStr(given string) bool {
+  if len(given) == 0 {
+    return true
+  }
+  
+  // ODD LENGTH IS INVALID
+  if len(given) % 2 != 0 {
+    return false
+  }
+  
+  var store = &Stack{}
+  for _, c := range given {
+      if c == '{' || c == '(' || c == '[' {
+        store.Push(c)
+        continue
+      }
+      got := store.Pop()
+      if c == '{' && got != '}' {
+        return false
+      } else if c == '[' && got != ']' {
+        return false
+      } else if c == '(' && got != ')' {
+        return false
+      }
+  }
+  return store.IsEmpty()
+}
 ----
