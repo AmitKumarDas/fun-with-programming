@@ -110,3 +110,12 @@ func IsValidParenStr(given string) bool {
   return store.IsEmpty()
 }
 ----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+// Solve using local variables only i.e. no custom struct types
+// Solve without using rune which is int32
+// Solve using byte which is uint8
+// Solve it using switch case statements
+----
