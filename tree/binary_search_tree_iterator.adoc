@@ -11,4 +11,107 @@
 - take root
 - should we return an array of in-order elements
 - what are the characteristics of this iterator
+  - Next()
+  - HasNext()
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+type BSTIter struct {
+  Items    []int
+  Position int
+}
+
+func (i *BSTIter) Next() int {
+  if len(i.Items) == 0 {
+    return 0
+  }
+  
+  if i.Position >= len(i.Items) {
+    i.Position = 0
+    return i.Items[0]
+  }
+  
+  n := i.Items[i.Position]
+  i.Position++
+  return n
+}
+
+func (i *BSTIter) HasNext() bool {
+  return i.Position != len(i.Items)
+}
+
+type BST struct {
+  Val   int
+  Left  *BST
+  Right *BST
+}
+
+func (b *BST) Add(i int) {
+  var isLeft bool
+  
+  if b.Val >= i {
+    isLeft = true  
+  }
+  
+  if isLeft {
+    if b.Left != nil {
+      b.Left.Add(i)
+    } else {
+      new := &BST{Val: i}
+      b.Left = new
+    }
+  } else {
+    if b.Right != nil {
+      b.Right.Add(i)
+    } else {
+      new := &BST{Val: i}
+      b.Right = new
+    }
+  }
+}
+
+func (b *BST) Iter() *BSTIter {
+  iter := &BSTIter{}
+  b.addToIter(iter)
+  return iter
+}
+
+func (b *BST) addToIter(i *BSTIter) {
+  if b == nil {
+    return
+  }
+  
+  // LEFT
+  if b.Left != nil {
+    b.Left.addToIter(i)
+  }
+  
+  // SELF
+  i.Items = append(i.Items, b.Val)
+  
+  // RIGHT
+  if b.Right != nil {
+    b.Right.addToIter(i)
+  }
+}
+
+// Test
+func main() {
+	b := &BST{Val: 1}
+	b.Add(20)
+	b.Add(5)
+	b.Add(10)
+	b.Add(10)
+	b.Add(30)
+	b.Add(30)
+	b.Add(15)
+	i := b.Iter()
+	for i.HasNext() {
+    // 1 5 10 10 15 20 30 30
+	  fmt.Printf("%d ", i.Next())
+	}
+}
+
 ----
