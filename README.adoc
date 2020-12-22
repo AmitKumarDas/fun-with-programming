@@ -41,6 +41,13 @@ frame the logic fast.
 - int ranges from –2147483648 to 2147483647 
 ----
 
+[source, bash]
+----
+size := len(arr)    // SOME ARRAY
+top := arr[size-1]  // LAST ELEMENT
+arr = arr[:size-1]  // MUTATE TO REMOVE LAST ELEM
+----
+
 == References
 ==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
