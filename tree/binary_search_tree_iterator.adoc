@@ -111,27 +111,27 @@ func (b *BST) addToIter(i *BSTIter) {
 // Iterator will be tightly coupled with BST
 
 type BSTIter struct {
-	stack []*BST
+  stack []*BST
 }
 
 func (i *BSTIter) HasNext() bool {
-	return len(stack) > 0
+  return len(stack) > 0
 }
 
 func (i *BSTIter) Next() int {
-	n := i.stack[len(i.stack)-1] // SMALLEST NODE
-	
-	// -----------
-	// REMOVE & OPTIONAL ADD
-	// -----------
-	i.stack = i.stack[:len(stack)-1] // REMOVE SMALLEST NODE
-	r := n.Right
-	for r != nil {
-		i.stack = append(i.stack, r) // APPEND NEXT SMALLEST NODE
-		r = r.LEFT // KEEP APPENDING LEFTS
-	}
-	
-	return n.Val
+  n := i.stack[len(i.stack)-1] // SMALLEST NODE
+
+  // -----------
+  // REMOVE & OPTIONAL ADD
+  // -----------
+  i.stack = i.stack[:len(stack)-1] // REMOVE SMALLEST NODE
+  r := n.Right
+  for r != nil {
+    i.stack = append(i.stack, r) // APPEND NEXT SMALLEST NODE
+    r = r.LEFT // KEEP APPENDING LEFTS
+  }
+
+  return n.Val
 }
 
 type BST struct {
@@ -165,20 +165,20 @@ func (b *BST) Add(i int) {
 }
 
 func (b *BST) Iter() *BSTIter {
-	i := &BSTIter{}
- 	tmp := b
-	
-	// ----------------------
-	// START FROM ROOT
-	// KEEP ADDING LEFT(s) ONLY
-	// HENCE O(h) SPACE USAGE
-	// ----------------------
- 	for tmp != nil {
-		i.stack = append(i.stack, tmp)
-		tmp = tmp.Left
-	}
-	
-	return i
+  i := &BSTIter{}
+  tmp := b
+
+  // ----------------------
+  // START FROM ROOT
+  // KEEP ADDING LEFT(s) ONLY
+  // HENCE O(h) SPACE USAGE
+  // ----------------------
+  for tmp != nil {
+    i.stack = append(i.stack, tmp)
+    tmp = tmp.Left
+  }
+
+  return i
 }
 ----
 
@@ -186,18 +186,18 @@ func (b *BST) Iter() *BSTIter {
 [source, go]
 ----
 func main() {
-	b := &BST{Val: 1}
-	b.Add(20)
-	b.Add(5)
-	b.Add(10)
-	b.Add(10)
-	b.Add(30)
-	b.Add(30)
-	b.Add(15)
-	i := b.Iter()
-	for i.HasNext() {
-  	// 1 5 10 10 15 20 30 30
-		fmt.Printf("%d ", i.Next())
-	}
+  b := &BST{Val: 1}
+  b.Add(20)
+  b.Add(5)
+  b.Add(10)
+  b.Add(10)
+  b.Add(30)
+  b.Add(30)
+  b.Add(15)
+  i := b.Iter()
+  for i.HasNext() {
+    // 1 5 10 10 15 20 30 30
+    fmt.Printf("%d ", i.Next())
+  }
 }
 ----
