@@ -1,0 +1,14 @@
+=== Implement Binary Search Tree Iterator
+[source, bash]
+----
+- Implement an iterator over a binary search tree (BST)
+- Iterator will be initialized with the root node of a BST
+----
+
+==== How
+[source, bash]
+----
+- take root
+- should we return an array of in-order elements
+- what are the characteristics of this iterator
+----
