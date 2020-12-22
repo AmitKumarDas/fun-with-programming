@@ -6,52 +6,89 @@ I will try to put more common sense information that in turn lets the brain
 frame the logic fast.
 
 == Connect The Dots - Golang
-[source, bash]
+[source, go]
 ----
-- str[idx] is bytes
-- rune(str[idx]) is rune
-- str[left:right+1] is the substring
-- sometimes str[left:right] based on the logic
+// str[idx] is bytes
+// rune(str[idx]) is rune
 ----
 
-[source, bash]
+[source, go]
 ----
-- map[int]bool as seen
-- map[rune]bool as seen
-- if seen then reset
-- reset to empty?
-- reset to current element?
+// str[left:right+1] ; SUBSTRING; LEFT & RIGHT INCLUDED
+// str[left:right] ; BASED ON SCENARIO; RIGHT EXCLUDED
 ----
 
-[source, bash]
+[source, go]
 ----
-- 10^i will not work
-- try PowerOf10(pow int) int
-- if arithmetic overflow
+// map[int]bool as seen
+// map[rune]bool as seen
+
+// TIP
+// WHEN TO RESET
+// RESET TO WHAT? 
+// - EMPTY? 
+// - SINGLE ELEMENT?
+// - CURRENT ELEMENT?
 ----
 
-[source, bash]
+[source, go]
 ----
-- rune is an alias for int32 
-  - mnemonic - ruined international man
-- byte is an alias for unit8
-  - mnemonic - bye to unify
-- unit implies all positive numbers including 0
-- uint ranges from 0 to 4294967295  
-- int ranges from –2147483648 to 2147483647 
+// ^ IS NOT POWER
+// ^ IS XOR
+// ^ IS BITWISE XOR OPERATOR FOR INTEGERS
 ----
 
-[source, bash]
+[source, go]
+----
+// rune is an alias for int32 
+// TIP - RUINED INTERNATIONAL MAN
+----
+
+[source, go]
+----
+// byte is an alias for unit8
+// TIP - BYE TO UNIFY
+----
+
+[source, go]
+----
+// unit ; all positive numbers including 0
+// uint ranges from 0 to 4294967295  
+// int ranges from –2147483648 to 2147483647 
+----
+
+[source, go]
 ----
 // ARRAY MUTATION
 
 size := len(arr)    // SOME ARRAY
-top := arr[size-1]  // LAST ELEMENT
-arr = arr[:size-1]  // MUTATE TO REMOVE LAST ELEM
+top := arr[size-1]  // TOP IS LAST ELEMENT
+arr = arr[:size-1]  // REMOVE LAST ELEM
 ----
 
-[source, bash]
+[source, go]
 ----
+// BST ITERATOR - O(h) space - h is tree's height
+
+// STORE ROOT && THEN LEFT NODES(s) 
+// I.E. STORE IN DESC ORDER
+// IS ENOUGH TO PROVIDE ENTIRE TREE AS INORDER LIST
+// NEXT() LOGIC IS TEASER
+
+type BSTIter struct {
+  Stack []*BST
+}
+
+func (i *BSTIter) push(b *BST) {
+  tmp := b 
+  for tmp != nil {
+    // -------------------
+    // Store in DESC order
+    // -------------------
+    i.Stack = append(i.Stack, tmp)
+    tmp = tmp.Left
+  }
+}
 ----
 
 == References
