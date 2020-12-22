@@ -43,9 +43,15 @@ frame the logic fast.
 
 [source, bash]
 ----
+// ARRAY MUTATION
+
 size := len(arr)    // SOME ARRAY
 top := arr[size-1]  // LAST ELEMENT
 arr = arr[:size-1]  // MUTATE TO REMOVE LAST ELEM
+----
+
+[source, bash]
+----
 ----
 
 == References
