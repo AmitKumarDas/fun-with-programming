@@ -49,7 +49,8 @@ Output: false // invalid !! incorrect ordering !!
 - how to build a stack in go?
 ----
 
-==== Source Code - Attempt 1
+==== Source Code - Attempt 
+[source, go]
 ----
 type Stack struct {
   Items []rune
