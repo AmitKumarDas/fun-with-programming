@@ -88,15 +88,22 @@ func IsValidParenStr(given string) bool {
   var store = &Stack{}
   for _, c := range given {
       if c == '{' || c == '(' || c == '[' {
+        // -------------------------
+        // PUSH THE OPENING BRACKETS
+        // -------------------------
         store.Push(c)
         continue
       }
-      got := store.Pop()
-      if c == '{' && got != '}' {
+      
+      // ---------------------------
+      // THIS IS A CLOSING BRACKET
+      // ---------------------------
+      opening := store.Pop()
+      if c == '}' && opening != '{' {
         return false
-      } else if c == '[' && got != ']' {
+      } else if c == ']' && opening != '[' {
         return false
-      } else if c == '(' && got != ')' {
+      } else if c == ')' && opening != '(' {
         return false
       }
   }
