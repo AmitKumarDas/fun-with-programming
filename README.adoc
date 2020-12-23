@@ -110,6 +110,19 @@ func (i *BSTIter) push(b *BST) {
 // TIP - Product Excluding Self is Two loops Two Directions Solution
 ----
 
+[source, go]
+----
+// Diameter of Binary Tree is all about maximums
+// Having a maximum func helps a lot
+
+func maximum(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+----
+
 == References
 ==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
