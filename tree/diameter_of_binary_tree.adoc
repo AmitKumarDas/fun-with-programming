@@ -1,0 +1,105 @@
+=== Given a Binary Tree, Compute the Length of the Diameter of the tree
+
+==== Notes
+[source, bash]
+----
+- longest path between any two nodes is the diameter
+- root node need not be included as the diameter
+----
+
+==== How
+[source, bash]
+----
+- return the same value if left & right are empty
+- add 1 if left is present
+- add 1 if right is present
+- cdiameter = left + right
+- if cdiameter > maxdiameter swap
+- return max(left, right)
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+type BT struct {
+  Val   int
+  Left  *BT
+  Right *BT
+}
+
+func (b *BT) Diameter() int {
+  _, d := b.diameter(0, 0) 
+  return d
+}
+
+func (b *BT) diameter(len int, max int) (int,int) {
+  if b.Left == nil && b.Right == nil {
+    return len, max
+  }
+  
+  var llen, rlen int
+  //var lmax, rmax int
+  if b.Left != nil {
+    llen, _ = b.Left.diameter(len+1, max)
+  }
+  if b.Right != nil {
+    rlen, _ = b.Right.diameter(len+1, max)
+  }
+  cdiam := llen + rlen
+  if cdiam > max {
+    max = cdiam
+  }
+  if llen < rlen {
+    llen = rlen
+  }
+  return llen, max
+}
+
+func (b *BT) Add(val int) {
+  if b.Left == nil {
+    b.Left = &BT{Val: val}
+    return
+  }
+  if b.Right == nil {
+    b.Right = &BT{Val: val}
+    return
+  }
+  
+  // -------------------
+  // Go Left if Left has space
+  // -------------------
+  if b.Left.Left == nil || b.Left.Right == nil {
+    b.Left.Add(val)
+    return
+  }
+  
+  // -------------------
+  // Go Right if Right has space
+  // -------------------
+  if b.Right.Left == nil || b.Right.Right == nil {
+    b.Right.Add(val)
+    return
+  }
+  
+  // Default to Left
+  b.Left.Add(val)
+}
+----
+
+==== Test
+[source, go]
+----
+func main() {
+  b := BT{Val: 1}
+  b.Add(11)
+  b.Add(2)
+  b.Add(13)
+  b.Add(3)
+  b.Add(1)
+  b.Add(2)
+  b.Add(4)
+  
+  // 5
+  fmt.Printf("%d\n",b.Diameter())
+}
+----
