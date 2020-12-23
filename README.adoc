@@ -91,6 +91,25 @@ func (i *BSTIter) push(b *BST) {
 }
 ----
 
+[source, go]
+----
+// Product of Array Items Excluding Current
+
+// --------
+// HINT:
+// --------
+// - Loop 1 - L to R 
+// - Product All Lefts i.e. Already Seen Items
+// - Loop 2 - R to L
+// - Product All Rights i.e. Already Seen Items
+
+// - Use a New Array that Stores Above Product
+// - Loop 1 - Arr[idx] = Current Left Product
+// - Loop 2 - Arr[idx] = Arr[idx] * Current Right Product
+
+// TIP - Product Excluding Self is Two loops Two Directions Solution
+----
+
 == References
 ==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
