@@ -1,1 +1,32 @@
 === Serialize and Deserialize the Binary Tree
+
+[source, bash]
+----
+- serialize binary tree into a string
+- deserialize string to the binary tree
+----
+
+==== Samples
+[source, bash]
+----
+# serialize
+Input: BT with [1],[2],[3],[null],[null],[4],[5] nodes
+Output: "1,2,3,null,null,4,5"
+
+# deserialize
+Input: "1,2,3,null,null,4,5"
+Output: BT with [1],[2],[3],[null],[null],[4],[5] nodes
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+----
+
+==== Source Code - Attempt 2
+[source, go]
+----
+// Try Breadth First Search Technique
+// Since Zig Zag Pattern Is Not Recursive
+// Hopefully Queue Should Solve This
+----
