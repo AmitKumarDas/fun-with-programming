@@ -162,3 +162,154 @@ func main() {
   fmt.Printf("%s\n", Serialize(b))
 }
 ----
+
+
+==== Source Code - Attempt 3 - Attempt 2's Serialize is BUGGY
+[source, go]
+----
+// Try Breadth First Search Technique
+// Since Zig Zag Pattern Is Not Recursive
+// Hopefully Queue Should Solve This
+
+type BT struct {
+  NilVal  string
+  Val     int
+  Left    *BT
+  Right   *BT
+}
+
+// ---
+// Helps in building unbalanced binary tree
+// ---
+func (b *BT) AddLeft(val int) {
+  if b.Left == nil {
+    b.Left = &BT{Val: val}
+    return
+  }
+  b.Left.AddLeft(val)
+}
+
+
+// ---
+// Helps in building unbalanced binary tree
+// ---
+func (b *BT) AddRight(val int) {
+  if b.Right == nil {
+    b.Right = &BT{Val: val}
+    return
+  }
+  b.Right.AddRight(val)
+}
+
+type Queue struct {
+  Items []*BT
+}
+
+// --
+// This is WRONG
+//
+// func (q Queue) Enq(b *BT) {
+// 
+// NOTE: Receiver must be a Pointer when logic mutates
+// --
+func (q *Queue) Enq(b *BT) {
+  q.Items = append(q.Items, b)
+}
+
+func (q *Queue) Deq() *BT {
+  if len(q.Items) == 0 {
+    fmt.Printf("invalid deq call\n")
+    return nil
+  }
+  
+  r := q.Items[0]
+  if len(q.Items) == 1 {
+    // ----
+    // Empty the Q
+    // ----
+    q.Items = []*BT{}
+    return r
+  }
+  
+  // ------
+  // This is WRONG
+  //
+  // q.Items = q.Items[1:len(q.Items)+1]
+  //
+  // NOTE: len(arr) is already lastindex + 1
+  // ------
+  q.Items = q.Items[1:len(q.Items)]
+  return r
+}
+
+func (q *Queue) IsEmpty() bool {
+  return len(q.Items) == 0
+}
+
+
+// --------
+// Serialize BT to a string in a zigzag pattern
+// --------
+func Serialize(root *BT) string {
+  if root == nil {
+    return ""
+  }
+  
+  var res []string
+  var q = &Queue{}
+  q.Enq(root)
+  
+  for !q.IsEmpty() {
+    tmp := q.Deq()
+    if tmp.NilVal != "" {
+      res = append(res, fmt.Sprintf("%s", tmp.NilVal))
+      
+      // ---
+      // VERY IMPORTANT 
+      // ELSE INFINITE LOOP
+      // ----
+      continue
+    } else {
+      res = append(res, fmt.Sprintf("%d", tmp.Val))
+    }
+
+    if tmp.Left == nil && tmp.Right == nil && q.IsEmpty() {
+      break
+    }
+    
+    if tmp.Left == nil {
+      q.Enq(&BT{NilVal: "null"})
+    } else {
+      q.Enq(tmp.Left)
+    }
+    
+    if tmp.Right == nil {
+      q.Enq(&BT{NilVal: "null"})
+    } else {
+      q.Enq(tmp.Right)
+    }
+  }
+  
+  return strings.Join(res, ",")
+}
+
+func Deserialize(ser string) *BT {
+  return nil
+}
+----
+
+==== Test
+[source, go]
+----
+func main() {
+  b := &BT{Val: 1}
+  b.AddLeft(1)
+  b.AddRight(2)
+  b.AddRight(3)
+  b.AddRight(4)
+  b.AddRight(5)
+  b.AddLeft(10)
+  
+  // 1,1,2,10,null,null,3,null,null,null,4,null,5 // !! STILL WRONG !!
+  fmt.Printf("%s\n", Serialize(b))
+}
