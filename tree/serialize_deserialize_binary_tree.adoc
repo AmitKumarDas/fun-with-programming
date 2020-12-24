@@ -63,11 +63,18 @@ type Queue struct {
   Items []*BT
 }
 
-func (q Queue) Enq(b *BT) {
+// --
+// This is WRONG
+//
+// func (q Queue) Enq(b *BT) {
+// 
+// NOTE: Receiver must be a Pointer when logic mutates
+// --
+func (q *Queue) Enq(b *BT) {
   q.Items = append(q.Items, b)
 }
 
-func (q Queue) Deq() *BT {
+func (q *Queue) Deq() *BT {
   if len(q.Items) == 0 {
     fmt.Printf("invalid deq call\n")
     return nil
@@ -75,17 +82,25 @@ func (q Queue) Deq() *BT {
   
   r := q.Items[0]
   if len(q.Items) == 1 {
+    // ----
+    // Empty the Q
+    // ----
     q.Items = []*BT{}
     return r
   }
   
-  fmt.Printf("q len=%d\n", len(q.Items))
-  q.Items = q.Items[1:len(q.Items)+1]
-  fmt.Printf("q len=%d\n", len(q.Items))
+  // ------
+  // This is WRONG
+  //
+  // q.Items = q.Items[1:len(q.Items)+1]
+  //
+  // NOTE: len(arr) is already lastindex + 1
+  // ------
+  q.Items = q.Items[1:len(q.Items)]
   return r
 }
 
-func (q Queue) IsEmpty() bool {
+func (q *Queue) IsEmpty() bool {
   return len(q.Items) == 0
 }
 
@@ -100,7 +115,7 @@ func Serialize(root *BT) string {
   
   var res []string
   var q = &Queue{}
-  q.Add(root)
+  q.Enq(root)
   
   for !q.IsEmpty() {
     tmp := q.Deq()
@@ -142,6 +157,8 @@ func main() {
   b.AddRight(4)
   b.AddRight(5)
   b.AddLeft(10)
+  
+  // 1,1,null,2,null,10,null,null,3,null,4,null,5
   fmt.Printf("%s\n", Serialize(b))
 }
 ----
