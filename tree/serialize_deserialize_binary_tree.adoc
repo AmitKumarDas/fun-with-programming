@@ -313,6 +313,7 @@ func main() {
   // 1,1,2,10,null,null,3,null,null,null,4,null,5 // !! STILL WRONG !!
   fmt.Printf("%s\n", Serialize(b))
 }
+----
 
 ==== Source Code - Attempt 4 - Attempt 3 is still BUGGY
 
@@ -416,7 +417,9 @@ func Serialize(root *BT) string {
       res = append(res, fmt.Sprintf("%s", tmp.NilVal))
       
       // ---
-      // VERY IMPORTANT ELSE INFINITE LOOP
+      // VERY IMPORTANT 
+      //
+      // ELSE INFINITE LOOP
       // ----
       continue
     } else {
@@ -425,6 +428,8 @@ func Serialize(root *BT) string {
 
     if tmp.Left == nil && tmp.Right == nil {
       // ---
+      // !! IMPORTANT CHANGE !!
+      //
       // Q's Items Determine The Course of Action
       // ---
       continue
@@ -467,3 +472,34 @@ func main() {
   fmt.Printf("%s\n", Serialize(b))
 }
 ----
+
+==== Source Code - Deserialize - Attemp 1
+[source, go]
+----
+func Deserialize(ser string) *BT {
+  if ser == "" {
+    return nil
+  }
+  
+  var root, tmp *BT
+  splits = strings.Split(ser, ",")
+  for i:=0; i<len(splits); i+=3 {
+    if i == 0 {
+      root = &BT{Val: int(splits[i])}
+      tmp = root
+    } else {
+      tmp = &BT{Val: int(splits[i])}
+    }
+    
+    if i+1 < len(splits) && splits[i+1] != "null" {
+      tmp.Left = &BT{Val: int(splits[i+1])}
+    }
+    
+    if i+2 < len(splits) && splits[i+2] != "null" {
+      tmp.Right = &BT{Val: int(splits[i+2])}
+    }
+    
+  }
+}
+----
+
