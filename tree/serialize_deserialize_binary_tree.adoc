@@ -473,33 +473,16 @@ func main() {
 }
 ----
 
-==== Source Code - Deserialize - Attemp 1
+==== Source Code - Deserialize - Attempt 1
 [source, go]
 ----
+// 1,1,2,10,null,null,3,null,4,null,5
+// pass 0 - count 1
+// pass 1 - count 2
+// pass 2 - count 4
+// pass 3 - count 8
+
 func Deserialize(ser string) *BT {
-  if ser == "" {
-    return nil
-  }
-  
-  var root, tmp *BT
-  splits = strings.Split(ser, ",")
-  for i:=0; i<len(splits); i+=3 {
-    if i == 0 {
-      root = &BT{Val: int(splits[i])}
-      tmp = root
-    } else {
-      tmp = &BT{Val: int(splits[i])}
-    }
-    
-    if i+1 < len(splits) && splits[i+1] != "null" {
-      tmp.Left = &BT{Val: int(splits[i+1])}
-    }
-    
-    if i+2 < len(splits) && splits[i+2] != "null" {
-      tmp.Right = &BT{Val: int(splits[i+2])}
-    }
-    
-  }
 }
 ----
 
