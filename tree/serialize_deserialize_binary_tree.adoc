@@ -314,9 +314,8 @@ func main() {
   fmt.Printf("%s\n", Serialize(b))
 }
 
-
-
 ==== Source Code - Attempt 4 - Attempt 3 is still BUGGY
+
 [source, go]
 ----
 // Try Breadth First Search Technique
@@ -342,9 +341,9 @@ func (b *BT) AddLeft(val int) {
 }
 
 
-// ---
+// ------
 // Helps in building unbalanced binary tree
-// ---
+// ------
 func (b *BT) AddRight(val int) {
   if b.Right == nil {
     b.Right = &BT{Val: val}
@@ -357,13 +356,13 @@ type Queue struct {
   Items []*BT
 }
 
-// --
+// ------
 // This is WRONG
 //
 // func (q Queue) Enq(b *BT) {
 // 
 // NOTE: Receiver must be a Pointer when logic mutates
-// --
+// -----
 func (q *Queue) Enq(b *BT) {
   q.Items = append(q.Items, b)
 }
@@ -376,9 +375,9 @@ func (q *Queue) Deq() *BT {
   
   r := q.Items[0]
   if len(q.Items) == 1 {
-    // ----
+    // -----
     // Empty the Q
-    // ----
+    // -----
     q.Items = []*BT{}
     return r
   }
@@ -467,3 +466,4 @@ func main() {
   // 1,1,2,10,null,null,3,null,4,null,5 !! CORRECT !!
   fmt.Printf("%s\n", Serialize(b))
 }
+----
