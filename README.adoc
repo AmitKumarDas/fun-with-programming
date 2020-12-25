@@ -59,6 +59,28 @@ frame the logic fast.
 
 [source, go]
 ----
+// MAX INT = HALF OF MAX UNIT
+// MIN INT = -(HALF OF MAX UNIT) - 1
+
+var MinUint uint = 0
+
+// all ones
+var MaxUint uint = ^MinUint
+
+// divide by 2 i.e. arithmetic right shift
+// all ones except high bit
+var MaxInt int = int(MaxUint >> 1)
+
+// either ^MaxInt or -MaxInt-1
+// all zeros except high bit
+var MinInt int = ^MaxInt
+
+// TIP - TRY TO EAT BUFFET. YOU CAN'T. YOU END UP DIVIDING BY HALF
+// TIP - BUFFET EATS YOU. HE CAN. HIS MONEY GETS DOUBLED I.E. 2X
+----
+
+[source, go]
+----
 // ARRAY MUTATION
 
 size := len(arr)    // SOME ARRAY
