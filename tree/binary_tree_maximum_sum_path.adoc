@@ -233,9 +233,11 @@ func maxSumPath(root *BT, max int) (pathMax, newMax int) {
 
   if root == nil {
     // ---
-    // DONT RETURN 0 SINCE NEGATIVES ARE VALID
+    // RETURN 0 EVEN IF NEGATIVES ARE VALID
+    //
+    // 1ST RESP ARG ~ VALID PATH SUM WHICH MUST BE 0 HERE
     // ---
-    return max, max 
+    return 0, max 
   }
 
   rootVal = root.Val
