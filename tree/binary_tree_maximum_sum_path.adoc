@@ -1,0 +1,114 @@
+=== Binary Tree Maximum Sum Path
+
+==== Understand
+[source, bash]
+----
+- A path can be from any node to any node
+- Need to find the maximum sum for a path
+  - Path may be long or small. Does not matter
+- Node can have positive as well as negative values
+----
+
+==== How
+[source, bash]
+----
+- initialize maxSum = root.Val
+- in-order traversal
+- maxSum = maximum(maxSum, left + right + root, left + root, right + root, root)
+- return max(left+root, right+root, root)
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+type BT struct {
+  Val   int
+  Left  *BT
+  Right *BT
+}
+
+// ---
+// Add that keeps the BT balanced
+// ---
+func (b *BT) Add(val int) {
+  if b.Left == nil {
+    b.Left = &BT{Val: val}
+    return
+  }
+  
+  if b.Right == nil {
+    b.Right = &BT{Val: val}
+    return
+  }
+  
+  if b.Left.Left == nil || b.Left.Right == nil {
+    b.Left.Add(val)
+    return
+  }
+  if b.Right.Left == nil || b.Right.Right == nil {
+    b.Right.Add(val)
+    return
+  }
+  
+  b.Left.Add(val)
+}
+
+func MaxSumPath(root *BT) int {
+  if root == nil {
+    return 0
+  }
+  
+  _, max := maxSumPath(root, root.Val)
+  return max
+}
+
+func maxSumPath(root *BT, max int) (pathMax, newMax int) {
+  var rootVal, leftCurMax, rightCurMax, leftMax, rightMax int
+  if root = nil {
+    return 0, max  
+  }
+
+  rootVal = root.Val
+  if root.Left != nil {
+    leftCurMax,leftMax = maxSumPath(root.Left, max)
+  }
+  if root.Right != nil {
+    rightCurMax, rightMax = maxSumPath(root.Right, max)
+  }
+  
+  // ----
+  // Either 'root' or 'root + left' or 'root + right'
+  //
+  // It cannot be 'root + left + right' as it cannot
+  // be added further
+  //
+  // Tree's max should not be included as this needs to
+  // be based on path
+  // ----
+  pathMax = maximum(
+    rootVal, 
+    rootVal+leftCurMax, 
+    rootVal+rightCurMax,
+  )
+  
+  // ---
+  // Max variable for the entire tree
+  // ---
+  newMax = maximum(
+    max,                            // existing
+    pathMax,                        // open path max
+    rootVal+rightCurMax+leftCurMax, // closed path max
+  )
+  
+  return pathMax, newMax
+}
+
+func maximum(candidates ...int) (max int) {
+  for _, i := range candidates {
+    if max < i {
+      max = i
+    }
+  }
+  return
+}
+----
