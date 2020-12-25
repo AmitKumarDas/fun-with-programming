@@ -182,3 +182,133 @@ func main() {
   fmt.Printf("%d\n", MaxSumPath(b))
 }
 ----
+
+
+==== Source Code - Attempt 2 - Attempt 1 Failed With Negatives
+[source, go]
+----
+type BT struct {
+  Val   int
+  Left  *BT
+  Right *BT
+}
+
+// ---
+// Add that keeps the BT balanced
+// ---
+func (b *BT) Add(val int) {
+  if b.Left == nil {
+    b.Left = &BT{Val: val}
+    return
+  }
+  
+  if b.Right == nil {
+    b.Right = &BT{Val: val}
+    return
+  }
+  
+  if b.Left.Left == nil || b.Left.Right == nil {
+    b.Left.Add(val)
+    return
+  }
+  if b.Right.Left == nil || b.Right.Right == nil {
+    b.Right.Add(val)
+    return
+  }
+  
+  b.Left.Add(val)
+}
+
+func MaxSumPath(root *BT) int {
+  if root == nil {
+    return 0
+  }
+  
+  got, max := maxSumPath(root, root.Val)
+  return maximum(got, max)
+}
+
+func maxSumPath(root *BT, max int) (pathMax, newMax int) {
+  var rootVal, leftPathMax, rightPathMax, leftMax, rightMax int
+
+  if root == nil {
+    // ---
+    // DONT RETURN 0 SINCE NEGATIVES ARE VALID
+    // ---
+    return max, max 
+  }
+
+  rootVal = root.Val
+  if root.Left != nil {
+    leftPathMax, leftMax = maxSumPath(root.Left, max)
+  }
+  if root.Right != nil {
+    rightPathMax, rightMax = maxSumPath(root.Right, max)
+  }
+  
+  // ----
+  // Either 'root' or 'root + left' or 'root + right'
+  //
+  // It cannot be 'root + left + right' as it cannot
+  // be added further
+  //
+  // Tree's max should not be included as this needs to
+  // be based on path
+  // ----
+  pathMax = maximum(
+    rootVal, 
+    rootVal+leftPathMax, 
+    rootVal+rightPathMax,
+  )
+  
+  // ---
+  // Max variable for the entire tree
+  // ---
+  newMax = maximum(
+    max,                              // existing
+    leftMax,                          // max from left tree
+    rightMax,                         // max from right tree
+    rootVal,                          // current eval - root
+    leftPathMax,                      // current eval - left
+    rightPathMax,                     // current eval - right
+    rootVal+leftPathMax,              // current eval - root & left
+    rootVal+rightPathMax,             // current eval - root & right
+    rootVal+leftPathMax+rightPathMax, // current eval - closed path max
+  )
+  
+  return pathMax, newMax
+}
+
+func maximum(candidates ...int) (max int) {
+  for _, i := range candidates {
+    if max < i {
+      max = i
+    }
+  }
+  return
+}
+----
+
+==== Test 3
+[source, go]
+----
+func main() {
+  b := &BT{Val: 50}
+  b.Add(1)
+  b.Add(20)
+  b.Add(30)
+  b.Add(-60)
+  b.Add(70)
+  b.Add(1)
+  b.Add(1)
+  b.Add(1)
+  b.Add(1)
+  b.Add(1)
+  b.Add(-100)
+  b.Add(200)
+  b.Add(300)
+  
+  // max = 200 + 70 + 20 + 1 + 300 = 591 !! Logic Not Correct !!
+  fmt.Printf("%d\n", MaxSumPath(b))
+}
+----
