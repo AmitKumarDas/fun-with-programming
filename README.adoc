@@ -6,6 +6,12 @@ I will try to put more common sense information that in turn lets the brain
 frame the logic fast.
 
 == Connect The Dots - Golang
+
+[source, go]
+----
+// anagrams seem a lot like code/decode
+----
+
 [source, go]
 ----
 // str[idx] is bytes
