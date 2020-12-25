@@ -108,7 +108,7 @@ func (i *BSTIter) push(b *BST) {
     // Store in DESC order
     // -------------------
     i.Stack = append(i.Stack, tmp)
-    tmp = tmp.Left
+    tmp = tmp.Left // JUST THE LEFT
   }
 }
 ----
