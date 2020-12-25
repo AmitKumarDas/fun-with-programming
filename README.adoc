@@ -145,6 +145,22 @@ func maximum(a, b int) int {
 }
 ----
 
+[source, go]
+----
+// MaxSumPath of BinaryTree is mad about max
+// Avoid initialising to Min Int etc
+
+func maximum(first int, others ...int) int {
+  var max = first
+  for _, i := range others {
+    if max < i {
+      max = i
+    }
+  }
+  return max
+}
+----
+
 == References
 ==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
