@@ -155,37 +155,12 @@ func main() {
   b.Add(200)
   b.Add(-300)
   
-  // max = 1 + 30 + 1 + 50 + 20 + 70 + 200 = 372 !! OK !!
+  // max = 200 + 1 + 30 + 1 + 300 = 372 !! OK !!
   fmt.Printf("%d\n", MaxSumPath(b))
 }
 ----
 
-==== Test 3
-[source, go]
-----
-func main() {
-  b := &BT{Val: 50}
-  b.Add(1)
-  b.Add(20)
-  b.Add(30)
-  b.Add(-60)
-  b.Add(70)
-  b.Add(1)
-  b.Add(1)
-  b.Add(1)
-  b.Add(1)
-  b.Add(1)
-  b.Add(-100)
-  b.Add(200)
-  b.Add(300)
-  
-  // max = 200 + 70 + 20 + 1 + 300 = 591 !! Logic Not Correct !!
-  fmt.Printf("%d\n", MaxSumPath(b))
-}
-----
-
-
-==== Source Code - Attempt 2 - Attempt 1 Failed With Negatives
+==== Source Code - Attempt 2 - IMPROVISATIONS
 [source, go]
 ----
 type BT struct {
@@ -195,7 +170,7 @@ type BT struct {
 }
 
 // ---
-// Add that keeps the BT balanced
+// Add that keeps the BT balanced till depth = 2
 // ---
 func (b *BT) Add(val int) {
   if b.Left == nil {
@@ -302,13 +277,14 @@ func maxSumPath(root *BT, max int) (pathMax, newMax int) {
   return pathMax, newMax
 }
 
-func maximum(candidates ...int) (max int) {
-  for _, i := range candidates {
+func maximum(first int, others ...int) int {
+  max := first
+  for _, i := range others {
     if max < i {
       max = i
     }
   }
-  return
+  return max
 }
 ----
 
@@ -331,7 +307,7 @@ func main() {
   b.Add(200)
   b.Add(300)
   
-  // max = 200 + 70 + 20 + 1 + 300 = 591 !! Logic Not Correct !!
+  // max = 200 + 1 + 30 + 1 + 300 = 532 !! OK !!
   fmt.Printf("%d\n", MaxSumPath(b))
 }
 ----
