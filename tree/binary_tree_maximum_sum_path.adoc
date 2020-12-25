@@ -200,6 +200,9 @@ func MaxSumPath(root *BT) int {
     return 0
   }
   
+  // ---
+  // START WITH ROOT.VAL AS MAX
+  // ---
   got, max := maxSumPath(root, root.Val)
   return maximum(got, max)
 }
@@ -208,24 +211,17 @@ func maxSumPath(root *BT, max int) (pathMax, newMax int) {
   var rootVal, leftPathMax, rightPathMax, leftMax, rightMax int
 
   // ---
-  // INIT TO BIG NEG 
-  //
-  // THIS IS IMP SINCE ALL MAY NOT BE TAKE PART IN LOGIC
-  // DUE TO NODE BEING NIL
+  // INIT TO LARGEST NEG INT IS NOT REQUIRED
   // ---
-  rootVal = -9999
-  leftPathMax = -9999
-  rightPathMax = -9999
-  leftMax = -9999
-  rightMax = -9999
 
   if root == nil {
     // ---
     // RETURN 0 EVEN IF NEGATIVES ARE VALID
     //
-    // 1ST RESP ARG ~ VALID PATH SUM WHICH MUST BE 0 HERE
+    // 1ST RESP ARG ~ VALID PATH SUM 
+    // HERE NODE ITSELF IS NIL HENCE 0 IS VALID
     // ---
-    return 0, max 
+    return 0, max
   }
   
   // ----
@@ -274,9 +270,17 @@ func maxSumPath(root *BT, max int) (pathMax, newMax int) {
     rootVal+leftPathMax+rightPathMax, // current eval - closed path max
   )
   
+  // ---
+  // DEBUG IF REQD ! ROOT IS PRINTED AT LAST !
+  // ---
+  fmt.Printf("root=%4d  pathmax=%4d  max=%4d\n", rootVal, pathMax, newMax)
   return pathMax, newMax
 }
 
+// ---
+// FIRST ARG HELPS THIS FUNCTION 
+// NOT TO INIT WITH MAX NEGATIVE INT
+// ---
 func maximum(first int, others ...int) int {
   max := first
   for _, i := range others {
