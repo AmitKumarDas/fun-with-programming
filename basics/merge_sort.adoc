@@ -139,6 +139,6 @@ func msort(given []int) []int {
     }
   }
 
-  merge(msort(left), msort(right))
+  return merge(msort(left), msort(right))
 }
 ----
