@@ -33,12 +33,12 @@ func msort(given []int) []int {
   if len(given) == 1 {
     return given
   }
-  
+
   mid := len(given)/2
   left := given[0:mid]
   right := given[mid:]          // NO NEED TO GIVE LEN(GIVEN)
-  
-  merge(msort(left), msort(right))
+
+  return merge(msort(left), msort(right))
 }
 
 func merge(left, right []int) []int {
@@ -115,7 +115,7 @@ func msort(given []int) []int {
   left := given[0:mid]
   right := given[mid:]
   
-  merge(msort(left), msort(right))
+  return merge(msort(left), msort(right))
 }
 
 // Vs.
