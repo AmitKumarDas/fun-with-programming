@@ -240,3 +240,6 @@ func maximum(first int, others ...int) int {
 ==== https://github.com/adnanaziz/EPIJudge[Elements of Programming Interviews Judge]
 ==== https://fodor.org/blog/go-heap/[Fodor Go Blog]
 ==== https://github.com/dorin131/go-data-structures[Dorin131's go data structures]
+
+== People
+==== https://github.com/trekhleb[trekhleb]
