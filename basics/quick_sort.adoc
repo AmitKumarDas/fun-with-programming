@@ -1,0 +1,13 @@
+=== Quick Sort Essentials
+
+[source, go]
+----
+// Quick Pivot
+// Quick Recursive
+
+// arr[:pivot]            // WRONG
+// arr[pivot+1:len(a)]    // WRONG
+
+// left := 0
+// right := len(arr)-1
+----
