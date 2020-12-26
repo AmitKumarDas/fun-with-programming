@@ -1,1 +1,34 @@
+=== Heap Sort
+
+==== Heap Datastructure
+[source, go]
+----
+// HEAP IS A BINARY TREE
+// HEAP IS A NEARLY COMPLETE BINARY TREE (i like this)
+
+// UNDERLYING STORE IS AN ARRAY
+
+// O(nlogn) runtime complexity
+// USED IN PRIORITY QUEUE AS WELL
+
+// MAX HEAP - ROOT IS MAX FOLLOWED BY SMALLER NODES
+// MIN HEAP - ROOT IS MIN FOLLOWED BY LARGERS NODES
+
+// IF PARENT IDX IS pIdx ~ HENCE IDX STARTS FROM 0
+// THEN LEFT IDX IS:      2*pIdx + 1
+// THEN RIGHT IDX IS:     2*pIdx + 2
+
+// IF CHILD IDX IS:       cIdx
+// THEN PARENT IDX IS:    (cIdx - 1)/2
+
+// HAS LEFT:              return getLIdx(pIdx) < len(h.Items)
+// HAS RIGHT:             return getRIdx(pIdx) < len(h.Items)
+// HAS PARENT:            return getPIdx(cIdx) >= 0
+//
+// ABOVE WORKS SINCE CALC IS BASED ON ROOTIDX=0
+
+// SWAP TWO NODES         h.Items[idx1],h.Items[idx2] = h.Items[idx2], h.Items[idx1]
+----
+
+
 
