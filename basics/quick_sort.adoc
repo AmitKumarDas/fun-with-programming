@@ -174,9 +174,7 @@ func qsort(arr []int, start, end int) {
   // ---
   for i := start; i < end; i++ {
     if arr[i] < pivot {
-      tmp := arr[i]
-      arr[i] = arr[splitIdx]
-      arr[splitIdx] = arr[i]
+      arr[i], arr[splitIdx] = arr[splitIdx], arr[i]
       splitIdx++
     }
   }
@@ -207,5 +205,32 @@ func main() {
   QuicksortMutate(arr3)
   // [-4 -2 0 1 1 1 1 3 3 6 23 32 34 45] // CORRECT
   fmt.Printf("%v\n", arr3)
+}
+----
+
+==== Source Code - Terse
+[source, go]
+----
+// Since we are using end element as the pivot
+// We dont need to define pivot variable
+
+func qsort(arr []int, start, end int) {
+  if end - start < 1 {
+    return
+  }
+  
+  var splitIdx = start
+  
+  for i := start; i < end; i++ {
+    if arr[i] < arr[end] {
+      arr[i], arr[splitIdx] = arr[splitIdx], arr[i]
+      splitIdx++
+    }
+  }
+
+  arr[end], arr[splitIdx] = arr[splitIdx], arr[end] // PIVOT MOVES FROM END TO SPLITIDX
+
+  qsort(arr, start, splitIdx-1) // REDUCE & RECURSE LEFT ELEMENTS // EXCLUDE PIVOT
+  qsort(arr, splitIdx+1, end)   // REDUCE & RECURSE RIGHT ELEMENTS // EXCLUDE PIVOT
 }
 ----
