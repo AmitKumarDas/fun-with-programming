@@ -15,7 +15,7 @@ frame the logic fast.
 [source, go]
 ----
 // ---
-// AVOID ELSE EXTRA 0 ELEMENTS
+// EXTRA ELEMENTS CREEP IN; AVOID
 // ---
 var sarr = make([]int, len(arr))
 for _, i := range arr {
@@ -23,14 +23,15 @@ for _, i := range arr {
 }
 
 // ---
-// AVOID ELSE EXTRA 0 ELEMENTS
+// EXTRA ELEMENTS CREEP IN; AVOID
 // ---
 var sarr = make([]int, len(arr))
 sarr = append(sarr, arr...)
 
 // ---
-// GOOD TO USE - SIMPLE / OLD COPY
+// SIMPLE OLD STYLE COPY; GOOD
 // ---
+var sarr = make([]int, len(arr))
 for idx, elem := range arr {
   sarr[idx] = elem
 }
@@ -38,6 +39,7 @@ for idx, elem := range arr {
 
 [source, go]
 ----
+// Terse; Is It Safe?
 func msort(given []int) []int {
   if len(given) == 1 {
     return given
@@ -74,6 +76,7 @@ func msort(given []int) []int {
   return merge(msort(left), msort(right))
 }
 ----
+
 [source, go]
 ----
 str[idx]        // bytes
