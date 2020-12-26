@@ -14,14 +14,38 @@ frame the logic fast.
 
 [source, go]
 ----
-// str[idx] is bytes
-// rune(str[idx]) is rune
+// ---
+// AVOID ELSE EXTRA 0 ELEMENTS
+// ---
+var sarr = make([]int, len(arr))
+for _, i := range arr {
+  sarr = append(sarr, i)
+}
+
+// ---
+// AVOID ELSE EXTRA 0 ELEMENTS
+// ---
+var sarr = make([]int, len(arr))
+sarr = append(sarr, arr...)
+
+// ---
+// GOOD TO USE - SIMPLE / OLD COPY
+// ---
+for idx, elem := range arr {
+  sarr[idx] = elem
+}
 ----
 
 [source, go]
 ----
-// str[left:right+1] ; SUBSTRING; LEFT & RIGHT INCLUDED
-// str[left:right] ; BASED ON SCENARIO; RIGHT EXCLUDED
+str[idx]        // bytes
+rune(str[idx])  // rune
+----
+
+[source, go]
+----
+str[left:right+1] // SUBSTRING; LEFT & RIGHT INCLUDED
+str[left:right]   // RIGHT EXCLUDED
 ----
 
 [source, go]
@@ -47,19 +71,19 @@ frame the logic fast.
 [source, go]
 ----
 // rune is an alias for int32 
-// TIP - RUINED INTERNATIONAL MAN
+fmt.Println("RUINED INTERNATIONAL MAN")
 ----
 
 [source, go]
 ----
 // byte is an alias for unit8
-// TIP - BYE TO UNIFY
+fmt.Println("BYE TO UNIFY")
 ----
 
 [source, go]
 ----
 // unit ; all positive numbers including 0
-// uint ranges from 0 to 4294967295  
+// uint ranges from 0 to 4294967295
 // int ranges from –2147483648 to 2147483647 
 ----
 
@@ -69,20 +93,18 @@ frame the logic fast.
 // MIN INT = -(HALF OF MAX UNIT) - 1
 
 var MinUint uint = 0
+var MaxUint uint = ^MinUint         // all ones
 
-// all ones
-var MaxUint uint = ^MinUint
+// Divide by 2 
+// i.e. arithmetic right shift
+var MaxInt int = int(MaxUint >> 1)  // all ones except high bit
 
-// divide by 2 i.e. arithmetic right shift
-// all ones except high bit
-var MaxInt int = int(MaxUint >> 1)
+// Either ^MaxInt 
+// OR -MaxInt-1
+var MinInt int = ^MaxInt            // all zeros except high bit
 
-// either ^MaxInt or -MaxInt-1
-// all zeros except high bit
-var MinInt int = ^MaxInt
-
-// TIP - TRY TO EAT BUFFET. YOU CAN'T. YOU END UP DIVIDING BY HALF
-// TIP - BUFFET EATS YOU. HE CAN. HIS MONEY GETS DOUBLED I.E. 2X
+fmt.Println("TRY TO EAT BUFFET. YOU CAN'T. YOU END UP DIVIDING BY HALF")
+fmt.Println("BUFFET EATS YOU. HE CAN. HIS MONEY GETS DOUBLED I.E. 2X")
 ----
 
 [source, go]
