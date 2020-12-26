@@ -4,10 +4,13 @@
 ----
 // Quick Pivot
 // Quick Recursive
-
-// arr[:pivot]            // WRONG
-// arr[pivot+1:len(a)]    // WRONG
-
-// left := 0
-// right := len(arr)-1
 ----
+
+[source, go]
+----
+// DONTS
+
+// arr[:pivot]
+// arr[pivot+1:len(a)]
+----
+
