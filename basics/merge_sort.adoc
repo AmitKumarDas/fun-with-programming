@@ -1,1 +1,105 @@
 === Merge Sort Essentials
+
+[source, go]
+----
+// Divide & Merge
+// Like qsort msort is recursive
+// Like qsort msort has O(nlogn) runtime avg
+----
+
+==== Source Code - PseudoCode
+[source, go]
+----
+func merge(left, right []int) []int {}
+func msort(given []int) []int{}         // RECURSIVE
+----
+
+==== Source Code - Attempt 1
+[source, go]
+----
+func Msort(given []int) []int {
+  if len(given) <= 1 {
+    return given
+  }
+  
+  var narr = make([]int, len(given))
+  for idx, item := range given {
+    narr[idx] = item
+  }
+  return msort(narr)
+}
+
+func msort(given []int) []int {
+  if len(given) == 1 {
+    return given
+  }
+  
+  mid := len(given)/2
+  left := given[0:mid]
+  right := given[mid:len(given)]
+  
+  merge(msort(left), msort(right))
+}
+
+func merge(left, right []int) []int {
+  var res = make([]int, len(left)+len(right))
+  var low int
+  
+  for len(left)>0 && len(right)>0 {
+    if left[0] < right[0] {
+      res[low] = left[0]
+      left = left[1:len(left)]
+    } else {
+      res[low] = right[0]
+      right = right[1:len(right)]
+    }
+    low++
+  }
+  
+  for len(left) > 0 {
+    res[low] = left[0]
+    left = left[1:len(left)]
+    low++
+  }
+  for len(right) > 0 {
+    res[low] = right[0]
+    right = right[1:len(right)]
+    low++
+  }
+  
+  return res
+}
+----
+
+
+==== Source Code - Attempt 2 - Alternative
+[source, go]
+----
+func merge(left, right []int) []int {
+  var res = make([]int, len(left)+len(right))
+  var low int
+  
+  for len(left)>0 && len(right)>0 {
+    if left[0] < right[0] {
+      res[low] = left[0]
+      left = left[1:]                 // NO NEED FOR RIGHT INDEX
+    } else {
+      res[low] = right[0]
+      right = right[1:]               // NO NEED FOR RIGHT INDEX
+    }
+    low++                             // ++ CANNOT BE USED AS ARR IDX 
+  }
+  
+  for i:=0; i<len(left); i++ {
+    res[low] = left[i]
+    low++
+  }
+  for j:=0; j<len(right); j++ {
+    res[low] = right[j]
+    low++
+  }
+  
+  return res
+}
+----
+
