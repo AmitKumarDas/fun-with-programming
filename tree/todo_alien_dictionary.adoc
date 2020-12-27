@@ -31,3 +31,18 @@ find order of characters in the language
 - These chars might appear in some other words in positions other than first
 - So position of chars might be completely random in a word
 ----
+
+==== How - Attempt 2
+[source, bash]
+----
+- loop the dictionary
+  - build graph of nodes & adjacents from first char
+- loop through all words with 2 pointers - slow & fast
+  - for every two words if their initial chars match
+    - build graph of nodes & adjacents from the mismatching chars
+  - increment slow pointer & reset fast pointer to slow pointer + 1 if chars mismatch
+- run a DFS on graph
+  - mark a node as visited when all its adjacents are visited
+  - push visited node to stack
+- return stack
+----
