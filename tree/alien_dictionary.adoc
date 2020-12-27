@@ -10,4 +10,18 @@ find order of characters in the language
 ==== How?
 [source, bash]
 ----
+- Given an array of words/strings
+- var order []byte
+- var seen byte
+- for idx, word := range words
+  - c = word[0]
+  - if idx == 0 seen = c 
+    - order = append(order, c)
+    - continue
+  - if c == seen 
+    - continue
+  - else
+    - seen = c
+    - order = append(order, c)
+- return order
 ----
