@@ -35,6 +35,9 @@ find order of characters in the language
 ==== How - Attempt 2
 [source, bash]
 ----
+Input:  words[] = {"baa", "abcd", "abca", "cab", "cad"}
+Output: Order of characters is 'b', 'd', 'a', 'c'
+
 - loop the dictionary
   - build graph of nodes & adjacents from first char
 - loop through all words with 2 pointers - slow & fast
@@ -45,4 +48,9 @@ find order of characters in the language
   - mark a node as visited when all its adjacents are visited
   - push visited node to stack
 - return stack
+
+- So we need to build Graph
+- We need to do a DFS
+- We need to mark a node as visited when all adjacents are visited
+- Do something with visited
 ----
