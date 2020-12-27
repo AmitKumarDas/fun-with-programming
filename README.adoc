@@ -9,7 +9,15 @@ frame the logic fast.
 
 [source, go]
 ----
-// anagrams seem a lot like code/decode
+fmt.Println("Anagrams relevant to encode & decode")
+fmt.Println("Ana enD")
+----
+
+[source, go]
+----
+fmt.Println("Dependency calculations use Topological Sort")
+fmt.Println("Dictionary")
+fmt.Println("Compilation of dependent programs")
 ----
 
 [source, go]
