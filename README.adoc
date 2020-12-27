@@ -18,6 +18,10 @@ fmt.Println("Ana enD")
 fmt.Println("Dependency calculations use Topological Sort")
 fmt.Println("Dictionary")
 fmt.Println("Compilation of dependent programs")
+
+fmt.Println("A depends on B & B depends on C")
+fmt.Println("Then in Topological Sort: [C, B, A]")
+fmt.Println("Ulta Topi")
 ----
 
 [source, go]
