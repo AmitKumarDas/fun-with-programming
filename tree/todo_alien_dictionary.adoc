@@ -24,4 +24,10 @@ find order of characters in the language
     - seen = c
     - order = append(order, c)
 - return order
+
+- Above is WRONG
+- BAD Assumption
+- It might happen that there are no words beginning with certain chars
+- These chars might appear in some other words in positions other than first
+- So position of chars might be completely random in a word
 ----
