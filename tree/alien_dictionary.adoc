@@ -1,0 +1,13 @@
+=== Alien Dictionary
+
+==== What?
+[source, bash]
+----
+Given a sorted dictionary (array of words) of an alien language, 
+find order of characters in the language
+----
+
+==== How?
+[source, bash]
+----
+----
