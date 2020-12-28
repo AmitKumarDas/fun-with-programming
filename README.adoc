@@ -27,6 +27,12 @@ fmt.Print("If Node is Blue Then Its Neighbours in Red & Neighbours' Neighbours i
 
 [source, go]
 ----
+fmt.Print("BiPartite Graph: All Edges Joining Vertices belonging to 2 Independent Sets")
+fmt.Print("If BPG[u][v] == 1 then u & v must be in different sets")
+----
+
+[source, go]
+----
 fmt.Print("BiPartite Color Store")
 fmt.Print("colors []int - colors[u] = -1 or 0 or 1")
 fmt.Print("-1=no_color, 0=red, 1=blue")
