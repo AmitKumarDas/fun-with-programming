@@ -22,12 +22,14 @@ fmt.Print("hasEdge:   graph[u][v] == 1")
 fmt.Print("If BiPartite Graph")
 fmt.Print("Then Red Blue Color Scheme @ Each Level")
 fmt.Print("Visualize Graph as a Tree")
-fmt.Print("If Node is Blue Then Its Neighbours in Red & Neighbours' Neighbours in Blue")
+fmt.Print("If Node is Blue Then Its Neighbours in Red")
+fmt.Print("If Node is Blue Then Its Neighbours' Neighbours in Blue")
 ----
 
 [source, go]
 ----
-fmt.Print("BiPartite Graph: All Edges Joining Vertices belonging to 2 Independent Sets")
+fmt.Print("BiPartite Graph")
+fmt.Print("All Edges Joining Vertices belonging to 2 Independent Sets")
 fmt.Print("If BPG[u][v] == 1 then u & v must be in different sets")
 ----
 
