@@ -24,3 +24,9 @@ that is, sums up to n*k where n is also an integer
     - i=low
     - sum = 0
 ----
+
+==== How - Attempt 2
+[source, bash]
+----
+
+----
