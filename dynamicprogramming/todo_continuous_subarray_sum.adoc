@@ -9,3 +9,18 @@ Check if the array has a continuous subarray of size at least 2
 that sums up to the multiple of k, 
 that is, sums up to n*k where n is also an integer
 ----
+
+==== How
+[source, bash]
+----
+- var i, low, sum = 0
+- var high = len(arr)
+- for low < high
+  - sum += arr[i]
+  - if sum % k == 0 return true
+  - i++
+  - if i == high
+    - low++
+    - i=low
+    - sum = 0
+----
