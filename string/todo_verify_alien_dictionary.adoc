@@ -84,3 +84,14 @@ func VerifyLangSort(words []string, order string) bool {
   return true
 }
 ----
+
+==== Improve
+[source, bash]
+----
+- use old 'for loop' style
+  - reduce / avoid use of break & continue
+- []string is a 2D array
+  - avoid use of prefix, suffix
+  - just access particular char & compare
+- convert ordered char to be accessed easily
+----
