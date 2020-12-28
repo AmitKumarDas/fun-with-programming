@@ -15,6 +15,14 @@ fmt.Print("Ana enD")
 
 [source, go]
 ----
+fmt.Print("Graph as 2D array vs. Adjacency List")
+fmt.Print("Graph as 2D Array gives O(v^2) in BFS & other calculations")
+fmt.Print("Graph as Adjacency List gives O(v+e) in BFS")
+fmt.Print("Adjacency List == Sparse Graph == Space Efficient")
+----
+
+[source, go]
+----
 fmt.Print("When Array of strings Then 2D Array Already")
 ----
 
