@@ -13,6 +13,16 @@ fmt.Print("Ana enD")
 
 [source, go]
 ----
+fmt.Print("Sum of at-least 2 numbers is k or n*k")
+fmt.Print("Sum of at-least 2 numbers % k == 0")
+fmt.Print("(a + b)%k == 0 if (a%k + b)%k == 0")
+fmt.Print("If Above Then (c + a + b)%k == c%k Since (a + b)%k == 0")
+fmt.Print("When Programming Use map[int]int{0: -1} & Condition")
+fmt.Print("Map's Key = 'Current Sum' & Value = 'Idx of Number In Array'")
+----
+
+[source, go]
+----
 fmt.Print("2D Graph - graph [][]int")
 fmt.Print("hasEdge:   graph[u][v] == 1")
 ----
