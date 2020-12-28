@@ -253,6 +253,10 @@ type BSTIter struct {
   Stack []*BST
 }
 
+// ---
+// push is the teaser function that
+// helps you build a BST with O(h) space
+// ---
 func (i *BSTIter) push(b *BST) {
   tmp := b 
   for tmp != nil {
