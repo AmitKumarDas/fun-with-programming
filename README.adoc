@@ -274,8 +274,7 @@ func maximum(first int, others ...int) int {
 }
 ----
 
-== References
-==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
+== Algorithm & DataStructure References
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
 ==== https://github.com/haoel/leetcode[Haoel's LeetCode]
 ==== https://github.com/de-cryptor/Must-Do-Coding-Questions[Must Do Coding Questions]
@@ -284,7 +283,16 @@ func maximum(first int, others ...int) int {
 ==== https://github.com/adnanaziz/EPIJudge[Elements of Programming Interviews Judge]
 ==== https://fodor.org/blog/go-heap/[Fodor Go Blog]
 ==== https://github.com/dorin131/go-data-structures[Dorin131's Go Data Structures]
+
+== System Design References
+==== https://hackernoon.com/how-not-to-design-netflix-in-your-45-minute-system-design-interview-64953391a054[Hackernoon]
+==== https://github.com/donnemartin/system-design-primer[Donnemartin's System Design Primer]
 ==== https://github.com/checkcheckzz/system-design-interview[Checkcheckzz's System Design Interview]
+==== https://www.hiredintech.com/system-design[hiredintech]
+==== https://www.interviewbit.com/courses/system-design[interviewbit]
+
+== References
+==== https://github.com/bbatsov/clojure-style-guide[clojure style guide] has inspired this styling
 
 == People
 ==== https://github.com/trekhleb[trekhleb]
