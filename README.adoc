@@ -9,8 +9,32 @@ frame the logic fast.
 
 [source, go]
 ----
-fmt.Println("Anagrams relevant to encode & decode")
-fmt.Println("Ana enD")
+fmt.Print("Anagrams relevant to encode & decode")
+fmt.Print("Ana enD")
+----
+
+[source, go]
+----
+fmt.Print("When Array of strings Then 2D Array Already")
+----
+
+[source, go]
+----
+fmt.Print("When Alien Dictionary And Order of Chars is Given")
+
+func OrderedAccess(order string) []int {
+  var res = make([]int, 26)   // assume 26 is the max order
+  for i, c := range order {
+    res[c] = i                // notice the reverse store
+  }
+  return res
+}
+----
+
+[source, go]
+----
+fmt.Print("When 'for' & use of '++' & lots of 'break' or 'continue'")
+fmt.Print("Then better use 'for i:=0; i < size; i++' loop")
 ----
 
 [source, go]
