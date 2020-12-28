@@ -1,5 +1,22 @@
 === System Design
-==== Breaking into Components
+==== Refer
+- https://github.com/donnemartin/system-design-primer#index-of-system-design-topics[index]
+
+[source, bash]
+----
+- Vertical Scaling:     Add Resources to Server Rack
+- Vertical Scaling:     Add Cluster
+- Vertical Scaling:     Add Memory / Storage to Server
+- Vertical Scaling:     Easy & Cheaper than Horizontal Scaling
+----
+
+==== Main Parts
+- Questions, Constraints, Assumptions
+- Sketch Main Components & Connections
+- Design Core Components
+- Scale The Design
+
+=== Breaking into Components
 - Storage
 - Compute
 - FrontEnd
@@ -8,6 +25,8 @@
 - Queueing
 - Networking
 - LoadBalancing
+- etc.
 
 === References
+==== https://github.com/donnemartin/system-design-primer[System Design Primer]
 ==== https://hackernoon.com/how-not-to-design-netflix-in-your-45-minute-system-design-interview-64953391a054[hackernoon]
