@@ -1,9 +1,7 @@
 = Fun With Programming
 
-== Introduction
-In this journey, I practice programming and keep my brain sharp.
-I will try to put more common sense information that in turn lets the brain
-frame the logic fast.
+== ABC - Always Be Coding
+- Practice programming and keep your brain sharp
 
 == Connect The Dots - Golang
 
@@ -11,6 +9,27 @@ frame the logic fast.
 ----
 fmt.Print("Anagrams relevant to encode & decode")
 fmt.Print("Ana enD")
+----
+
+[source, go]
+----
+fmt.Print("2D Graph - graph [][]int")
+fmt.Print("hasEdge:   graph[u][v] == 1")
+----
+
+[source, go]
+----
+fmt.Print("If BiPartite Graph")
+fmt.Print("Then Red Blue Color Scheme @ Each Level")
+fmt.Print("Visualize Graph as a Tree")
+fmt.Print("If Node is Blue Then Its Neighbours in Red & Neighbours' Neighbours in Blue")
+----
+
+[source, go]
+----
+fmt.Print("BiPartite Color Store")
+fmt.Print("colors []int - colors[u] = -1 or 0 or 1")
+fmt.Print("-1=no_color, 0=red, 1=blue")
 ----
 
 [source, go]
@@ -41,7 +60,7 @@ func OrderedAccess(order string) []int {
 
 [source, go]
 ----
-fmt.Print("When 'for' & use of '++' & lots of 'break' or 'continue'")
+fmt.Print("When 'for loop' & use of '++' & lots of 'break' or 'continue'")
 fmt.Print("Then better use 'for i:=0; i < size; i++' loop")
 ----
 
