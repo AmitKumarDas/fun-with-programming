@@ -43,6 +43,9 @@
     - toggle color
 - return true
 
+// runtime complexity same as BFS i.e o(v^2)
+// O(v^2) runtime where v = no of vertices
+
 // ---------
 // IMPROVISATIONS
 // ---------
@@ -55,4 +58,6 @@
 - -1 is no color
 - 0 is color
 - 1 is alternate color
+
+- if graph is represented as adjacency list then runtime complexity is o(v+e)
 ----
