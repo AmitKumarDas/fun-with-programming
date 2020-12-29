@@ -5,6 +5,54 @@
 
 [source, go]
 ----
+// Given:             [1, 3, 5]
+// Calc:              No. of ways to form N from given items
+// Assumption:        Repetitions Allowed
+// Assumption:        Every Order is Unique
+
+fmt.Print("           Derive the Formula First Then Logic")
+fmt.Print("           Should Formula Use 1, 3 & 5")
+fmt.Print("           Wrong Way of Thinking")
+
+fmt.Print("How many ways to get:")
+fmt.Print("                     N=1")
+fmt.Print("                     N=2")
+fmt.Print("                     N=3")
+
+fmt.Print("No Need To Find All Answers")
+fmt.Print("Just Ways To Find Smallest States")
+fmt.Print("Use Known Ways as Conditions")
+
+fmt.Print("How Many Ways to Get N=4")
+fmt.Print("                     Add 3 to Ways_to_Get(1)")
+fmt.Print("                     Add 1 to Ways_to_Get(3)")
+fmt.Print("                     Add 5 to Ways_to_Get(0)")
+
+fmt.Print("                     Add X where X is an Arr Item")
+fmt.Print("                     Ways(Y) where Y is SMALL & CAN BE CALC easily")
+
+fmt.Print("TIP:                 X = Each Item = Treated Exclusively")
+fmt.Print("TIP:                 Y = Target / Final State = SMALL & KNOWN")
+
+fmt.Print(Formula:              f(4) = f(1) + f(3) + f(0)")
+fmt.Print(                      i.e. f(n) = f(n-3) + f(n-1)")
+
+fmt.Print("How Many Ways to Get N=6")
+fmt.Print("                     Add 3 to Ways_to_Get(3)")
+fmt.Print("                     Add 1 to Ways_to_Get(5)")
+fmt.Print("                     Add 5 to Ways_to_Get(1)")
+
+fmt.Print("Formula:             f(6) = f(3) + f(5) + f(1)")
+fmt.Print("                     i.e. f(n) = f(n-3) + f(n-1) + f(n-5)")
+
+fmt.Print("Conditions:")
+fmt.Print("1/                   if n < 1 return 0")
+fmt.Print("2/                   if n == 1 return 1")
+fmt.Print("Correct Formula:     f(n) = f(n-3) + f(n-1) + f(n-5)")
+----
+
+[source, go]
+----
 fmt.Print("Shortest Path:         May Have Optimal Sub-Structure Property")
 fmt.Print("                       i.e. a Combination of Shortest Paths")
 
