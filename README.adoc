@@ -30,6 +30,9 @@ fmt.Print("           Adding Condition before Invoking Might Be Wrong")
 fmt.Print("Traverse Both Strings Together")
 fmt.Print("Either From Left to Right or Vice-Versa")
 
+// --
+// O(3^N) runtime
+// --
 func FindMinOps(str1, str2 string) int {
   if len(str1) == 0 {
     return len(str2)
