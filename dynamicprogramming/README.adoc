@@ -64,7 +64,7 @@ func MinOps(str1, str2 string) {
 ----
 fmt.Print("Memoization & BottomsUp & Space Optimization")
 
-fmt.Print("                   Store Past Results Only 
+fmt.Print("                   Store Past Results Only")
 fmt.Print("                   memo[2][m+1]")
 fmt.Print("                   memo[i%2][j] or memo[(i-1)%2][j] etc.")
 
