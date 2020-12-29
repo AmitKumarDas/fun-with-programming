@@ -4,6 +4,155 @@
 - Practice programming and keep your brain sharp
 
 == Connect The Dots - Golang
+[source, go]
+----
+fmt.Print("Heap to Array:              Level Order Traversal")
+fmt.Print("Heap to Array:              Zig Zag")
+
+fmt.Print("Del Min from Min Heap:      Remove & Heapify from Root)
+fmt.Print("Delete from Min Heap:       Replace the Val with MAX_MIN then DelMin)
+----
+
+[source, go]
+----
+fmt.Print("Heapify:                    A recursive approach)
+fmt.Print("Heap Conditions:            l, r <= size & parent >= 0)
+----
+
+[source, go]
+----
+fmt.Print("Heap Parent Idx:")
+fmt.Print("=                   (childIdx-1)/2")
+fmt.Print("=                   (len(arr)-2)/2")
+fmt.Print("=                   len(arr)/2 - 1")
+----
+
+[source, go]
+----
+fmt.Print("Heap QnA")
+
+fmt.Print("Q:     How to Ensure Lower SubTrees are Always Heapified?")
+fmt.Print("A1:    Start from Bottom Parent & Call Heapify (a recursive func)")
+fmt.Print("A2:    i.e. Loop In Reverse Order")
+fmt.Print("A3:    i.e. Loop from Bottom Parent To Root")
+
+fmt.Print("Q:    Why Leaf Nodes Dont Need to be Heapified?")
+fmt.Print("A:    Leaf Nodes Always Follow Heap property")
+----
+
+[source, go]
+----
+// ----
+// Given the root index heapify the tree recursively
+//
+// Assumption:        subtrees are already heapified
+// Aliter:            use func instead of method
+// Aliter:            use []int instead of *MinHeap
+// ----
+func (m *MinHeap) MinHeapify(parent int) {
+  // ---
+  // Deal with indexes 
+  // Since goal is to swap the array in-line
+  // ---
+  var l = m.Left(parent)
+  var r = m.Right(parent)
+  
+  var smallest = parent
+  
+  if l < m.Size && m.Items[l] < m.Items[smallest] {
+    smallest = l
+  }
+  if r < m.Size && m.Items[r] < m.Items[smallest] {
+    smallest = r
+  }
+  if smallest != parent {
+    // swap
+    m.Items[parent], m.Items[smallest] = m.Items[smallest], m.Items[parent]
+    
+    // ---
+    // given index val was swapped
+    //
+    // heapify till it finds its right position
+    // ---
+    m.MinHeapify(smallest)
+  }
+
+  // If No Change then No Recursion
+  // Since SubTrees are ASSUMED to be Heapified
+}
+----
+
+[source, go]
+----
+// --
+// Pure Function
+// --
+func MaxHeapify(arr []int, parent, size int) {
+  var l := 2*parent+1
+  var r := 2*parent+2
+  
+  var largest = parent
+  
+  // --
+  // Compare both Left & Right against Parent
+  // --
+  if l <= size && arr[l] > arr[largest] {
+    largest = l
+  }
+  if r <= size && arr[r] > arr[largest] {
+    largest = r
+  }
+  if largest != parent {
+    // --
+    // Array is the Heap
+    // No extra struct
+    // --
+    arr[parent], arr[largest] = arr[largest], arr[parent]
+    
+    // --
+    // Recurse due to new largest
+    // --
+    MaxHeapify(arr, largest, size)
+  }
+}
+----
+
+[source, go]
+----
+// --
+// Convert MinHeap to MaxHeap in O(N)
+//
+// Tip:     Loop from "Bottom Parent" to "Root" & MaxHeapify
+// Note:    Ignore the leaves
+// Note:    This seems O(NlogN) but its O(N). HOW?
+// --
+func MinHeapToMaxHeap(arr []int) {
+  // --
+  // pIdx =(cIdx-1)/2, OR
+  // pIdx =(size-2)/2
+  // --
+  size := len(arr)
+  for i:=(size-2)/2; i>=0; i-- {
+    MaxHeapify(arr, i, size)
+  }
+}
+----
+
+[source, go]
+----
+// --
+// O(NlogN) ~ O(N) - HOW?
+// --
+func BuildHeap(arr []int) {
+  if len(arr) == 0 {
+    return nil
+  }
+  size = len(arr)
+  for i:=(size-2)/2; i>=0; i-- {  // N
+    Heapify(arr, i)               // logN
+  }
+}
+----
 
 [source, go]
 ----
