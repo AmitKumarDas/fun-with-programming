@@ -3,7 +3,45 @@
 == ABC - Always Be Coding
 - Practice programming and keep your brain sharp
 
-== Connect The Dots - Golang
+[source, go]
+----
+fmt.Print("Shortest Path:         May Have Optimal Sub-Structure Property")
+fmt.Print("                       i.e. a Combination of Shortest Paths")
+
+fmt.Print("Longest Path:          DoNot Have Optimal Sub-Structure Property")
+----
+
+[source, go]
+----
+// Given:                 Level Order Traversal of a Binary Tree
+// Check:                 Is BinaryTree A MinHeap?
+func IsMinHeap(arr []int) bool {
+  size := len(arr)
+  for parent:=(size-2)/2; parent>=0; parent-- {
+    l := 2*parent + 1
+    r := l + 1
+    if l < size && arr[parent] > arr[l] {
+      return false
+    }
+    if r < size && arr[parent] > arr[r] {
+      return false
+    }
+  }
+  return true
+}
+----
+
+[source, go]
+----
+fmt.Print("Binary Heap:        Single Tree")
+fmt.Print("Binomial Heap:      Collection of Trees")
+fmt.Print("Fibonacci Heap:     Collection of Trees of Any Shape")
+
+fmt.Print("Fibonacci Heap Property:")
+fmt.Print("                    All trees' root are connected")
+fmt.Print("                    Roots are connected via Circular Doubly Linked List")
+----
+
 [source, go]
 ----
 fmt.Print("Heap to Array:              Level Order Traversal")
@@ -132,6 +170,7 @@ func MinHeapToMaxHeap(arr []int) {
   // pIdx =(size-2)/2
   // --
   size := len(arr)
+
   for i:=(size-2)/2; i>=0; i-- {
     MaxHeapify(arr, i, size)
   }
@@ -147,6 +186,7 @@ func BuildHeap(arr []int) {
   if len(arr) == 0 {
     return nil
   }
+
   size = len(arr)
   for i:=(size-2)/2; i>=0; i-- {  // N
     Heapify(arr, i)               // logN
@@ -467,6 +507,7 @@ func maximum(first int, others ...int) int {
 ----
 
 == Algorithm & DataStructure References
+==== https://www.geeksforgeeks.org[Geeks For Geeks]
 ==== https://github.com/aQuaYi/LeetCode-in-Go[AQuaYi's LeetCode In Go]
 ==== https://github.com/haoel/leetcode[Haoel's LeetCode]
 ==== https://github.com/de-cryptor/Must-Do-Coding-Questions[Must Do Coding Questions]
