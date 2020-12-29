@@ -32,6 +32,10 @@ fmt.Print("Either From Left to Right or Vice-Versa")
 
 // --
 // O(3^N) runtime
+//
+// Optimise further via:
+//                        1/ memoization
+//                        2/ for loop instead of recursion
 // --
 func FindMinOps(str1, str2 string) int {
   if len(str1) == 0 {
