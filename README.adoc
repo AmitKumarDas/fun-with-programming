@@ -5,6 +5,68 @@
 
 [source, go]
 ----
+fmt.Print("When DP & Recursion")
+fmt.Print("           Think What Base Value To Return")
+fmt.Print("           When to return 0 or 1 etc.")
+
+fmt.Print("When DP & Recusion & Min / Max")
+fmt.Print("           Max of all Combinations OR")
+fmt.Print("           Min of all Combinations")
+fmt.Print("           Double Check before Invoking A Combination")
+fmt.Print("           Adding Condition before Invoking Might Be Wrong")
+----
+
+[source, go]
+----
+// Given:             str1 & str2
+// Find:              Minimum No of Operations to Transform str1 to str2
+// Assumptions:       Insert, Delete & Replace are Valid Operations
+
+// Samples:           
+//                    amit & asmit
+//                    amit & samit
+//                    amit & amits
+
+fmt.Print("Traverse Both Strings Together")
+fmt.Print("Either From Left to Right or Vice-Versa")
+
+func FindMinOps(str1, str2 string) int {
+  if len(str1) == 0 {
+    return len(str2)
+  }
+  if len(str2) == 0 {
+    return len(str1)
+  }
+  
+  m := len(str1)
+  n := len(str2)
+  
+  if str1[m-1] == str2[n-1] {
+    return findMinOps(str1[:m-1], str2[:n-1])   // EQUALS -- i.e. 0 Add
+  }
+  
+  // ---
+  // BELOW IS WRONG !! DONT ADD CONDITIONS !!
+  // ---
+  //  var i, r, d int
+  //  if m < n {
+  //    i = findMinOps(str1[:m], str2[:n-1])        // INSERT
+  //  } else if m == n {
+  //    r = findMinOps(str1[:m-1], str2[:n-1])      // REPLACE
+  //  } else {
+  //    d = findMinOps(str1[:m-1], str2[:n])        // DELETE
+  //  }
+
+  return 1 + Minimum(                               // Add 1 Else Its 0 Always
+    findMinOps(str1[:m], str2[:n-1]),
+    findMinOps(str1[:m-1], str2[:n-1]),
+    findMinOps(str1[:m-1], str2[:n]),
+  )
+}
+----
+
+[source, go]
+----
 // Given:             [1, 3, 5]
 // Calc:              No. of ways to form N from given items
 // Assumption:        Repetitions Allowed
