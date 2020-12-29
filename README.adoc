@@ -9,14 +9,14 @@
 fmt.Print("Heap to Array:              Level Order Traversal")
 fmt.Print("Heap to Array:              Zig Zag")
 
-fmt.Print("Del Min from Min Heap:      Remove & Heapify from Root)
-fmt.Print("Delete from Min Heap:       Replace the Val with MAX_MIN then DelMin)
+fmt.Print("Del Min from Min Heap:      Remove & Heapify from Root")
+fmt.Print("Delete from Min Heap:       Replace the Val with MAX_MIN then DelMin")
 ----
 
 [source, go]
 ----
-fmt.Print("Heapify:                    A recursive approach)
-fmt.Print("Heap Conditions:            l, r <= size & parent >= 0)
+fmt.Print("Heapify:                    A recursive approach")
+fmt.Print("Heap Conditions:            l, r <= size & parent >= 0")
 ----
 
 [source, go]
