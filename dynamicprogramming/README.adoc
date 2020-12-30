@@ -7,11 +7,9 @@ fmt.Print("Memoization & BottomsUp")
 fmt.Print("                   All About Filling Memo[][]")
 fmt.Print("                   if else-if else blocks")
 
-fmt.Print("                   Init memo to [m+1][n+1]")
-fmt.Print("                   All memo[0][j]s are inited to j")
-fmt.Print("                   All memo[i][0]s are inited to i")
+fmt.Print("                   Init Cache to [m+1][n+1]")
 
-fmt.Print("                   Nested loops (0 to m) & (0 to n) inclusive")
+fmt.Print("                   Nested Loops (0 to m) & (0 to n) Inclusive")
 fmt.Print("                   Str access only at [i-1] & [j-1]")
 
 fmt.Print("                   cache[m][n] holds the answer")
@@ -36,6 +34,12 @@ func MinOps(str1, str2 string) {
     return m
   }
   
+  // ---
+  // M+1 & N+1 FOR CACHE            WHY?
+  //
+  // - 0TH ROW                      i.e. EMPTY STR1
+  // - 0TH COLUMN                   i.e. EMPTY STR2
+  // ---
   var cache [][]int = make([][]int, m+1, n+1)
   
   var ops int
@@ -46,12 +50,12 @@ func MinOps(str1, str2 string) {
       } else if j == 0 {
         cache[i][0] = i
       } else if str1[i-1] == str2[j-1] {
-        cache[i][j] = cache[i-1][j-1]
+        cache[i][j] = cache[i-1][j-1] ~ DIAGONAL
       } else {
         cache[i][j] = 1 + minimum(
-          cache[i-1][j-1], // replace
-          cache[i-1][j],   // delete
-          cache[i][j-1],   // insert
+          cache[i-1][j-1], // REPLACE ~ DIAGONAL
+          cache[i-1][j],   // DELETE  ~ TOP
+          cache[i][j-1],   // INSERT  ~ LEFT  
         )
       }
     }
@@ -70,8 +74,6 @@ fmt.Print("                   memo[i%2][j] or memo[(i-1)%2][j] etc.")
 
 fmt.Print("                   abs((i%2)-1) same as (i-1)%2")
 fmt.Print("                   use (i-1)%2 if i >= 1")
-
-fmt.Print("                   All memo[0][j]s are inited to j")
 
 fmt.Print("                   Nested loops (1 to n) & (0 to m) inclusive")
 fmt.Print("                   memo[n%2][m] holds the answer")
@@ -94,27 +96,37 @@ func MinOps(str1, str2 string) {
     return m
   }
 
-  // i - str2 & j - str1
-  // store results of previous calculations only
+  // Store Results of Previous Calculations Only
+  //
+  // X=ROW      Y=COLUMN
+  // X=TARGET   Y=GIVEN
+  //
+  // TWO ROWS & ALL GIVEN COLUMNS
+  // VISUALIZE IN 2 ROWS
+  //
+  //   | 0 G I V E N
+  //  -|-------------
+  //  0|
+  //  T|
   var cache [][]int = make([][]int, 2, m+1)
 
-  // init is same as second string being empty
+  // WHEN str2 is EMPTY
   for j:=0; j<=m; j++{
-    cache[0][j] = j
+    cache[0][j] = j                     // VAL = j
   }
 
   var ops int
   for i:=1; i<=n; i++ {                 // str2
     for j:=0; j<=m; j++ {               // str1
       if j==0 {
-        cache[i%2][0]=i
+        cache[i%2][0]=i                       // VAL = i & NOT i%2
       } else if str1[j-1] == str2[i-1] {
-        cache[i%2][j] = cache[(i-1)%2][j-1]
+        cache[i%2][j] = cache[(i-1)%2][j-1]   // DIAGONAL
       } else {
         cache[i%2][j] = 1 + minimum(
-          cache[(i-1)%2][j-1],          // REPLACE
-          cache[(i-1)%2][j],            // DELETE
-          cache[i%2][j-1],              // ADD
+          cache[(i-1)%2][j-1],          // REPLACE  ~ DIAGONAL
+          cache[(i-1)%2][j],            // DELETE   ~ TOP
+          cache[i%2][j-1],              // ADD      ~ LEFT
         )
       }
     }
