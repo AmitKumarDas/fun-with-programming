@@ -64,3 +64,35 @@
 - Embedded ad play
 - Embedded image display
 ----
+
+[source, bash]
+----
+# Contracts / API
+
+- GetDoc(name) @authorized
+- ListDocs(user) @authorized
+- UpdateDoc(name) @authorized
+- RemoveDoc(name) @authorized
+----
+
+[source, bash]
+----
+# Data Model
+
+- Doc
+- User
+- Role
+- StarredDoc
+- SharedDoc
+----
+
+[source, bash]
+----
+# DB & Storage
+
+- SQL vs NoSQL
+- RealtimeDB for metrics
+- Block storage vs. Object storage
+- Versions via git or Storage snapshots
+----
+
