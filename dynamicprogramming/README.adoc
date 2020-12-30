@@ -1,7 +1,113 @@
 == ABC - Always Be Coding
+[source, go]
+----
+UseCase:                      Minimum Grid Traversal From Source to Edge
+Grid Traversal:               Left, Right, Top, Bottom
+Cell Visit Policy:            Certain cells are eligible to be visited
+
+Traversal Algo:               BFS since its Neighbouring Cells Traversal
+Minimums:                     Percolated at First &/ Last Rows & Cols
+Answer:                       Minimum of All Above Minimums via 4 For Loops
+
+Tip 1:                        make([][]int, row+1, col+1)
+
+Tip 2:                        i / j < 0       is Invalid
+Tip 3:                        i / j >= row    is Invalid
+Tip 4:                        i / j >= col    is Invalid
+
+Tip 5:                        dist[row-1][j]  is Valid
+Tip 6:                        dist[i][col-1]  is Valid
+
+Tip 7:                        4 Min Dist Calcs Done 4 Every Source i.e. x, y
+
+Tip 8:                        Each BFS Calc ~ 4 Min Dist Calcs ~ T, B, L, R
+Tip 9:                        Post BFS      ~ 4 For Loops
+----
 
 [source, go]
 ----
+Given:                  grid [][]int
+Given:                  x int, y int        // Source Location
+Assumption:             grid[i][i] == 1     // Is Invalid
+Find:                   Min Distance to End of grid from Point
+----
+
+[source, go]
+----
+var visited = make([][]int, row+1, col+1)
+var minDist = make([][]int, row+1, col+1)
+
+row = len(grid)
+col = len(grid[0])
+
+// Function to find whether the move is valid or not 
+bool isValid(grid [][]int, i, j int) 
+{ 
+  if (i < 0 || j < 0                       // First Row & Col Included
+    || j >= col || i >= row                // Last  Row & Col Included
+    || grid[i][j] || visited[i][j]) {
+    return false
+  }
+
+  return true
+} 
+
+func findMinDist(grid [][]int, x, y int) int {
+  if len(grid) == 0 return 0  
+  if x == 0 || x == row return 0
+  if y == 0 || y == col return 0
+
+  var finalMinDist = row * col
+
+  // INIT minDist Cells to row*column
+  
+  visited[x][y] = 1
+  minDist[x][y] = 0
+  
+  q.enq(pair(x, y))
+  while q != nil {
+    x, y = q.deq()                  // x, y i.e. Source is Renewed
+
+    // Left Cell Min Dist Calc
+    if isValid(x,y-1) {
+      q.enq(x,y-1)
+      visited[x,y-1]=1
+      minDist[x,y-1] = min(
+        minDist[x,y-1],             // Either Self _OR_
+        minDist[x][y] + 1,          // 1 Hop From Source
+      )
+    }
+    
+    // Top Cell Min Dist Calc
+    if isValid(x-1,y) {} 
+    
+    // Down Cell Min Dist Calc
+    if isValid(x+1,y) {}
+    
+    // Right Cell Min Dist Calc
+    if isValid(x,y+1) {}
+  }
+  
+  for i <= col {
+    finalMinDist = min(finalMinDist, minDist[0][i])       // 1ST ROW
+  }
+
+  for i <= col {
+    finalMinDist = min(finalMinDist, minDist[row-1][i])   // LAST ROW (row-1)*
+  }
+
+  for i <= row {
+    finalMinDist = min(finalMinDist, minDist[i][0])       // 1ST COL
+  }
+
+  for i <= row {
+    finalMinDist = min(finalMinDist, minDist[i][col-1])   // LAST COL (col-1)*
+  }
+
+  if finalMinDist == row * col return -1
+  
+  return finalMinDist
+}
 ----
 
 [source, go]
