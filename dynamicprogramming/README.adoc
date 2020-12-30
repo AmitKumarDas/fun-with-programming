@@ -2,6 +2,10 @@
 
 [source, go]
 ----
+----
+
+[source, go]
+----
 fmt.Print("Memoization & BottomsUp")
 
 fmt.Print("                   All About Filling Memo[][]")
@@ -50,12 +54,12 @@ func MinOps(str1, str2 string) {
       } else if j == 0 {
         cache[i][0] = i
       } else if str1[i-1] == str2[j-1] {
-        cache[i][j] = cache[i-1][j-1] ~ DIAGONAL
+        cache[i][j] = cache[i-1][j-1]     // DIAGONAL
       } else {
         cache[i][j] = 1 + minimum(
-          cache[i-1][j-1], // REPLACE ~ DIAGONAL
-          cache[i-1][j],   // DELETE  ~ TOP
-          cache[i][j-1],   // INSERT  ~ LEFT  
+          cache[i-1][j-1],                // REPLACE ~ DIAGONAL
+          cache[i-1][j],                  // DELETE  ~ TOP
+          cache[i][j-1],                  // INSERT  ~ LEFT
         )
       }
     }
