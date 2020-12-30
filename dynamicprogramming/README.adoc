@@ -9,6 +9,8 @@ if DP && Array           == for{} for{}       // O(N)
 if DP && Tree            == for{for{}}        // O(N^2)
 
 if DP && 4 Directions    == BFS for{} for{} for{} for{}
+
+if memo[m][n] == answer     space optimization possible
 ----
 
 ==== Max Sum SubSequence of Array Items Spaced By K Items
@@ -159,21 +161,7 @@ func findMinDist(grid [][]int, x, y int) int {
 }
 ----
 
-==== No of Min Operations to convert str1 to str2
-[source, go]
-----
-fmt.Print("Memoization & BottomsUp")
-
-fmt.Print("                   All About Filling Memo[][]")
-fmt.Print("                   if else-if else blocks")
-
-fmt.Print("                   Init Cache to [m+1][n+1]")
-
-fmt.Print("                   Nested Loops (0 to m) & (0 to n) Inclusive")
-fmt.Print("                   Str access only at [i-1] & [j-1]")
-
-fmt.Print("                   cache[m][n] holds the answer")
-----
+==== Minimum Operations to convert str1 to str2
 
 [source, go]
 ----
