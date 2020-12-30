@@ -1,4 +1,53 @@
 == ABC - Always Be Coding
+==== Thoughts
+[source, go]
+----
+if DP && Array              == make([]int, len(arr))
+if DP && Tree/Graph/Grid    == make([][]int, m+1, n+1)
+
+if DP && Array           == for{} for{}       // O(N)
+if DP && Tree            == for{for{}}        // O(N^2)
+
+if DP && 4 Directions    == BFS for{} for{} for{} for{}
+----
+
+==== Max Sum SubSequence of Array Items Spaced By K Items
+[source, go]
+----
+// Recursion ~ not great
+return max(
+  arr[i] + findMax(arr, i+k+1),  // include
+  findMax(arr, i+1),             // exclude
+)
+
+// Memoization ~ loop based
+memo[i] = max(
+  arr[i] + cache[i-(k+1)],  // include
+  cache[i-1],               // exclude ~ prev
+)
+----
+
+[source, go]
+----
+// Find Current Max at Each Index Till Kth Index
+memo[0] = arr[0]
+for i:=0; i<=k; i++ {
+  memo[i] = max(arr[i], memo[i-1])
+}
+
+// Fill k+1 till last elem
+for i:=k+1; i<n; i++ {
+  memo[i] = max(
+    memo[i-(k+1)] + arr[i],
+    memo[i-1],
+  )
+}
+
+// Answer
+return max(memo...)
+----
+
+==== Minimum Grid Traversal From Source to Edge
 [source, go]
 ----
 UseCase:                      Minimum Grid Traversal From Source to Edge
@@ -110,6 +159,7 @@ func findMinDist(grid [][]int, x, y int) int {
 }
 ----
 
+==== No of Min Operations to convert str1 to str2
 [source, go]
 ----
 fmt.Print("Memoization & BottomsUp")
@@ -188,7 +238,6 @@ fmt.Print("                   use (i-1)%2 if i >= 1")
 fmt.Print("                   Nested loops (1 to n) & (0 to m) inclusive")
 fmt.Print("                   memo[n%2][m] holds the answer")
 ----
-
 
 [source, go]
 ----
