@@ -1,0 +1,66 @@
+=== Introduction
+
+[source, bash]
+----
+# GOALS
+
+- Whats the exact scope
+- What is the exact thing
+- Who are going to use? 
+  - Business / EndUsers
+  - Kids/Adults
+  - Geography
+- How many will use
+----
+
+[source, bash]
+----
+# Design Google Docs - Start With Questions
+
+- Should it deal with RBAC
+- Should it deal with English Text or Other Languages
+- Should it deal with Programming Languages
+- How long to store them
+- Does it need to be monetised
+- Should it be ad free
+- Should it be shared / copies be maintained
+- How many docs per user
+- How many shares per doc
+- Is it doc or xls or ppt or something else
+- Does it need to have notifications
+- Does it need to have review features
+- Does it need to maintain version
+- Can it embed ads, videos, images
+- Should it support translation services
+
+- Is it trying to emulate some existing services
+- Is it for Business / End Users
+- Is it for certain category of users
+- Can it be shared across regions / countries
+
+- Is it a SAAS or can be packaged & deployed anywhere
+- Does it need to be cloud native
+- Do we bother about frontend or backend or both
+----
+
+[source, bash]
+----
+# Back Of The Envelope Calculations - Scaling Estimation
+
+## Storage Needs
+- Number of users
+- Number of docs per user
+- Number of shares per doc
+- Number of shares per user
+- Number of doc revisions
+- Time period to save these docs & versions
+- Number of videos per doc
+- Number of images per doc
+
+## Networking Needs
+- Does it need an offline version
+- Auto save feature
+- Embedded video play
+- Embedded ad play
+- Embedded image display
+----
