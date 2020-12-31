@@ -5,6 +5,12 @@
 
 [source, go]
 ----
+Visualize Z Array       continue \ \ \ matches till successful
+Z Array                 Of P$T
+----
+
+[source, go]
+----
 fmt.Print("When DP & Recursion")
 fmt.Print("           Think What Base Value To Return")
 fmt.Print("           When to return 0 or 1 etc.")
