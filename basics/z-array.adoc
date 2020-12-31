@@ -4,8 +4,16 @@
 ----
 UseCase:        Pattern Matching
 Details:        Linear Time Pattern Match Algo
+Linear Time:    O(m+n)
+Others:         Similar to KMP But Easy To Understand
 
-Tip:            P$T ~ Pattern $ Text
+Tip:                P$T ~ Pattern $ Text
+Note:               $ Should Not be Present in P or T
+Mnemonic:           Pattern Search In Pacific Standard Time
+
+Step 1:             Concatenate ~ Pattern+$+Text
+Step 2:             Find Z Array for P$T
+Step 3:             If any Z[i] == len(P) Then P Found In T
 ----
 
 [source, go]
