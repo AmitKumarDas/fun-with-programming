@@ -1,0 +1,22 @@
+=== Thoughts
+[source, go]
+----
+One BEEFY DB is NOT more Reliable than 1 SMALL DB
+
+Master    used for WRITEs
+Slaves    used for READs
+
+Master    tailored based on needs
+Salve     tailored based on needs
+
+Writes    More Expensive Than Reads
+----
+
+[source, go]
+----
+C:  Data Consistency Across Multiple Machines
+A:  Multiple Machines Availablility to Achive Consistency
+P:  Multiple Machines Communication to Achieve Availability
+
+P:  Partition Tolerance
+----
