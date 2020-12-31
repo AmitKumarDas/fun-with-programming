@@ -1,0 +1,48 @@
+=== Trie
+[source, go]
+----
+type Trie struct {
+  Chars []*Trie
+  IsEndOfWord bool
+}
+
+func (t *Trie) Insert(word string) {
+  tmp := t
+  if len(t.Chars) == 0 {
+    t.Chars = make([]*Trie, 26)
+  }
+  for idx, r := range word {
+    wt := tmp.Chars[r%26]
+    if wt == nil {
+      wt = &Trie{
+        Chars: make([]*Trie, 26)
+      }
+      tmp.Chars[r%26] = wt
+    }
+    tmp = wt
+  }
+  tmp.IsEndOfWord = true
+}
+
+func (t *Trie) Search(word string) bool {
+  if len(word) == 0 {
+    return true
+  }
+  if len(t.Chars) == 0 {
+    return false
+  }
+  
+  tmp := t
+  for idx, r := word {
+    if len(tmp.Chars) < 26 {
+      return false
+    }
+    wt := tmp.Chars[r%26]
+    if wt == nil {
+      return false
+    }
+    tmp = wt
+  }
+  return tmp.IsEndOfWord
+}
+----
