@@ -5,8 +5,80 @@
 
 [source, go]
 ----
-Visualize Z Array       continue \ \ \ matches till successful
-Z Array                 Of P$T
+Visualize Z Array
+
+Txt     a   a   a   a
+Txt     a   a   a   a
+Z       x   3   2   1         // Dont bother about x
+
+Txt     a   b   a   b
+Txt     a   b   a   b
+Z       x   0   2   0         // Dont bother about x
+
+Txt     a   b   c   d
+Txt     a   b   c   d
+Z       x   0   0   0         // Dont bother about x
+----
+
+[source, go]
+----
+DP Formula               From Past / Previous Occurences
+DP & Past                Think loop or nested loops & memo
+
+f(n) ~ f(n-1)            
+f(x,y) ~ f(x-1,y-1) + f(x,y-1) + f(x-1,y)
+----
+
+[source, go]
+----
+DP Formula                Neighbours Derived from Center
+DP & Neighbours           Is BST
+
+f(x+1,y) ~ f(x,y)         Bottom    ~ Neighbour
+f(x-1,y) ~ f(x,y)         Top       ~ Neighbour
+f(x,y-1) ~ f(x,y)         Left      ~ Neighbour
+f(x,y+1) ~ f(x,y)         Right     ~ Neighbour
+----
+
+[source, go]
+----
+var p$t = fmt.Sprintf(%s$%s, pattern, txt)
+
+z = ZArrayOf(p$t)
+
+for i:=0; i<len(z); i++ {
+  if z[i] == len(P) {
+    return "P found in T"
+  }
+}
+----
+
+[source, go]
+----
+MinHeapify(Array, Pant) {
+  Min(L, P, R)
+  if MinNePant() {
+    Swap arr[min], arr[pant]
+    reCurse(arr, min)
+  }
+}
+
+MinHeapify(arr []int, p int) {
+  var l := 2*p + 1
+  var r := 2*p + 2
+  var min = p
+
+  if l <= len(arr) && arr[l] < arr[min] {
+    min = l
+  }
+  if r <= len(arr) && arr[r] < arr[min] {
+    min = r
+  }
+  if min != p {
+    arr[min], arr[p] = arr[p], arr[min]
+    MinHeapify(arr, min)
+  }
+}
 ----
 
 [source, go]
