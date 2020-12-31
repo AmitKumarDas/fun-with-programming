@@ -1,0 +1,26 @@
+=== Back of Envelope Calculations
+
+[source, go]
+----
+Writes are expensive        Transactional & Disk Seek
+
+1 disk seek                 10ms
+In 1s                       1s/10ms = 100 seeks/sec
+----
+
+[source, go]
+----
+Reads are cheap             
+                            Non Transactional. 
+                            Need to be Consistent
+                            Easily Cached
+
+1MB data from Memory        250usec
+In 1s                       1s/250usec = 4GB/sec
+If 1MB entity               4000 fetches per sec
+----
+
+[source, go]
+----
+L1 Cache Reference                    0.5ns
+----
