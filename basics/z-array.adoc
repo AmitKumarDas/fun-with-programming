@@ -1,0 +1,61 @@
+=== Z Array / Z Algorithm
+
+[source, go]
+----
+UseCase:        Pattern Matching
+Details:        Linear Time Pattern Match Algo
+
+Tip:            P$T ~ Pattern $ Text
+----
+
+[source, go]
+----
+Index            0   1   2   3   4   5   6   7   8   9  10  11 
+Text             a   a   b   c   a   a   b   x   a   a   a   z
+Z values         X   1   0   0   3   1   0   0   2   2   1   0
+----
+
+[source, go]
+----
+z[0]      useless
+z[i]      Count of Matches i.e. a[0] a[i], a[1] a[i+1] & so on
+----
+
+[source, go]
+----
+func GetZValues(txt string) []int {
+  if len(txt) == 0 {
+    return nil
+  }
+  var z = make([]int, len(txt))
+  z[0] = -1 // no use
+  
+  var match bool
+  var left, pivot, count int
+  left = 1
+  pivot = 1
+
+  for pivot < len(txt) {
+    match = false
+    if txt[count] == txt[left] {
+      match = true
+      count++
+      left++
+    }
+
+    // RESET
+    if left+1 == len(txt) || !match {
+      z[pivot] = count
+      pivot++
+      left=pivot
+      count=0
+    }
+  }
+  return z
+}
+
+func main() {
+  // [-1 1 0 0 3 1 0 0 2 2 1 0]
+  fmt.Printf("%v\n", GetZValues("aabcaabxaaaz"))
+}
+----
