@@ -7,9 +7,15 @@
 - Do not copy the Recursion code blocks
   - Into DP code block AS-IS
 
-- When DP & Max / Min
-  - Then major logic should be inside main dp filling block
-  - Minimize initial DP fill logic
+- DP & Max / Min - I
+  - Major logic should be inside main dp filling block
+  - Mostly if-elif-else blocks
+  - Minimize Initial DP fill logic
+
+- DP & Max / Min - II
+  - Think Where the Max / Min Value will Percolate in DP Table
+  - Will it be Top Right Cell of DP Table?
+  - Will it be DP Table Edges?
 
 - DP Table & Palindrome
   - Bottom Part of Diagonal is Useless
