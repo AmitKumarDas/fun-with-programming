@@ -11,14 +11,26 @@ Output:   7
 Details:  babcbab
 ```
 
-#### Lets Try DP Table
-- Loop the string twice
-  - For each char i you get below filled
-  - dp[i][j]=j-i where str[i]==str[j]
-  - dp[i][j]=0 where str[i]!=str[j]
+#### Lets Try Recursion
+```go
+func longestPalinSubSeq(str string) int {
+  if len(str) <= 1 || isPalin(str) {
+    return len(str)
+  }
+  return 0
+}
 
-- for each char
-  - l = max(
-      longestPalinSubStrLen(str[i:len], 
-      longestPalinSubStrLen(str[i+1:len], 
+func LongestPalinSubSeq(str string) int {
+  var max int
+  for idx := range str {
+    new := str[0:idx] + str[idx+1:len(str)]
+    got = maximum(
+      longestPalinSubSeq(new), // exclude char
+      longestPalinSubSeq(str), // include char
     )
+    if got > max {
+      max = got
+    }
+  }
+}
+```
