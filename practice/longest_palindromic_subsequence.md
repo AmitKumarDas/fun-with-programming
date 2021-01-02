@@ -14,16 +14,13 @@ Details:  babcbab
 #### Generalized Formula For SubSequence
 - Question Talks of Longest
   - Hence maximum(...) to be used
-
 - Let n = len(str)
 - Consider str[0] till str[n-1]
-
 - Let F(0, n-1) ~ longest palin subsequence
 - if str[0] == str[n-1]
   - F(0, n-1) = F(1, n-2) + 2
 - if str[0] != str[n-1]
   - F(0, n-1) = max(F(0, n-2), F(1, n-1))
-
 - Above looks like Fibonacci!
 - Seems like we dont need a memo table!
 - Should couple of memo variables suffice?
