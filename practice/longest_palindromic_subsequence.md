@@ -152,6 +152,7 @@ func longestLenPalinSubSeq(str string) int {
     }
   }
 
+  // TOP RIGHT HAS MAX VALUE
   return dp[0][size-1]
 }
 ```
