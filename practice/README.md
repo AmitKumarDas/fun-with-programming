@@ -1,4 +1,4 @@
 ### Practices
 
-#### Set-0001
-- Longest SubString Palindrome
+#### DP
+- Longest Palindromic Substring `table` `diagonal` `loop` `is-elif`
