@@ -1,4 +1,5 @@
 ### Length of Longest Palindromic SubSequence
+`dp` `palindrome` `substr == dp` `loop` `equation`
 
 ```bash
 Input:    geeksforgeeks
@@ -105,5 +106,58 @@ func longestLengthPalinSubSeq(str string, i, j int) int {
     longestLengthPalinSubSeq(str, i, j-1),
     longestLengthPalinSubSeq(str, i+1, j),
   )
+}
+```
+```bash
+Q/ Can we optimise?
+
+- Lets Try Like We Optimized Fibonacci
+- Note dp[i][j] implies substr(i,j)
+- Set dp[i][i] = 1
+- Set dp[i][j] = 2 if j == i+1 && str[i]==str[j]
+- Set dp[i][j] = 3 if j == i+2 && str[i]==str[j]
+
+- Last One is Not Required
+- However Formula Should Accomodate Last Logic
+```
+```go
+func longestLenPalinSubSeq(str string) int {
+
+  var size = len(str)
+  var dp = make([][]int, size)
+  for i := range dp {
+    dp[i] = make([]int, size)
+  }
+
+  for i := range dp {
+    // ---
+    // dp[i][j] represents substring
+    // Since i == j is one char
+    // Value is 1 since each char is a Palin
+    // ---
+    dp[i][i] = 1
+    
+    if i+1 < size && str[i] == str[i+1] {
+      dp[i][i+1] = 2 // same successive chars
+    }
+  }
+
+  for i:=size-2; i>=0; i-- {
+    for j:=i+2; j<size; j++ {
+      // ---
+      // FILL
+      // ---
+      if str[i] == str[j] {
+        dp[i][j] = dp[i+1][j-1] + 2
+      } else {
+        dp[i][j] = max(
+          dp[i+1][j],
+          dp[i][j-1],
+        )
+      }
+    }
+  }
+
+  return dp[0][size-1]
 }
 ```
