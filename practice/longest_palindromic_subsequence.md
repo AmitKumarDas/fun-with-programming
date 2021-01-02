@@ -35,6 +35,15 @@ Q/ Why Formula?
 - Hence, we need Formula to fill cells
 ```
 ```bash
+Q/ Should Formula be based on Include / Exclude?
+
+- Do not use Pointers & Their Movements
+- Think of Include Equation 
+- Think of Exclude Equation
+```
+```bash
+Q/ Right Way to Derive Formula?
+
 - Question Talks of Longest
   - Hence maximum(...) to be used
 
@@ -88,9 +97,41 @@ func longestLengthPalinSubSeq(str string, i, n int) int {
 ```
 #### Source Code - Attempt 2
 ```go
-func LongestLengthPalinSubSeq(str string) int {  
+func LongestLengthPalinSubSeq(str string) int {
+  if len(str) <= 1 {
+    return len(str)
+  }
+  return longestLengthPalinSubSeq(str, 0, len(str)-1)
 }
 
-func longestLengthPalinSubSeq(str string, i, n int) int {
+func longestLengthPalinSubSeq(str string, i, j int) int {
+  if i > j {
+    return 0
+  }
+  if i == j { // i.e. 1 char
+    return 1
+  }
+  if j-i == 1 { // i.e. 2 chars
+    if str[i] == str[j] {
+      return 2
+    } else {
+      return 0
+    }
+  }
+  // ---
+  // Formula Depends on
+  // Formula For Match &
+  // Formula for MisMatch
+  // ---
+  
+  // Match
+  if str[i] == str[j] {
+    return longestLengthPalinSubSeq(str, i+1, j-1) + 2
+  }
+  // MisMatch
+  return maximum(
+    longestLengthPalinSubSeq(str, i, j-1),
+    longestLengthPalinSubSeq(str, i+1, j),
+  )
 }
 ```
