@@ -84,7 +84,7 @@ func longestLengthPalinSubSeq(str string, i, j int) int {
   if i == j { // i.e. 1 char
     return 1
   }
-  if j-i == 1 && str[i] == str[j] {
+  if j == i+1 && str[i] == str[j] {
     return 2
   }
   // ---
