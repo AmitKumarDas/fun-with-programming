@@ -12,20 +12,49 @@ Details:  babcbab
 ```
 
 #### Generalized Formula For SubSequence
+```bash
+Q/ Why not start with multiple loops?
+Q/ Perhaps 2 pointers?
+
+- Loop Body needs proper Conditions
+- Formula provides Conditions
+```
+```bash
+Q/ Why not start thinking from recursion?
+
+- Recursion needs proper Exit Criteria
+- Formula Provides Exit Criteria
+```
+```bash
+Q/ Why Formula?
+
+- Visualize x & y axes
+- X axis & Y axis are represented by same string
+- This enables comparisons
+- x & y represent a 2D Table
+- Hence, we need Formula to fill cells
+```
+```bash
 - Question Talks of Longest
   - Hence maximum(...) to be used
+
 - Let n = len(str)
 - Consider str[0] till str[n-1]
+
 - Let F(0, n-1) ~ longest palin subsequence
 - if str[0] == str[n-1]
   - F(0, n-1) = F(1, n-2) + 2
 - if str[0] != str[n-1]
   - F(0, n-1) = max(F(0, n-2), F(1, n-1))
+```
+```bash
+Q/ Any Patterns?
+
 - Above looks like Fibonacci!
 - Seems like we dont need a memo table!
 - Should couple of memo variables suffice?
-
-#### Source Code
+```
+#### Source Code - Attempt 1
 ```go
 func LongestLengthPalinSubSeq(str string) int {
   if len(str) <= 1 {
@@ -55,5 +84,13 @@ func longestLengthPalinSubSeq(str string, i, n int) int {
       )
     }
   }
+}
+```
+#### Source Code - Attempt 2
+```go
+func LongestLengthPalinSubSeq(str string) int {  
+}
+
+func longestLengthPalinSubSeq(str string, i, n int) int {
 }
 ```
