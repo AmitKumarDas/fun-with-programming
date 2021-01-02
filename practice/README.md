@@ -1,4 +1,4 @@
 ### Practices
 
 #### DP
-- Longest Palindromic Substring `table` `diagonal` `loop` `is-elif`
+- Longest Palindromic Substring `table` `diagonal` `loop` `if-elif`
