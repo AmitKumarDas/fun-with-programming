@@ -11,25 +11,51 @@ Output:   7
 Details:  babcbab
 ```
 
-#### Lets Try Recursion
+#### Generalized Formula For SubSequence
+- Question Talks of Longest
+  - Hence maximum(...) to be used
+
+- Let n = len(str)
+- Consider str[0] till str[n-1]
+
+- Let F(0, n-1) ~ longest palin subsequence
+- if str[0] == str[n-1]
+  - F(0, n-1) = F(1, n-2) + 2
+- if str[0] != str[n-1]
+  - F(0, n-1) = max(F(0, n-2), F(1, n-1))
+
+- Above looks like Fibonacci!
+- Seems like we dont need a memo table!
+- Should couple of memo variables suffice?
+
+#### Source Code
 ```go
-func longestPalinSubSeq(str string) int {
-  if len(str) <= 1 || isPalin(str) {
+func LongestLengthPalinSubSeq(str string) int {
+  if len(str) <= 1 {
     return len(str)
   }
-  return 0
+  return longestLengthPalinSubSeq(str, 0, len(str))
 }
 
-func LongestPalinSubSeq(str string) int {
-  var max int
-  for idx := range str {
-    new := str[0:idx] + str[idx+1:len(str)]
-    got = maximum(
-      longestPalinSubSeq(new), // exclude char
-      longestPalinSubSeq(str), // include char
-    )
-    if got > max {
-      max = got
+func longestLengthPalinSubSeq(str string, i, n int) int {
+  if n-i <= 1 {
+    return n-i
+  }
+  if n-i == 2 {
+    if str[i] == str[n-1] {
+      return 2
+    } else {
+      return 0
+    }
+  }
+  for i <= n {
+    if str[i]==str[n-1] {
+      return longestLengthPalinSubSeq(str, i+1, n-1) + 2
+    } else {
+      return max(
+        longestLengthPalinSubSeq(str, i, n-1),
+        longestLengthPalinSubSeq(str, i+1, n),
+      )
     }
   }
 }
