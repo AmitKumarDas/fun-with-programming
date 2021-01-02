@@ -1,5 +1,5 @@
 ### Longest Palindromic Substring
-`DPFill` `DP` `Loop` `Teaser` `MemoTable`
+`DP` `Loop` `Teaser` `MemoTable` `Diagonal`
 
 ```bash
 Given a string.
@@ -21,38 +21,30 @@ Find the Longest SubString which is a Palindrome.
 - _Assumption:_ dp[i][i] = 1 i.e. diagonal is true for any string
 - _Since Single Char is Already a Palindrome_
 
+#### Do This Simple Fills
+- dp[i][i] = 1
+- dp[i][i+1] = 1 if arr[i+1] == arr[i]
+
 #### Derive Generalized Formula
 - for j-i >= 2
 - dp[i][j] = dp[i+1][j-1]
 
-#### Do This Additional Yet Simple Filling
-// ---
+#### How Did We Arrive At General Formula?
+- dp[i][j] is Palin if & only if dp[i+1][j-1] is Palin
+  - String is Palin if its Immediate Substring is Palin
+  - Substring is Palindrome if its Immediate Substring is Palin
+- Here Substring means _first_ & _last_ chars are Removed
 
-- dp[i][i+1] = 1 if arr[i+1] == arr[i]
-```
-```bash
-// ----
-// How Did We Arrive At General Formula?
-// ----
-
-- Since dp[i][j] is Palin if & only if dp[i+1][j-1] is Palin
-- i.e. Substring is Palindrome if its nested Substrings are palindrome
-- Nested SubString i.e. first & last chars are removed
-```
-```bash
-// --
-// How To Fill Up Future Cells Before Current Cell?
-// --
-
+#### How To Fill Up Future Cell Before Current Cell?
 - Trick Lies in Filling the dp via Custom Nested Loops
 - Do Not fill cells on Left of diagonals
 - Fill from Bottom to Top
 - Fill cells on Diagonal & its Right
-```
+
 ```go
 var n = len(str)
 for i:=n-1; i>=0; i-- {
-  for j:=i; j<=n-1; ;j++ {
+  for j:=i; j<=n-1; j++ {
   }
 }
 ```
@@ -62,7 +54,7 @@ var x, y, max int
 var dp = make([][]int, n)
 
 for i:=n-1; i>=0; i-- {
-  for j:=i; j<=n-1; ;j++ {
+  for j:=i; j<=n-1; j++ {
     // Fill
     if i == j {
       dp[i][j] = 1
