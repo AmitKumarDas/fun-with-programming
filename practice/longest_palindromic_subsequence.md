@@ -68,7 +68,7 @@ Q/ Any Patterns?
 - Seems like we dont need a memo table!
 - Should couple of memo variables suffice?
 ```
-#### Source Code - Attempt 1
+#### Source Code - Recursive
 ```go
 func LongestLengthPalinSubSeq(str string) int {
   if len(str) <= 1 {
@@ -84,12 +84,8 @@ func longestLengthPalinSubSeq(str string, i, j int) int {
   if i == j { // i.e. 1 char
     return 1
   }
-  if j-i == 1 { // i.e. 2 chars
-    if str[i] == str[j] {
-      return 2
-    } else {
-      return 0
-    }
+  if j-i == 1 && str[i] == str[j] {
+    return 2
   }
   // ---
   // Formula Depends on
@@ -102,7 +98,7 @@ func longestLengthPalinSubSeq(str string, i, j int) int {
     return longestLengthPalinSubSeq(str, i+1, j-1) + 2
   }
   // MisMatch
-  return maximum(
+  return max(
     longestLengthPalinSubSeq(str, i, j-1),
     longestLengthPalinSubSeq(str, i+1, j),
   )
@@ -136,18 +132,16 @@ func longestLenPalinSubSeq(str string) int {
     // Value is 1 since each char is a Palin
     // ---
     dp[i][i] = 1
-    
-    if i+1 < size && str[i] == str[i+1] {
-      dp[i][i+1] = 2 // same successive chars
-    }
   }
 
-  for i:=size-2; i>=0; i-- {
-    for j:=i+2; j<size; j++ {
+  for i:=size-1; i>=0; i-- {
+    for j:=i+1; j<size; j++ {
       // ---
       // FILL
       // ---
-      if str[i] == str[j] {
+      if j == i+1 && str[i] == str[j] {
+        dp[i][j] = 2 // when substring is 2 & same chars
+      } else if str[i] == str[j] {
         dp[i][j] = dp[i+1][j-1] + 2
       } else {
         dp[i][j] = max(
