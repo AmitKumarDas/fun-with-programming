@@ -35,17 +35,21 @@ Q/ Why Formula?
 - Hence, we need Formula to fill cells
 ```
 ```bash
-Q/ Should Formula be based on Include / Exclude?
+Q/ Dos vs. Donts for Fn
 
-- Do not use Pointers & Their Movements
-- Think of Include Equation 
-- Think of Exclude Equation
+- Do Not Think In Terms Of:
+-- Pointers & Their Movements
+-- Fn Depends on Include & Exclude
+
+- Think In Terms of:
+-- Fn Depends on Include Fn & Exclude Fn
 ```
 ```bash
 Q/ Right Way to Derive Formula?
 
+- Think Using Numbers like 0, 1, 2, & N
 - Question Talks of Longest
-  - Hence maximum(...) to be used
+  - Hence max(...) may be used
 
 - Let n = len(str)
 - Consider str[0] till str[n-1]
@@ -64,38 +68,6 @@ Q/ Any Patterns?
 - Should couple of memo variables suffice?
 ```
 #### Source Code - Attempt 1
-```go
-func LongestLengthPalinSubSeq(str string) int {
-  if len(str) <= 1 {
-    return len(str)
-  }
-  return longestLengthPalinSubSeq(str, 0, len(str))
-}
-
-func longestLengthPalinSubSeq(str string, i, n int) int {
-  if n-i <= 1 {
-    return n-i
-  }
-  if n-i == 2 {
-    if str[i] == str[n-1] {
-      return 2
-    } else {
-      return 0
-    }
-  }
-  for i <= n {
-    if str[i]==str[n-1] {
-      return longestLengthPalinSubSeq(str, i+1, n-1) + 2
-    } else {
-      return max(
-        longestLengthPalinSubSeq(str, i, n-1),
-        longestLengthPalinSubSeq(str, i+1, n),
-      )
-    }
-  }
-}
-```
-#### Source Code - Attempt 2
 ```go
 func LongestLengthPalinSubSeq(str string) int {
   if len(str) <= 1 {
