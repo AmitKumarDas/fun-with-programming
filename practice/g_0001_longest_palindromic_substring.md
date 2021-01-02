@@ -1,41 +1,31 @@
-### Practice Set 0001
+### Longest Palindromic Substring
+`DPFill` `DP` `Loop` `Teaser` `MemoTable`
 
-##### [1] Longest Palindromic Substring
-`DP` `Loop` `Teaser` `MemoTable vs. Func`
 ```bash
 Given a string.
 Find the Longest SubString which is a Palindrome.
 ```
-```bash
-// ---
-// Optimal Approach - DP
-// ---
 
+#### Optimal Approach - DP
 - Every single char is Palindrome
 - In DP Present Calc Needs Past Results
 - In this case Present Calc is Derived from Future Results
 - i.e. dp(i) derived from dp(i+1)
-```
-```bash
-// ---
-// How to DP?
-// ----
 
-- Challenge Is To Use DP Table Instead of isPalin() func
-- dp[i][j] Implies If substr(i,j) is Palindrome i.e. 1 or 0
-- dp[i][i] = 1 i.e. diagonal is true for any string
-- Since Single Char is Already a Palindrome
-```
-```bash
-// --
-// Generalized Formula for j-i >= 2
-// ---
+#### How to DP?
+- Challenge Is To Fill & Use DP Table Instead of isPalin() func
 
+### What can be `dp[i][j]`?
+- The cell indicates a substr(i,j)
+- The cell value indicates true or false i.e. is a Palindrome?
+- _Assumption:_ dp[i][i] = 1 i.e. diagonal is true for any string
+- _Since Single Char is Already a Palindrome_
+
+#### Derive Generalized Formula
+- for j-i >= 2
 - dp[i][j] = dp[i+1][j-1]
-```
-```bash
-// ---
-// Do This Additional Yet Simple Filling
+
+#### Do This Additional Yet Simple Filling
 // ---
 
 - dp[i][i+1] = 1 if arr[i+1] == arr[i]
