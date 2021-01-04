@@ -4,6 +4,9 @@ Segregate the values of the array so that all the
 - Gs come second, &
 - Bs come last
 
+#### Tags
+`2-pointer` `loop` `swap`
+
 #### Note
 ```bash
 - You can only swap elements of the array
@@ -25,6 +28,10 @@ Segregate the values of the array so that all the
 #### Source Code
 ```go
 func CharArrange(str []rune) []rune {
+  // ---
+  // Use of 2 Pointer Theory
+  // Move all 'R' chars to Left
+  // ---
   var low int
   for idx, c := range str {
     if c == 'R' && low == idx {
@@ -34,6 +41,29 @@ func CharArrange(str []rune) []rune {
       low++
     }
   }
+  
+  // ---
+  // Repeat above logic for char 'G'
+  // i.e. Move all 'G' chars to Left
+  // ---
+  var size = len(str)
+  var second = low
+  for low < size {
+    if str[low] == 'G' && low == second {
+      second++
+    } else if str[low] == 'G' && low > second {
+      str[low], str[second] = str[second], str[low]
+      second++
+    }
+    low++
+  }
   return str
+}
+
+// ---
+// Test
+// ---
+func main() {
+  fmt.Printf("%c\n", CharArrange([]rune{'G', 'B', 'R', 'R', 'B', 'R', 'G'}))
 }
 ```
