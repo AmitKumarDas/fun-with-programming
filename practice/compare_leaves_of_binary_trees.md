@@ -158,9 +158,8 @@ func CompareBTLeaves(one, two *BT) bool {
   return two.DeqLeavesAndCompareFrom(q)
 }
 ```
-#### Source Code - Implement Iterative Way
+#### Source Code - Optimise Via Iterative Way
 ```bash
-Try for
 - O(m+n)   runtime - m & n are tree node count of trees
 - O(h1+h2) space   - h1 & h2 are the heights of trees
 ```
