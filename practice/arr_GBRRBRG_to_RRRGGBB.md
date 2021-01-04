@@ -69,7 +69,7 @@ func main() {
 ```
 #### Can we optimise?
 ```bash
-- Try a single loop with 2 or 3 pointers
+- Try 3 pointers In a Single Loop
 ```
 ```go
 ```
