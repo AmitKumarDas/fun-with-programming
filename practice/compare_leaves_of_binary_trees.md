@@ -6,29 +6,19 @@
 - Assume: Node is an Int
 ```
 
+#### How?
+```bash
+- Try a Queue
+- BT1 will enqueue its leaves to Q
+- BT1 will enqueue a dummy node to Q to mark end of leaves
+- BT2 will dequeue from Q & compare with its leaf
+```
+
 #### Source Code
 ```go
 type BT struct {
   Val   int
   Left  *BT
   Right *BT
-}
-
-func (b *BT) Leaves(arr []int) []int {
-  if b.Left == nil && b.Right == nil {
-    return append(arr, b.Val)
-  }
-
-  if b.Left != nil {
-    arr = append(arr, b.Left.Leaves(arr))
-  }
-  if b.Right != nil {
-    arr = append(arr, b.Right.Leaves(arr))
-  }
-  return arr
-}
-
-func (b *BT) CompareLeaves(other *BT) bool {
-
 }
 ```
