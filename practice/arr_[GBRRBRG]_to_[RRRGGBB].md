@@ -79,9 +79,17 @@ func CharArrange(str []rune) []rune{
   }
   
   var low, high int
-  high = size - 1
-  for idx := range str {
-  
+  low = 1
+  high = size - 2
+  for low < size {
+    if str[low] == 'R' {
+      str[low], str[low-1] = str[low-1], str[low]
+    }
+    if str[high] == 'B' {
+      str[high], str[high+1] = str[high+1], str[high]
+    }
+    low++
+    high--
   }
 }
 ```
