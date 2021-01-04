@@ -29,3 +29,6 @@
 #### DP
 - Longest Palindromic Substring `table` `diagonal` `loop` `if-elif`
 - Longest Palindromic SubSequence `table` `diagonal` `loop` `if-elif`
+
+#### Array
+- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `loop` `2-pointer` `rune` `swap` `if-elif`
