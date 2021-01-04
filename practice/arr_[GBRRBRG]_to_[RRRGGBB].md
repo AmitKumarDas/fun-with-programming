@@ -67,3 +67,21 @@ func main() {
   fmt.Printf("%c\n", CharArrange([]rune{'G', 'B', 'R', 'R', 'B', 'R', 'G'}))
 }
 ```
+#### Can we optimise?
+```bash
+- Try a single loop with 2 pointers
+```
+```go
+func CharArrange(str []rune) []rune{
+  var size = len(str)
+  if size <= 1 {
+    return str
+  }
+  
+  var low, high int
+  high = size - 1
+  for idx := range str {
+  
+  }
+}
+```
