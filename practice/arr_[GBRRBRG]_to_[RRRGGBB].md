@@ -69,27 +69,7 @@ func main() {
 ```
 #### Can we optimise?
 ```bash
-- Try a single loop with 2 pointers
+- Try a single loop with 2 or 3 pointers
 ```
 ```go
-func CharArrange(str []rune) []rune{
-  var size = len(str)
-  if size <= 1 {
-    return str
-  }
-  
-  var low, high int
-  low = 1
-  high = size - 2
-  for low < size {
-    if str[low] == 'R' {
-      str[low], str[low-1] = str[low-1], str[low]
-    }
-    if str[high] == 'B' {
-      str[high], str[high+1] = str[high+1], str[high]
-    }
-    low++
-    high--
-  }
-}
 ```
