@@ -64,12 +64,43 @@ func CharArrange(str []rune) []rune {
 // Test
 // ---
 func main() {
+  // --
+  // %c is used as formatting option
+  // --
   fmt.Printf("%c\n", CharArrange([]rune{'G', 'B', 'R', 'R', 'B', 'R', 'G'}))
 }
 ```
 #### Can we optimise?
 ```bash
 - Try 3 pointers In a Single Loop
+- low, mid & high
+- low to mid    - contains all Rs
+- mid to high   - contains all Gs
+- high onwards  - contains all Bs
 ```
 ```go
+func CharArrange(str []rune) []rune {
+  size := len(str)
+  if size <= 1 {
+    return str
+  }
+  
+  var low, mid, high int
+  high = size - 1
+  
+  while mid < high {
+    if str[mid] == 'R' {
+      str[low], str[mid] = str[mid], str[low]
+      low++
+      mid++
+    } else if str[mid] == 'G' {
+      mid++
+    } else if str[mid] == 'B' {
+      str[high], str[mid] = str[mid], str[high]
+      high--
+      mid++
+    }
+  }
+  return str
+}
 ```
