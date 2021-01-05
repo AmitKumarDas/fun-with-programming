@@ -1,6 +1,10 @@
 ### Check if Two Binary Trees have same leaves
-- `O(h)` `Multiple Trees` `Stack` `Queue` 
-- `If O(h) Then Stack` `Multiple Trees & Stacks` `bool && bool`
+- `O(h)` `Multiple Trees` `Stack` `Traversal`
+
+#### Tips
+- `If O(h) && BinTrees Then Stack` 
+- `Multiple Trees & Stacks` 
+- `bool && bool`
 
 #### What?
 ```bash
