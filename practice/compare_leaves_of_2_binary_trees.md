@@ -1,5 +1,5 @@
 ### Check if Two Binary Trees have same leaves
-`O(h)` `Multiple Trees` `Stack` `Queue`
+`O(h)` `Multiple Trees` `Stack` `Queue` `If O(h) Then Stack` `Multiple Trees & Stacks`
 
 #### What?
 ```bash
