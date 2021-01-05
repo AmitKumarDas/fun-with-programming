@@ -1,5 +1,5 @@
 ### Check if Two Binary Trees have same leaves
-`O(h)` `Multiple Trees` `Stack` `Queue` `If O(h) Then Stack` `Multiple Trees & Stacks`
+`O(h)` `Multiple Trees` `Stack` `Queue` `If O(h) Then Stack` `Multiple Trees & Stacks` `bool && bool`
 
 #### What?
 ```bash
@@ -9,7 +9,22 @@
 
 #### Scars
 ```bash
-- Avoid getting trapped inside multi tree recursions
+- Avoid getting trapped in Multi Tree Recursions
+- When Multiple Recursions then stick to Pure Functions
+- Handle Multiple Recursions One-At-A-Time
+- Since Binary Tree try for O(h) space
+- I.E. Traverse One Height Then Next Ht & So On
+```
+
+```bash
+- true  == true   -> true
+- false == false  -> true
+- false && false  -> false
+- true  && true   -> true
+
+- Consider Carefully & Choose One
+- `bool == bool` _OR_
+- `bool && bool`
 ```
 
 #### How?
@@ -233,6 +248,12 @@ func CompareBTLeaves(a, b *BT) bool {
       return false
     }
   }
-  return s1.IsEmpty() == s2.IsEmpty()
+
+  // --
+  // false == false returns true which might be WRONG
+  // --
+  // return s1.IsEmpty() == s2.IsEmpty()
+
+  return s1.IsEmpty() && s2.IsEmpty()
 }
 ```
