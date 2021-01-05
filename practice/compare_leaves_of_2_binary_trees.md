@@ -41,10 +41,6 @@
 ```
 
 #### Source Code
-```bash
-- O(m+n) runtime
-- O(m) space
-```
 ```go
 type BT struct {
   Val           int
@@ -75,109 +71,6 @@ func (b *BT) BalancedAdd(val int) {
     b.Right.BalancedAdd(val)
   }
 }
-
-// --
-// How about synchronizing the Q operations
-// in a mutex
-// --
-type Queue struct {
-  Items []int
-  IsEnd bool  // useful for parallel processing
-}
-
-func (q *Queue) Enq(val int) {
-  q.Items = append(q.Items, val)
-}
-
-func (q *Queue) IsEmpty() bool {
-  return len(q.Items) == 0
-}
-
-func (q *Queue) Deq() int {
-  if len(q.Items) == 0 {
-    panic("Deq invoked on empty Q")
-  }
-  var first = q.Items[0]
-  q.Items = q.Items[1:]
-  return first
-}
-
-func (b *BT) EnqLeavesInto(q *Queue) {
-  b.enqLeavesInto(q)
-  q.IsEnd = true
-}
-
-// --
-// Recursive Calls
-// --
-func (b *BT) enqLeavesInto(q *Queue) {
-  if b.Left == nil && b.Right == nil {
-    q.Enq(b.Val)
-  }
-  if b.Left != nil {
-    b.Left.enqLeavesInto(q)
-  }
-  if b.Right != nil {
-    b.Right.enqLeavesInto(q)
-  }
-}
-
-func (b *BT) DeqLeavesAndCompareFrom(q *Queue) bool {
-  var cmp = b.deqLeavesAndCompareFrom(q)
-  if !cmp {
-    return false
-  }
-  return q.IsEmpty()
-}
-
-// --
-// Recursive Calls
-// --
-func (b *BT) deqLeavesAndCompareFrom(q *Queue) bool {
-  if b.Left == nil && b.Right == nil {
-    val := b.Val
-    var hasLeaf bool
-    var got int
-    while !q.IsEnd {
-       if !q.IsEmpty() {
-          got = q.Deq()
-          hasLeaf = true
-          // --
-          // Compare only one leaf at a time
-          // --
-          break
-       }
-    }
-    if !hasLeaf {
-      // --
-      // BT has leaf while Q is parsed out
-      // --
-      return false
-    }
-    return val == got
-  }
-  
-  var cmp bool
-  if b.Left != nil {
-    cmp = b.Left.deqLeavesAndCompareFrom(q)
-    if !cmp {
-      return false
-    }
-  }
-  if b.Right != nil {
-    cmp = b.Right.deqLeavesAndCompareFrom(q)
-    if !cmp {
-      return false
-    }
-  }
-  return cmp
-}
-
-func CompareBTLeaves(one, two *BT) bool {
-  var q = &Queue{}
-  one.EnqLeavesInto(q)
-  return two.DeqLeavesAndCompareFrom(q)
-}
 ```
 #### Source Code - Optimise Via Iterative Way
 ```bash
@@ -190,7 +83,6 @@ func CompareBTLeaves(one, two *BT) bool {
 - Here GetNextLeaf()
 - O(h) Space Possible When Comparisons are Done Together
 - h implies height
-- THINK: However, if we do comparisons together then h = 1
 ```
 
 ```bash
@@ -204,6 +96,10 @@ func BT struct {
   Right *BT
 }
 
+func isLeaf(b *BT) bool {
+  return b.Left == nil && b.Right == nil
+}
+
 // --
 // This logic might seem tricky
 // It does a height traversal of left side first
@@ -212,7 +108,7 @@ func BT struct {
 // --
 func getNextLeaf(s *Stack) *BT {
   p := s.Pop()
-  for p.Left != nil || p.Right != nil {
+  for !isLeaf(p) {
     // --
     // Since Stack is LIFO
     // Right is Pushed First
