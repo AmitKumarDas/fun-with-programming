@@ -5,7 +5,7 @@ Segregate the values of the array so that all the
 - Bs come last
 
 #### Tags
-`2-pointer` `loop` `swap`
+`3-pointer` `loop` `swap` `mid<=high`
 
 #### Note
 ```bash
@@ -88,7 +88,13 @@ func CharArrange(str []rune) []rune {
   var low, mid, high int
   high = size - 1
   
-  while mid < high {
+  // --
+  // Think Why The Cond Should Be <=
+  // - Even though 'mid' equals 'high'
+  // - 'low' & 'mid' might need swaps
+  // - Remember there are 3 pointers
+  // --
+  for mid <= high {
     if str[mid] == 'R' {
       str[low], str[mid] = str[mid], str[low]
       low++
@@ -98,7 +104,6 @@ func CharArrange(str []rune) []rune {
     } else if str[mid] == 'B' {
       str[high], str[mid] = str[mid], str[high]
       high--
-      mid++
     }
   }
   return str
