@@ -97,9 +97,9 @@
 ```
 
 #### DP
-- Longest Palindromic Substring `table` `diagonal` `loop` `if-elif`
-- Longest Palindromic SubSequence `table` `diagonal` `loop` `if-elif`
+- Longest Palindromic Substring `table` `diagonal` `loop` `equation`
+- Longest Palindromic SubSequence `table` `diagonal` `loop` `equation`
 
 #### Array
-- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `loop` `3-pointer` `rune` `swap` `if-elif`
-- Dutch Flag with 4 Chars `loop` `4-pointer` `rune` `swap` `if-elif`
+- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `3-pointer` `rune` `swap` `o(n)` `o(1)`
+- Dutch Flag with 4 Chars `4-pointer` `rune` `swap` `o(n)` `o(1)`
