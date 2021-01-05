@@ -101,4 +101,5 @@
 - Longest Palindromic SubSequence `table` `diagonal` `loop` `if-elif`
 
 #### Array
-- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `loop` `2-pointer` `rune` `swap` `if-elif`
+- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `loop` `3-pointer` `rune` `swap` `if-elif`
+- Dutch Flag with 4 Chars `loop` `4-pointer` `rune` `swap` `if-elif`
