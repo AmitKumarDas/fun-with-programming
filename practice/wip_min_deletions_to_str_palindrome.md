@@ -7,8 +7,8 @@
 
 ```bash
 - Palindrome - Diagonal & Up
-- dp[i][j]        // refers to substring
-- dp[i][j] = m    // m = len(str)
+- dp[i][j]        // refers the substring
+- dp[i][j] = m    // m = len(str) // no of deletions to Palin
 - dp[i][i] = 0
 - dp[i][i+1] = 0  if str[i] == str[i+1]
 - dp[i][i+1] = 1  if str[i] != str[i+1]
