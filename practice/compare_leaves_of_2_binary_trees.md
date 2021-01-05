@@ -1,4 +1,5 @@
 ### Check if Two Binary Trees have same leaves
+`O(h)` `Multiple Trees` `Stack` `Queue`
 
 #### What?
 ```bash
@@ -162,4 +163,76 @@ func CompareBTLeaves(one, two *BT) bool {
 ```bash
 - O(m+n)   runtime - m & n are tree node count of trees
 - O(h1+h2) space   - h1 & h2 are the heights of trees
+```
+
+```bash
+- Iterative Implies GetNext()
+- Here GetNextLeaf()
+- O(h) Space Possible When Comparisons are Done Together
+- h implies height
+- THINK: However, if we do comparisons together then h = 1
+```
+
+```bash
+- Since Multiple Trees Stick to Pure Functions
+```
+
+```go
+func BT struct {
+  Val   int
+  Left  *BT
+  Right *BT
+}
+
+// --
+// This logic might seem tricky
+// It does a height traversal of left side first
+// then a height traversal of right side
+// Always remember Stack & LIFO semantics
+// --
+func getNextLeaf(s *Stack) *BT {
+  p := s.Pop()
+  for p.Left != nil || p.Right != nil {
+    // --
+    // Since Stack is LIFO
+    // Right is Pushed First
+    // i.e. Right Node stays at bottom
+    // --
+    if p.Right != nil {
+      s.Push(p.Right)
+    }
+
+    // --
+    // Left Node is Always on Top of Right Node
+    // --
+    if p.Left != nil {
+      s.Push(p.Left)
+    }
+
+    // --
+    // In General, A Left Node Pops Out First
+    // Then A Right Node
+    // --
+    p = s.Pop()
+  }
+  return p
+}
+
+func CompareBTLeaves(a, b *BT) bool {
+  var s1 = &Stack{}
+  var s2 = &Stack{}
+  
+  s1.Push(a)
+  s2.Push(b)
+  
+  for !s1.IsEmpty() && !s2.IsEmpty() {
+    l1 := getNextLeaf(s1)
+    l2 := getNextLeaf(s2)
+    
+    if l1.Val != l2.Val {
+      return false
+    }
+  }
+  return s1.IsEmpty() == s2.IsEmpty()
+}
 ```
