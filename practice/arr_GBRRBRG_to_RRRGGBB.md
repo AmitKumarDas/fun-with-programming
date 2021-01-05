@@ -156,6 +156,9 @@ func main() {
   // --
   // %c is used as formatting option
   // --
-  fmt.Printf("%c\n", CharArrange([]rune{'A', 'C', 'B', 'D', 'D', 'D', 'B', 'C', 'B', 'C', 'A', 'A', 'D'}))
+  fmt.Printf(
+    "%c\n",
+    CharArrange([]rune{'A', 'C', 'B', 'D', 'D', 'D', 'B', 'C', 'B', 'C', 'A', 'A', 'D'}),
+  )
 }
 ```
