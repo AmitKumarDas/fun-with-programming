@@ -109,3 +109,12 @@ func CharArrange(str []rune) []rune {
   return str
 }
 ```
+#### Can we solve when there are 4 chars
+```bash
+- A, B, C, D are only valid array chars
+- Output should follow the order D then C then A then B
+```
+```bash
+- Input:  []rune{'A', 'C', 'B', 'D', 'D', 'D', 'B', 'C', 'B', 'C', 'A', 'A', 'D'}
+- Output: []rune{'D', 'D', 'D', 'D', 'C', 'C', 'C', 'A', 'A', 'A', 'B', 'B', 'B'}
+```
