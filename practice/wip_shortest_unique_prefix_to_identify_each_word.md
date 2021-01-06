@@ -32,6 +32,15 @@ Output: [he, t, ho, a, y]
   - pos = rune - 'A'
 ```
 
+```bash
+- trie.Val DoesNot Exist
+```
+
+```bash
+- Use []*Trie         // With Position Calcs _OR_
+- Use map[rune]*Trie
+```
+
 #### Source Code
 ```go
 // --
@@ -40,7 +49,7 @@ Output: [he, t, ho, a, y]
 type Trie struct {
   Seen        int       // Freq of Visits
   Next        []*Trie
-  IsEnd       bool
+  IsEnd       bool      // Good To Have
 }
 
 func (t *Trie) Add(word string) {
@@ -85,6 +94,13 @@ func (t *Trie) GetUniqPrefixFor(word string) string {
     prefix = append(prefix, c)
     var pos = c - 'A'
     tmp = tmp.Next[pos]   // Its Never The Root But Next
+    
+    // --
+    // If A Word can be a Prefix of Another Word
+    // Then Use Below Logic:
+    //
+    // if tmp == nil || tmp.Seen == 1 {..}
+    // --
     if tmp == nil || tmp.Seen == 1 || tmp.IsEnd {
       break
     }
