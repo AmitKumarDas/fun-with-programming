@@ -15,21 +15,21 @@ Output: [he, t, ho, a, y]
 
 - Since Trie Can Handle Prefixes Well
 - Use Trie DataStructure
+- Store Freq Of Visits Based on Prefix Sequence
 ```
 
+#### Tips
 ```bash
-- If words Hi, Her & Hello are given
-- Take Hi
-  - h has 2 Nested Tries - move on
-  - i has 0 Nested Trie - so hi is a prefix
-- Take Her
-  - h has 2 Nested Tries - move on
-  - e has 2 Nested Trie - move on
-  - r has 0 Nested Trie - so her is a prefix
-- Take Hello
-  - h has 2 Nested Tries - move on
-  - e has 2 Nested Tries - move on
-  - l has 1 Nested Trie - so hel is a prefix
+- If ASCII set then size = 128
+- If only small case English chars then:
+  - size = 26
+  - pos = rune - 'a'
+- If only capital case English chars then:
+  - size = 26
+  - pos = rune - 'A'
+- If both case English chars then:
+  - size = 128 // since small & cap cases are not together
+  - pos = rune - 'A'
 ```
 
 #### Source Code
@@ -38,6 +38,7 @@ Output: [he, t, ho, a, y]
 // Trie Does Not Need a Val? Really?
 // --
 type Trie struct {
+  Seen        int       // Freq of Visits
   Next        []*Trie
   IsEnd       bool
 }
@@ -49,11 +50,19 @@ func (t *Trie) Add(word string) {
 
   var tmp = t
   for idx, c := range word {
-    var pos = c - 'a'
+    var pos = c - 'A'
+    
+    // --
+    // Start off With Next
+    // As Per the Data Structure
+    // Root Has No Role Here
+    // --
     if tmp.Next[pos] == nil {
-      tmp.Next[pos] = &Trie{Next: make([]*Trie, 26)}
+      tmp.Next[pos] = &Trie{Next: make([]*Trie, 128), Seen: 1,}
+    } else {
+      tmp.Next[pos].Seen += 1   // Freq of Visits In Prefix Sequence
     }
-    if idx+1 == size(word) {
+    if idx+1 == len(word) {
       tmp.Next[pos].IsEnd = true  
     }
     tmp = tmp.Next[pos]
@@ -65,12 +74,18 @@ func (t *Trie) GetUniqPrefixFor(word string) string {
     return ""
   }
   
+  if len(t.Next) == 0 {
+    return ""
+  }
+  
   var prefix []rune
+  var tmp = t
+
   for _, c := range word {
     prefix = append(prefix, c)
-    var pos = c - 'a'
-    var tre = t.Next[pos]
-    if tre == nil || len(tre.Next) <= 1 || tre.IsEnd {
+    var pos = c - 'A'
+    tmp = tmp.Next[pos]   // Its Never The Root But Next
+    if tmp == nil || tmp.Seen == 1 || tmp.IsEnd {
       break
     }
   }
@@ -79,7 +94,7 @@ func (t *Trie) GetUniqPrefixFor(word string) string {
 }
 
 func UniqPrefixes(words []string) []string {
-  var root = &Trie{Next: make([]*Trie, 26)}
+  var root = &Trie{Next: make([]*Trie, 128)}
   for _, word := range words {
     root.Add(word)
   }
@@ -96,7 +111,12 @@ func UniqPrefixes(words []string) []string {
 #### Test
 ```go
 func main() {
-  fmt.Printf("%v\n", UniqPrefixes([]string{"Hi", "Her", "Hello"}))
+  // [H hi her hel fella fello A a z Z]
+  fmt.Printf(
+    "%v\n", 
+    UniqPrefixes(
+      []string{"Hi", "hi", "her", "hello", "fella", "fellow", "Andy", "am", "ze", "Zero"}),
+    ),
 }
 ```
 
