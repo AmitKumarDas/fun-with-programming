@@ -25,7 +25,7 @@ Output: 10 5 6 7 4 2 -9 -2 -3 -1
 - If neg & not last then swap with next pos item or last if no pos found
 ```
 
-#### Source Code
+#### Source Code - Corrections Needed
 ```go
 func SegPosNeg(given []int) []int {
   var size = len(given)
@@ -106,5 +106,13 @@ func main() {
   fmt.Printf("%v\n", SegPosNeg([]int{-10, -20, 0}))
   fmt.Printf("%v\n", SegPosNeg([]int{0, -10, -20, 0}))
   fmt.Printf("%v\n", SegPosNeg([]int{0, -10, -20, 1, 0, -1})) // IMP
+  fmt.Printf("%v\n", SegPosNeg([]int{9, -3, 5, -2, -8, -6, 1, 3})) // !! Does Not Work !!
 }
 ```
+
+#### Source Code - Negative Then Positive
+
+#### Source Code - Via MergeSort
+
+#### References
+- https://www.techiedelight.com/segregate-positive-negative-integers-using-mergesort/
