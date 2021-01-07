@@ -2,32 +2,20 @@
 
 #### Facts
 ```bash
-- l<=root
-- root<right
+- l <= root
+- root < right
 - in-order gives the full ordered list
+- last but one from in-order provides the answer
 ```
 
 #### How
 ```bash
 - Get Root Node
-- If Left & Right Not Present then Error
-- Traverse Right if Present
-- Traverse Left if Right Not Present
-- If Left & Right Not Present Then Set Max
-- On Return If Max is Set Then Set 2nd Max
-
-- Get Root Node
-- If NO L & R then Error
-- If R push to Stack
-- If No R push Root to Stack
-- If no R & L then pop twice & return
-
-- Get Root Node
 - If No L & R then Error
 
 - If R Recursion with R
-- If No R Add Root to Array
-- If L Recursion with L
+- If No R Add Root As Max or Sec Max
+- If Max or Sec Max != nil && L != nil Recursion with L
 ```
 
 ### Source Code
@@ -45,6 +33,9 @@ func SecLarg(root *BST) int {
   return *sec
 }
 
+// --
+// Recursive
+// --
 func secLargest(root *BST, max, sec *int) {
   if root.Right != nil {
     secLargest(root.Right, max, sec)
