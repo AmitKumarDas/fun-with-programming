@@ -50,8 +50,8 @@ func MatchPatternOrder(text, pat string) bool {
   var occurs = map[rune]*Occurence{}
   for idx, t := range text {
     if patm[t] {
-      o, ok := occurs[t]
-      if !ok {
+      o, found := occurs[t]
+      if !found {
         occurs[t] = &Occurence{First: idx} // Set Only Once
       } else {
         o.Last = idx   // Keeps Updating When Found
@@ -74,4 +74,15 @@ func MatchPatternOrder(text, pat string) bool {
   }
   return true
 }
+```
+
+#### Source Code - Repeated Removal
+
+```bash
+- Loop text & mutate by removing chars that are not in pattern
+- Loop text & remove adjacent chars that are equal
+- return text == pat
+```
+
+```go
 ```
