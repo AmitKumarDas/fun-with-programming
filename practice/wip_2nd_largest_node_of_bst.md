@@ -14,8 +14,8 @@
 - If No L & R then Error
 
 - If R Recursion with R
-- If No R Add Root As Max or Sec Max
-- If Max or Sec Max != nil && L != nil Recursion with L
+- If No R Add Root As Max or Sec Max whichever is Nil
+- If Either Max is Nil or Sec Max is Nil && L is not Nil Recursion with L
 ```
 
 ### Source Code
@@ -59,4 +59,8 @@ func secLargest(root *BST, max, sec *int) {
     secLargest(root.Left, max, sec)
   }
 }
+```
+
+#### Source Code - Via Counter
+```go
 ```
