@@ -86,3 +86,6 @@ func MatchPatternOrder(text, pat string) bool {
 
 ```go
 ```
+
+#### References
+- https://www.techiedelight.com/determine-string-follows-specified-order/
