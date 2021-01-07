@@ -100,6 +100,7 @@ func main() {
   fmt.Printf("%v\n", SegPosNeg([]int{10, 5, 6, -9, -2, -3, 7, 4, 2, -1}))
   fmt.Printf("%v\n", SegPosNeg([]int{10, 5, -9, 7, -20, -25, 20}))   // IMP
   fmt.Printf("%v\n", SegPosNeg([]int{10}))
+  fmt.Printf("%v\n", SegPosNeg([]int{0, 0, 0}))
   fmt.Printf("%v\n", SegPosNeg([]int{10, 20}))
   fmt.Printf("%v\n", SegPosNeg([]int{10, -20}))
   fmt.Printf("%v\n", SegPosNeg([]int{-10, -20}))  // IMP
