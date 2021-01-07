@@ -1,7 +1,7 @@
 ### Segregate Positive & Negative Numbers using Merge Sort
 
 #### Tags
-- `stable` `merge sort` `divide n conquer`
+- `stable` `merge sort` `divide n conquer` `basics` `partition` `learn`
 
 #### What
 ```bash
@@ -98,20 +98,23 @@ func SegPosNeg(given []int) []int {
 ```go
 func main() {
   fmt.Printf("%v\n", SegPosNeg([]int{10, 5, 6, -9, -2, -3, 7, 4, 2, -1}))
-  fmt.Printf("%v\n", SegPosNeg([]int{10, 5, -9, 7, -20, -25, 20}))   // IMP
+  fmt.Printf("%v\n", SegPosNeg([]int{10, 5, -9, 7, -20, -25, 20}))    // IMP
   fmt.Printf("%v\n", SegPosNeg([]int{10}))
   fmt.Printf("%v\n", SegPosNeg([]int{0, 0, 0}))
   fmt.Printf("%v\n", SegPosNeg([]int{10, 20}))
   fmt.Printf("%v\n", SegPosNeg([]int{10, -20}))
-  fmt.Printf("%v\n", SegPosNeg([]int{-10, -20}))  // IMP
+  fmt.Printf("%v\n", SegPosNeg([]int{-10, -20}))                      // IMP
   fmt.Printf("%v\n", SegPosNeg([]int{-10, -20, 0}))
   fmt.Printf("%v\n", SegPosNeg([]int{0, -10, -20, 0}))
-  fmt.Printf("%v\n", SegPosNeg([]int{0, -10, -20, 1, 0, -1})) // IMP
-  fmt.Printf("%v\n", SegPosNeg([]int{9, -3, 5, -2, -8, -6, 1, 3})) // !! Does Not Work !!
+  fmt.Printf("%v\n", SegPosNeg([]int{0, -10, -20, 1, 0, -1}))         // IMP
+  fmt.Printf("%v\n", SegPosNeg([]int{9, -3, 5, -2, -8, -6, 1, 3}))    // !! Does Not Work !!
 }
 ```
 
 #### Source Code - Negative Then Positive
+```go
+// TODO
+```
 
 #### Source Code - Via MergeSort (Negative Then Positive)
 ```go
@@ -150,7 +153,9 @@ func SegMergeSort(given []int) []int {
     }
   }
 
-  return SegMerge(SegMergeSort(left), SegMergeSort(right))
+  sortedLeft = SegMergeSort(left)           // Recursion
+  sortedRight = SegMergeSort(right)         // Recursion
+  return SegMerge(sortedLeft, sortedRight)  // Merge Both Halves
 }
 
 func SegMerge(left, right []int) []int {
@@ -187,6 +192,102 @@ func SegMerge(left, right []int) []int {
   }
   
   return neg
+}
+```
+
+#### Source Code ~ MergeSort Via Partition ~ Negative Then Positive
+```go
+// --
+// Partition Between Low & High 
+// Partition Recursively 2 Times
+// Merge at-last Within Partition Itself
+// --
+
+// --
+// TIP:
+//
+// - Partition follows post-order traversal scheme
+// - 1/ Recursively Partition Left Elements
+// - 2/ Recursively Partition Right Elements
+// - 3/ Operate on Left Results & Right Results
+// --
+
+// --
+// NO RETURN OF ARRAY STYLE
+// --
+
+// --
+// partition  With 4 args ~ orig aux, low high
+// merge      With 5 args ~ orig aux, low mid high
+// --
+
+func merge(orig, aux []int, low, mid, high int) {
+  var k = low
+  
+  // --
+  // Left Negatives to Left
+  // --
+  for i:=low; i<=mid; i++ {
+    if orig[i] < 0 {
+      aux[k] = orig[i]
+      k++
+    }
+  }
+  
+  // --
+  // Right Negatives to Left
+  // --
+  for i:=mid+1; i<=high; i++ {
+    if orig[i] < 0 {
+      aux[k] = orig[i]
+      k++
+    }
+  }
+  
+  // --
+  // Left Positives to Right
+  // --
+  for i:=low; i<=mid; i++ {
+    if orig[i] >= 0 {
+      aux[k] = orig[i]
+      k++
+    }
+  }
+  
+  // --
+  // Right Positives to Right
+  // --
+  for i:=mid+1; i<=high; i++ {
+    if orig[i] >= 0 {
+      aux[k] = orig[i]
+      k++
+    }
+  }
+}
+
+func partition(orig, aux []int, low, high int) {
+  if high == low {
+    return                           // LOGIC 1
+  }
+  
+  var mid = low + ((high-low)>>1)        // x>>1 means x/2
+  
+  partition(orig, aux, low, mid)     // LEFT
+  partition(orig, aux, mid+1, high)  // RIGHT
+  
+  merge(orig, aux, low, mid, high)   // LOGIC 2
+}
+
+func SegNegPosMergeSort(given []int) []int {
+  var size = len(given)
+  if size <= 1 {
+    return given
+  }
+  
+  var aux = make([]int, size)
+
+  partition(given, aux, 0, size-1)
+  return aux
 }
 ```
 
