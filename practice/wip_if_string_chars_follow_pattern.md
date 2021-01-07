@@ -41,7 +41,10 @@ func MatchPatternOrder(text, pat string) bool {
   if text == "" {
     return pat == ""
   }
-  
+  if pat == "" {
+    return true
+  }
+
   var patm = make(map[rune]bool, len(pat))
   for _, c := range pat {
     patm[c] = true
@@ -50,29 +53,58 @@ func MatchPatternOrder(text, pat string) bool {
   var occurs = map[rune]*Occurence{}
   for idx, t := range text {
     if patm[t] {
-      o, found := occurs[t]
-      if !found {
-        occurs[t] = &Occurence{First: idx} // Set Only Once
+      _, found := occurs[t]
+      if !found {         // Found For The First Time
+        occurs[t] = &Occurence{
+          First: idx,     // Set Only Once
+          Last: idx,      // Reqd For One Time Appearance Char(s)
+        }
       } else {
-        o.Last = idx   // Keeps Updating When Found
-        occurs[t] = o
+        occurs[t].Last = idx  // Last Updates When Found Again
       }
     }
   }
   
   var last int
-  for idx, c := range pat {
-    o := occurs[c]
-    if idx == 0 {
-      last = o.Last
+  
+  // ---
+  // Used As A Toggle
+  // Can Not Use Idx == 0 As First Seen
+  // Since Pat Char May Not Appear In Text
+  // ---
+  var firstSeen = true
+
+  for _, c := range pat {
+    o, found := occurs[c]
+    if !found {
       continue
     }
-    if o.min < last {
+    if firstSeen {
+      last = o.Last
+      firstSeen = false
+      continue            // No Comparisons For First Pat Char
+    }
+    if o.First < last {
       return false
     }
-    last = o.Last // Reset last to current last
+    last = o.Last         // Reset to current last
   }
   return true
+}
+```
+
+#### Test
+```go
+func main() {
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "la"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "lb"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "zx"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "ae"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "ea"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "el"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "ro"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "re"))
+  fmt.Printf("%t\n", MatchPatternOrder("aeroplane", "er"))
 }
 ```
 
