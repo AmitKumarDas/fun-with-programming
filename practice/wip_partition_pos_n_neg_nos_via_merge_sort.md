@@ -1,7 +1,7 @@
 ### Segregate Positive & Negative Numbers using Merge Sort
 
 #### Tags
-- `stable order` `sort` `merge sort`
+- `stable` `merge sort` `divide n conquer`
 
 #### What
 ```bash
@@ -112,7 +112,82 @@ func main() {
 
 #### Source Code - Negative Then Positive
 
-#### Source Code - Via MergeSort
+#### Source Code - Via MergeSort (Negative Then Positive)
+```go
+// --
+// How
+// 
+// - Keep Negatives To Left
+// - Keep 0s & Positives to Right
+
+func SegNegPosByMergeSort(given []int) []int {
+  var size = len(given)
+  if size <= 1 {
+    return given
+  }
+  
+  return SegMergeSort(given)
+}
+
+func SegMergeSort(given []int) []int {
+  if len(given) == 1 {
+    return given
+  }
+  
+  var size = len(given)
+  var mid = int(size >> 1)      // Divide By 2
+  var left = make([]int, mid)
+  var right = make([]int, size-mid)
+  
+  for idx, item := range given {
+    if idx < mid {
+      // Fill left
+      left[idx] = item
+    } else {
+      // Fill right
+      right[idx-mid] = item
+    }
+  }
+
+  return SegMerge(SegMergeSort(left), SegMergeSort(right))
+}
+
+func SegMerge(left, right []int) []int {
+  var sizel = len(left)
+  var sizer = len(right)
+  
+  if sizel == 0 {
+    return right
+  }
+  if sizer == 0 {
+    return left
+  }
+  
+  var neg, pos []int
+
+  for i:=0; i<sizel; i++ {
+    if left[i] < 0 {
+      neg = append(neg, left[i])
+    } else {
+      pos = append(pos, left[i])
+    }
+  }
+  
+  for i:=0; i<sizer; i++ {
+    if right[i] < 0 {
+      neg = append(neg, right[i])
+    } else {
+      pos = append(pos, right[i])
+    }
+  }
+  
+  for i:=0; i<len(pos); i++ {
+    neg = append(neg, pos[i])
+  }
+  
+  return neg
+}
+```
 
 #### References
 - https://www.techiedelight.com/segregate-positive-negative-integers-using-mergesort/
