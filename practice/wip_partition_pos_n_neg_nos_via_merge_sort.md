@@ -270,7 +270,7 @@ func partition(orig, aux []int, low, high int) {
     return                           // LOGIC 1
   }
   
-  var mid = low + ((high-low)>>1)        // x>>1 means x/2
+  var mid = low + ((high-low)>>1)    // x>>1 means x/2
   
   partition(orig, aux, low, mid)     // LEFT
   partition(orig, aux, mid+1, high)  // RIGHT
