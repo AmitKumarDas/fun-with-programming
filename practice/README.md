@@ -4,14 +4,14 @@
 ```bash
 - Tree Tips
 
-- When O(1) space constraint then Recursion 
-- When O(1) space constraint then ~ DFS Traversal
+- O(1) space ~ Recursion 
+- O(1) space ~ DFS Traversal
 ```
 
 ```bash
 - Tree Tips
 
-- When space is not constraint then
+- No Space Constraint
   - Queue i.e. ~ BFS traversal _OR_
   - Stack i.e. ~ BFS traversal
 ```
@@ -97,8 +97,8 @@
 ```
 
 #### DP
-- Longest Palindromic Substring `table` `diagonal` `loop` `equation`
-- Longest Palindromic SubSequence `table` `diagonal` `loop` `equation`
+- Longest Palindromic Substring `dp` `diagonal` `loop` `equation`
+- Longest Palindromic SubSequence `dp` `diagonal` `loop` `equation`
 
 #### Array
 - [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `3-pointer` `rune` `swap` `o(n)` `o(1)`
