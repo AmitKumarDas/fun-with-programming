@@ -110,4 +110,8 @@
 - Next Greater Elem In Array 
   - `stack`
   - `Next Great EATER elMENt In tRRAY is sTACKo`
+- Next Greater Elem In Circular Array
+  - `stack`
+  - `CirCle Twice And Use mOOdulOO`
+  - `for i:=0; i<2*n; i++ {arr[i%n]}`
 - 
