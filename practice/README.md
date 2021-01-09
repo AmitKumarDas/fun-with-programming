@@ -109,5 +109,5 @@
   - `4-pointer` `rune` `swap` `o(n)` `o(1)`
 - Next Greater Elem In Array 
   - `stack`
-  - Next GreatEATER elMENt In tRRAY is sTACKo
+  - `Next` `Great``EATER` el`MEN`t In t`RRAY` is `sTACK`o
 - 
