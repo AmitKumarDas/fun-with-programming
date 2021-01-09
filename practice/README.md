@@ -97,9 +97,17 @@
 ```
 
 #### DP
-- Longest Palindromic Substring `dp` `diagonal` `loop` `equation`
-- Longest Palindromic SubSequence `dp` `diagonal` `loop` `equation`
+- Longest Palindromic Substring 
+  - `dp` `diagonal` `loop` `equation`
+- Longest Palindromic SubSequence 
+  - `dp` `diagonal` `loop` `equation`
 
 #### Array
-- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem `3-pointer` `rune` `swap` `o(n)` `o(1)`
-- Dutch Flag with 4 Chars `4-pointer` `rune` `swap` `o(n)` `o(1)`
+- [GBRRBRG]_to_[RRRGGBB] i.e. Dutch Flag Problem 
+  - `3-pointer` `rune` `swap` `o(n)` `o(1)`
+- Dutch Flag with 4 Chars 
+  - `4-pointer` `rune` `swap` `o(n)` `o(1)`
+- Next Greater Elem In Array 
+  - `stack`
+  - Next GreatEATER elMENt In tRRAY is sTACKo
+- 
