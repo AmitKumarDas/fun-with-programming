@@ -114,9 +114,12 @@
 
 #### Stack
 - Next Greater Elem In Array 
-  - `stack the array indexes`
+  - `stack the array indexes ~ s-tacko-in`
+  - `stack.top comparison with arr[i]`
+  - `stack.pop if stack.top compare passes`
   - `Next Great EATER elMENt In tRRAY is sTACKo`
 - Next Greater Elem In Circular Array
   - `stack the array indexes`
   - `CirCle Twice And Use mOOdulOO`
+  - `circular ~ stack array ~ stray ~ modular`
   - `for i:=0; i<2*n; i++ {arr[i%n]}`
