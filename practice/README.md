@@ -108,10 +108,10 @@
 - Dutch Flag with 4 Chars 
   - `4-pointer` `rune` `swap` `o(n)` `o(1)`
 - Next Greater Elem In Array 
-  - `stack the indexes`
+  - `stack the array indexes`
   - `Next Great EATER elMENt In tRRAY is sTACKo`
 - Next Greater Elem In Circular Array
-  - `stack the indexes`
+  - `stack the array indexes`
   - `CirCle Twice And Use mOOdulOO`
   - `for i:=0; i<2*n; i++ {arr[i%n]}`
 - 
