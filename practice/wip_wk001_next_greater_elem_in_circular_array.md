@@ -4,26 +4,33 @@
 ```bash
 Input:      [1, 5, 4, 3, 2, 6, 9]
 Output:     [
-             1 < 5 ~ 5, 
-             5 < push push push 6 ~ 6,  
-             4 < pop pop 6 ~ 6,  
-             3 < push 6 ~ 6,
-             2 < pop 6 ~ 6,
-             6 < 9 ~ 9,
-             9 < push push push push push ~ -1,
-             ]
+              push 1's idx,
+              
+              stack top < arr[i]          // 1 < 5
+                result[stack top] = arr[i]
+                stack pop
+              push 5's idx
+              
+              stack top < arr[i]          // 5 < 4
+                result[stack top] = arr[i]
+                stack pop
+              push 4's idx
+              
+              ...
+            ]
 ```
 
 #### Snippets ~ Circular Array Loop
 ```go
-var size = len(arr)
+var n = len(arr)
 
-for i:=0; i<2*size; i=int((i+1)%size) {
+for i:=0; i<2*n; i=int((i+1)%n) {
 }
 
-// or
+// _or_
 
-for i:=0; i<2*size; i++ {
-  j = i%size
+for i:=0; i<2*n; i++ {
+  j := i%n
+  // use j
 }
 ```
