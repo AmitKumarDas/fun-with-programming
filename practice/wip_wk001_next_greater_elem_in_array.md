@@ -8,7 +8,34 @@
 #### Samples
 ```bash
 Given:      [1, 4, 2,              1,  6,  2, 4]
-Output:     [4, 6, pop < pop' ~ 6, 6, push push -1, pop < pop' ~ 4, -1]
-            [4, 6, 6,              6, -1,  4, -1]
+Logic:      [
+              push 1's idx,
+              
+              stack top < arr[i]  // 1 < 4
+                result[1's idx] = 4 & pop
+              push 4's idx,
+              
+              stack top < arr[i]  // 4 < 2
+                --
+              push 2's idx,
+              
+              stack top < arr[i]  // 2 < 1
+                --
+              push 1's idx,
+              
+              stack top < arr[i]  // 1 < 6
+                result[1's idx] = 6 & pop
+                result[2's idx] = 6 & pop
+                result[4's idx] = 6 & pop
+              push 6's idx,
+              
+              stack top < arr[i]  // 6 < 2
+                --
+              push 2's idx,
+              
+              stack top < arr[i]  // 2 < 4
+                result[2's idx] = 4 & pop
+              push 4's idx,
+            ]
 ```
 
