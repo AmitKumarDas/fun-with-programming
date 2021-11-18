@@ -25,6 +25,13 @@
 ### DNS
 - https://github.com/ycd/dstp
   - dns - domain - testing - network - dig - troubleshoot - e2e
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md
+  - dns - external - nginx - dig - ingress - coredns with etcd backend
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/hostport.md
+  - headless service - kafka - sts - fqdn
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/ns-record.md
+  - namespace record - CRD - kind: DNSEndpoint - dns - external
+
 
 ### SLO
 - https://github.com/kruize/autotune
@@ -76,28 +83,7 @@ spec: # of nginx deployment
 
 
 
-```
-# how to go get any private github repo?
-# ans: set below in ~/.profile
 
-machine github.com username AmitKumarDas password <my github token with relevant access>
-```
-
-```
-// dns // external // nginx // dig // ingress // coredns with etcd backend
-- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md
-```
-
-```
-// headless service // kafka // sts // fqdn
-- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/hostport.md
-```
-
-```
-// namespace record // CRD // kind: DNSEndpoint // dns // external
-// custom resource definition
-- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/ns-record.md
-```
 
 ```yaml
 apiVersion: monitoring.coreos.com/v1
