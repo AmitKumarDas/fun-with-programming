@@ -1,18 +1,26 @@
 ### State of Golang Code 2021
+```yaml
 - how to go get any private github repo?
-	- set below in ~/.profile
-	- machine github.com username AmitKumarDas password <my github token with relevant access>
+- set below in ~/.profile
+- machine github.com username AmitKumarDas password <my github token with relevant access>
+
 - https://danielmangum.com/posts/how-kubernetes-validates-custom-resources/
-	- design - history - kubernetes - open api - validation - api
+- design - history - kubernetes - open api - validation - api
+
 - https://github.blog/2021-11-10-make-your-monorepo-feel-small-with-gits-sparse-index/
-	- monorepo - git - sparse index - contributing guide
+- monorepo - git - sparse index - contributing guide
+
 - https://github.com/stefanprodan/kustomizer/blob/main/pkg/objectutil/io.go
-	- yaml to unstruct - unstruct to yaml
+- yaml to unstruct - unstruct to yaml
+
 - https://github.com/kubernetes-sigs/prometheus-adapter/blob/master/deploy/manifests/custom-metrics-apiservice.yaml
-	- api - custom - kubernetes
-	- k8s.io/kube-aggregator/pkg/apis/apiregistration/v1beta1
-	- k8s.io/kube-aggregator/pkg/client/clientset_generated/clientset/typed/apiregistration/v1beta1
+- api - custom - kubernetes
+- k8s.io/kube-aggregator/pkg/apis/apiregistration/v1beta1
+- k8s.io/kube-aggregator/pkg/client/clientset_generated/clientset/typed/apiregistration/v1beta1
+
 - https://github.com/kubernetes/kubernetes/tree/master/pkg/proxy/userspace
+- load balancer - proxy - round robin - limit - socket
+```
 
 ```go
 // Node proxy via userspace socket
