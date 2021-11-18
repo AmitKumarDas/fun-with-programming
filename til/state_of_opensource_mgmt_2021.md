@@ -44,11 +44,27 @@
     - confirm the vision
     - what's happening now
     - what has changed
+  - standups should have following (every day can have a different theme)
+    - code reviews
+    - happiness reviews
+    - retrospectives
+    - vision reviews
+  - rules
+    - no more than 2 meetings per day
+    - some days can be no meeting day
+    - team events that force team to travel together, explore things beyond code
+  - tools
+    - [+] GitHub
+    - [+] MIRO
+    - [-] JIRA
+    - [-] Confluence
+    - [~] PPTs
 
 ### Project should
 - have its own compliance kit
 - have its own Post Mortem Analysis Kit 
-  - think there is no source code or logs or maintainers & issue/bug needs to be fixed
+  - what if there is no source code or logs or maintainers 
+  - PMA kit should still be able to identify the issue
 - learn from bugs, wars, troubleshooting articles
 - learn from other projects'
   - release notes
