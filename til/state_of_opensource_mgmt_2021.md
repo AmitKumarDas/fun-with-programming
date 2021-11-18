@@ -44,6 +44,10 @@
     - confirm the vision
     - what's happening now
     - what has changed
+    - change or no change in strategy when customers come in
+    - change or no change in strategy when community grows
+    - change or no change in strategy when we have multiple releases
+    - change or no change in strategy at scale
   - standups should have following (every day can have a different theme)
     - code reviews
     - happiness reviews
@@ -53,9 +57,11 @@
     - no more than 2 meetings per day
     - some days can be no meeting day
     - team events that force team to travel together, explore things beyond code
+    - should run, manage, upgrade, automate, scale, etc. the solution in EKS
   - tools
     - [+] GitHub
     - [+] MIRO
+    - [+] EKS
     - [-] JIRA
     - [-] Confluence
     - [~] PPTs
