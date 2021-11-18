@@ -1,5 +1,12 @@
 ### State of API 2021
 
+
+```yaml
+https://github.blog/2021-11-10-make-your-monorepo-feel-small-with-gits-sparse-index/
+
+// monorepo // git // sparse index // contributing guide
+```
+
 ```yaml
 https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
 
