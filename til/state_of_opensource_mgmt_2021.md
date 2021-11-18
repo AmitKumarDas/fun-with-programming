@@ -17,6 +17,9 @@
 - e2e automation
 - issue template
 - website with proper domain(s)
+
+- effective README
+- https://github.com/brancz/kube-rbac-proxy
 ```
 
 ### Development Cycle - During code
