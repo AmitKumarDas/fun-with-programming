@@ -38,7 +38,9 @@
 - https://github.com/cruise-automation/k-rail
 
 - https://kubernetes.io/docs/concepts/security/controlling-access/
-- authentication - access
+- authentication 
+- then authorization 
+- then admission control
 
 - https://kubernetes.io/docs/reference/access-authn-authz/authorization/
 - kubectl - rbac - user impersonation - can i 
