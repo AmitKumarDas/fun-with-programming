@@ -14,6 +14,7 @@
   - unit &/ integration automation
   - e2e automation
   - issue template
+  - website with proper domain(s)
 - During code
   - PR with couple of commits
   - rework PR immediately after above PR gets merged
