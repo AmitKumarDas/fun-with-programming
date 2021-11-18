@@ -12,6 +12,15 @@
   - kube_deployment_status_replicas & kube_deployment_status_replicas_available
   - alert on whether a deployment is rolled out successfully or stuck
   - kube_pod_container_resource_requests and kube_pod_container_resource_limits for capacity planning
+- https://github.com/common-fate/iamzero
+  - startup idea
+  - personised advice on IAM roles // platform team // end user
+  - security - read from error & propose the solution
+  - security policy for all clouds
+  - PGP Public Key - fingerprint - builds - penetration testing
+- https://github.com/cruise-automation/rbacsync
+- https://github.com/cruise-automation/k-rail
+
 
 ### DNS
 - https://github.com/ycd/dstp
@@ -34,98 +43,38 @@ spec: # of nginx deployment
         prometheus.io/scrape: "true"
         prometheus.io/port: "80"
 ```
+- https://github.com/kubernetes/kube-state-metrics/blob/master/examples/prometheus-alerting-rules/alerts.yaml
+  - snippets
+- 
 
 ### Orgs
 - Container Solutions Github
-  - // Secrets Management // platform // consulting // security
-  - // Helm monitoring
-  - // Rust via rustling // Learn // startup
-  - // Trow vs Docker // Just in time images in Kubernetes
-  - // Terraform Snippets // fellow // support // startup
-  - // From Runbooks to automated E2E
-  - // From How To Kubernetes documents to automated E2E
-  - // Custom Domains
-  - // Creating Docker Registry in Kubernetes
-  - // certificate // cert manager // dns // volumes // ebs
+  - Secrets Management - platform - consulting - security
+  - Helm monitoring
+  - Rust via rustling - learn
+  - Trow vs Docker - Just in time images in Kubernetes
+  - Terraform Snippets - learn
+  - From Runbooks to automated E2E
+  - From How To Kubernetes documents to automated E2E
+  - Creating Docker Registry in Kubernetes - custom domain
+  - certificate - cert manager - dns - volumes - ebs
 
 
-```
-// yaml // templating // variable declaration
-https://sidneyliebrand.io/blog/the-greatnesses-and-gotchas-of-yaml
-```
-
-```
-// build artifacts from source
-// inject into containers
-// can version & control your build environments
-https://github.com/openshift/source-to-image
-```
-
-```
-// go // python
-// personised advice on IAM roles // platform team // end user
-// security // read from error & propose the solution
-// startup idea // security policy for all clouds // openebs
-// K8s // GCP // Azure
-//
-// PGP Public Key // fingerprint // builds // penetration testing
-https://github.com/common-fate/iamzero
-```
+### YAML
+- https://sidneyliebrand.io/blog/the-greatnesses-and-gotchas-of-yaml
 
 
-```c
-// policy // security
-
-https://github.com/cruise-automation/rbacsync
-https://github.com/cruise-automation/k-rail
-```
+### Registry / Image
+- https://github.com/openshift/source-to-image
 
 
-```
-// yaml to unstruct // unstruct to yaml
-//
-https://github.com/stefanprodan/kustomizer/blob/main/pkg/objectutil/io.go
-```
 
-```
-// alerts // prometheus // indentation // rules
-https://github.com/kubernetes/kube-state-metrics/blob/master/examples/prometheus-alerting-rules/alerts.yaml
-```
+### Kubernetes code snippets
+- https://github.com/stefanprodan/kustomizer/blob/main/pkg/objectutil/io.go
+  - unstructured
 
-```
-// prometheus // api // testing // e2e
-https://prometheus.io/docs/prometheus/latest/querying/api/
-```
 
-```c
-// If the URL storage.jimdosite-stage.com reported an SSL error
-//
-// $ dig storage.jimdosite-stage.com // cmd
 
-// ; <<>> DiG 9.10.6 <<>> storage.jimdosite-stage.com
-// ;; global options: +cmd
-// ;; Got answer:
-// ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16840
-// ;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
-//
-// ;; OPT PSEUDOSECTION:
-// ; EDNS: version: 0, flags:; udp: 1232
-// ;; QUESTION SECTION:
-// ;storage.jimdosite-stage.com.	IN	A
-//
-// ;; ANSWER SECTION:
-// storage.jimdosite-stage.com. 300 IN	CNAME	dolphin-content-storage-stage.jimdo-platform.net.
-// dolphin-content-storage-stage.jimdo-platform.net. 20 IN	CNAME dolphin-conten-906dd1-1511968020-1586625729.eu-west-1.elb.amazonaws.com.
-// dolphin-conten-906dd1-1511968020-1586625729.eu-west-1.elb.amazonaws.com. 60 IN A 54.220.29.254
-// dolphin-conten-906dd1-1511968020-1586625729.eu-west-1.elb.amazonaws.com. 60 IN A 52.19.91.241
-//
-// ;; Query time: 387 msec
-// ;; SERVER: 1.1.1.1#53(1.1.1.1)
-// ;; WHEN: Wed Nov 10 11:32:26 CET 2021
-// ;; MSG SIZE  rcvd: 232
-//
-// So that points to dolphin-content-storage-stage.jimdo-platform.net
-```
 
 ```
 # how to go get any private github repo?
@@ -518,6 +467,8 @@ tls.key:  1675 bytes
 - kubectl-convert -f ./my-deployment.yaml --output-version apps/v1
 - kubectl get apiservice
 - kubectl get apiservice v1beta1.custom.metrics.k8s.io -oyaml
+- kubectl auth can-i create deployments --namespace dev
+
     
 ### Blogs
 - Tilt blogs
