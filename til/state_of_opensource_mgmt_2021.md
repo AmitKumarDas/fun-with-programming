@@ -16,11 +16,9 @@
   - issue template
   - website with proper domain(s)
 - During code
-  - PR with couple of commits
-  - rework PR immediately after above PR gets merged
-  - 1 commit with max 2 files
-  - developer have their local WIP branches
-  - when developer are done in their WIP branch they send PR from specific feature branch(-es)
+  - commits with proper code level comments
+  - commits with unit &/ integration tests with proper comments
+  - [optional] rework PR immediately after above PR gets merged
   - Plugin based, composable, extensions, library, tracing, metrics comes before API
   - API - both with & without
   - DB - both with & without
