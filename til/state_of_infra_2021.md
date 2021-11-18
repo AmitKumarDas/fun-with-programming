@@ -1,77 +1,50 @@
 ## State of Infra 2021
 
-```
-https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
+### Security
+- https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
+  - // iam // service account
+- https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
+  - capacity planning // monitoring // kube state metrics
+  - kube_pod_container_status_restarts_total can be used to alert on a crashing pod
+  - kube_deployment_status_replicas & kube_deployment_status_replicas_available
+  - alert on whether a deployment is rolled out successfully or stuck
+  - kube_pod_container_resource_requests and kube_pod_container_resource_limits for capacity planning
 
-// iam // service account
-```
+### DNS
+- https://github.com/ycd/dstp
+  - // dns // domain // testing // network // dig // troubleshoot // e2e
 
-```c
-https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
-//
-// capacity planning // monitoring // kube state metrics
-//
-// kube_pod_container_status_restarts_total can be used to alert on a crashing pod
-//
-// kube_deployment_status_replicas & kube_deployment_status_replicas_available
-// can be used to alert on whether a deployment is rolled out successfully or stuck
-//
-// kube_pod_container_resource_requests and kube_pod_container_resource_limits
-// can be used in capacity planning dashboards.
-```
+### SLO
+- https://github.com/kruize/autotune
+  - // tune // performance // recommendation // slo // api
 
-```
-// dns // domain // testing // network // dig // troubleshoot // e2e
-https://github.com/ycd/dstp
-```
-
-```
-// tune // performance // recommendation // slo // API
-// might be good to look from eBPF perspective
-https://github.com/kruize/autotune
-```
-
-```c
-// prometheus // e2e // via curl nginx status
-// hpa // custom metrics
-//
-// kubectl get apiservice // til
-// kubectl get apiservice v1beta1.custom.metrics.k8s.io -oyaml // til
-//
-// spec: # of nginx deployment
-//   template:
-//     metadata:
-//       annotations:
-//         prometheus.io/path: "/status/format/prometheus"
-//         prometheus.io/scrape: "true"
-//         prometheus.io/port: "80"
-//
-https://hackernoon.com/how-to-use-prometheus-adapter-to-autoscale-custom-metrics-deployments-p1p3tl0
+### Prometheus
+- https://hackernoon.com/how-to-use-prometheus-adapter-to-autoscale-custom-metrics-deployments-p1p3tl0
+  - // prometheus // e2e // curl nginx status // hpa // custom metrics
+- Deployment specs
+```yaml
+spec: # of nginx deployment
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: "/status/format/prometheus"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "80"
 ```
 
-```
-// kind: Prometheus
-// e2e // prometheus to alert manager mapping
-kubectl get prometheus -n monitoring -oyaml
-```
+### Orgs
+- Container Solutions Github
+  - // Secrets Management // platform // consulting // security
+  - // Helm monitoring
+  - // Rust via rustling // Learn // startup
+  - // Trow vs Docker // Just in time images in Kubernetes
+  - // Terraform Snippets // fellow // support // startup
+  - // From Runbooks to automated E2E
+  - // From How To Kubernetes documents to automated E2E
+  - // Custom Domains
+  - // Creating Docker Registry in Kubernetes
+  - // certificate // cert manager // dns // volumes // ebs
 
-
-```
-// Container Solutions Github
-//
-// Secrets Management // platform // consulting // security
-// Helm monitoring
-// Rust via rustling // Learn // startup
-// Trow vs Docker // Just in time images in Kubernetes
-// Terraform Snippets // fellow // support // startup
-// From Runbooks to automated E2E
-// From How To Kubernetes documents to automated E2E
-//
-// Custom Domains
-//
-// Creating Docker Registry in Kubernetes touches upon
-// - custom domain // certificate // cert manager // dns // volumes // ebs
-```
 
 ```
 // yaml // templating // variable declaration
@@ -538,21 +511,22 @@ tls.crt:  3566 bytes
 tls.key:  1675 bytes
 ```
 
-
 ### kubectl tip
 - kubectl-convert -f ./my-deployment.yaml --output-version apps/v1
-
+- kubectl get apiservice
+- kubectl get apiservice v1beta1.custom.metrics.k8s.io -oyaml
+    
 ### Blogs
 - Tilt blogs
 
-
-### e2e testing library - https://github.com/kubeshop/testkube
-- Avoid vendor lock-in for test orchestration and execution in CI/CD pipelines
-- Make it easy to orchestrate and run any kind of tests
-  - functional, load/performance, security, compliance, etc.
-  - in your clusters, without having to wrap them in docker-images or ??
-  - providing network access ??
-- Make it possible to decouple test execution from build processes;
-  - engineers should be able to run specific tests whenever needed
-- Centralize all test results in a consistent format for "actionable QA analytics"
-- Provide a modular architecture for adding new types of test scripts and executors
+### E2E testing library 
+- https://github.com/kubeshop/testkube
+  - Avoid vendor lock-in for test orchestration and execution in CI/CD pipelines
+  - Make it easy to orchestrate and run any kind of tests
+    - functional, load/performance, security, compliance, etc.
+    - in your clusters, without having to wrap them in docker-images or ??
+    - providing network access ??
+  - Make it possible to decouple test execution from build processes;
+    - engineers should be able to run specific tests whenever needed
+  - Centralize all test results in a consistent format for "actionable QA analytics"
+  - Provide a modular architecture for adding new types of test scripts and executors
