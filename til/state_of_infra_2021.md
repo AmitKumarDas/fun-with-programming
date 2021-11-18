@@ -1,5 +1,15 @@
 ## State of Infra 2021
 
+### kubectl one liners
+```yaml
+- kubectl-convert -f ./my-deployment.yaml --output-version apps/v1
+- kubectl get apiservice
+- kubectl get apiservice v1beta1.custom.metrics.k8s.io -oyaml
+- kubectl auth can-i create deployments --namespace dev
+- kubectl auth can-i list secrets --namespace dev --as dave # user impersonation
+- kubectl auth can-i list pods --namespace dev --as system:serviceaccount:dev:dev-sa
+```
+
 ### Virtual Cluster
 ```yaml
 - https://www.vcluster.com/
@@ -26,6 +36,16 @@
 
 - https://github.com/cruise-automation/rbacsync
 - https://github.com/cruise-automation/k-rail
+
+- https://kubernetes.io/docs/concepts/security/controlling-access/
+- authentication - access
+
+- https://kubernetes.io/docs/reference/access-authn-authz/authorization/
+- kubectl - rbac - user impersonation - can i 
+- kind: SelfSubjectAccessReview
+- kind: SubjectAccessReview
+- kind: LocalSubjectAccessReview
+- ABAC - RABC - Node - Webhook - AlwaysAllow - AlwaysDeny
 ```
 
 ### DNS
@@ -428,11 +448,6 @@ tls.crt:  3566 bytes
 tls.key:  1675 bytes
 ```
 
-### kubectl tip
-- kubectl-convert -f ./my-deployment.yaml --output-version apps/v1
-- kubectl get apiservice
-- kubectl get apiservice v1beta1.custom.metrics.k8s.io -oyaml
-- kubectl auth can-i create deployments --namespace dev
 
     
 ### Blogs
