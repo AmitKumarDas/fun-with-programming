@@ -1,9 +1,11 @@
+### State of OpenSource Management 2021
+
+### Manage
 - Startup Ideas
   - Sponsor the Maintainers
   - Compliance Kit
   - Post Mortem Analysis Kit -- think there is no source code or logs
   - Learn from bugs, wars, troubleshooting, release notes, LWKD, webinars
-
 - Design Theories
   - Before code
     - setup automation
