@@ -1,113 +1,92 @@
 ## State of Infra 2021
 
 ### Virtual Cluster
+```yaml
 - https://www.vcluster.com/
+```
 
 ### Security
+```yaml
 - https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
-  - iam - service account
+- iam - service account
+
 - https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
-  - capacity planning - monitoring - kube state metrics
-  - kube_pod_container_status_restarts_total can be used to alert on a crashing pod
-  - kube_deployment_status_replicas & kube_deployment_status_replicas_available
-  - alert on whether a deployment is rolled out successfully or stuck
-  - kube_pod_container_resource_requests and kube_pod_container_resource_limits for capacity planning
+- capacity planning - monitoring - kube state metrics
+- kube_pod_container_status_restarts_total can be used to alert on a crashing pod
+- kube_deployment_status_replicas & kube_deployment_status_replicas_available
+- alert on whether a deployment is rolled out successfully or stuck
+- kube_pod_container_resource_requests and kube_pod_container_resource_limits for capacity planning
+
 - https://github.com/common-fate/iamzero
-  - startup idea
-  - personised advice on IAM roles // platform team // end user
-  - security - read from error & propose the solution
-  - security policy for all clouds
-  - PGP Public Key - fingerprint - builds - penetration testing
+- startup idea
+- personised advice on IAM roles // platform team // end user
+- security - read from error & propose the solution
+- security policy for all clouds
+- PGP Public Key - fingerprint - builds - penetration testing
+
 - https://github.com/cruise-automation/rbacsync
 - https://github.com/cruise-automation/k-rail
-
+```
 
 ### DNS
+```yaml
 - https://github.com/ycd/dstp
-  - dns - domain - testing - network - dig - troubleshoot - e2e
-- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md
-  - dns - external - nginx - dig - ingress - coredns with etcd backend
-- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/hostport.md
-  - headless service - kafka - sts - fqdn
-- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/ns-record.md
-  - namespace record - CRD - kind: DNSEndpoint - dns - external
+- dns - domain - testing - network - dig - troubleshoot - e2e
 
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/coredns.md
+- dns - external - nginx - dig - ingress - coredns with etcd backend
+
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/hostport.md
+- headless service - kafka - sts - fqdn
+
+- https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/ns-record.md
+- namespace record - CRD - kind: DNSEndpoint - dns - external
+```
 
 ### SLO
+```yaml
 - https://github.com/kruize/autotune
-  - tune - performance - recommendation - slo - api
+- tune - performance - recommendation - slo - api
+```
 
 ### Prometheus
-- https://hackernoon.com/how-to-use-prometheus-adapter-to-autoscale-custom-metrics-deployments-p1p3tl0
-  - prometheus - e2e - curl nginx status - hpa - custom metrics
-- Deployment specs
 ```yaml
-spec: # of nginx deployment
-  template:
-    metadata:
-      annotations:
-        prometheus.io/path: "/status/format/prometheus"
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "80"
-```
+- https://hackernoon.com/how-to-use-prometheus-adapter-to-autoscale-custom-metrics-deployments-p1p3tl0
+- prometheus - e2e - curl nginx status - hpa - custom metrics
+
 - https://github.com/kubernetes/kube-state-metrics/blob/master/examples/prometheus-alerting-rules/alerts.yaml
-  - snippets
-- 
+- snippets
+``` 
 
 ### Orgs
-- Container Solutions Github
-  - Secrets Management - platform - consulting - security
-  - Helm monitoring
-  - Rust via rustling - learn
-  - Trow vs Docker - Just in time images in Kubernetes
-  - Terraform Snippets - learn
-  - From Runbooks to automated E2E
-  - From How To Kubernetes documents to automated E2E
-  - Creating Docker Registry in Kubernetes - custom domain
-  - certificate - cert manager - dns - volumes - ebs
-
-
-### YAML
-- https://sidneyliebrand.io/blog/the-greatnesses-and-gotchas-of-yaml
-
-
-### Registry / Image
-- https://github.com/openshift/source-to-image
-
-
-
-### Kubernetes code snippets
-- https://github.com/stefanprodan/kustomizer/blob/main/pkg/objectutil/io.go
-  - unstructured
-
-
-
-
-
-
 ```yaml
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
-spec:
-  groups:
-    - name: ./aws-limits.rules
-      rules:
-        # We just pick one sample metric for the absent check to verify that the exporter is working
-        - alert: AWSServiceLimitMetricsAbsent
-          expr: absent(aws_ec2_limit_total) or absent(aws_ec2_used_total)
-          for: 10m
-          annotations:
-            description: Missing aws_limits metrics. Is aws-limits-exporter running?
-        - alert: AWSServiceLimitUsageHigh
-          expr: '{__name__=~"aws_.*_used_total"} / {__name__=~"aws_.*_limit_total"} * 100 > 80'
-          annotations:
-            description: AWS resource "{{ $labels.resource }}" in region "{{ $labels.region }}" is using {{ $value }}% of its limit. Check usage and think about requesting a limit increase.
-        - alert: AWSServiceLimitUsageCritical
-          expr: '{__name__=~"aws_.*_used_total"} / {__name__=~"aws_.*_limit_total"} * 100 == 100'
-          annotations:
-            description: AWS resource "{{ $labels.resource }}" in region "{{ $labels.region }}" is using {{ $value }}% of its limit. Check usage and think about requesting a limit increase.
+- Container Solutions Github
+- Secrets Management - platform - consulting - security
+- Helm monitoring
+- Rust via rustling - learn
+- Trow vs Docker - Just in time images in Kubernetes
+- Terraform Snippets - learn
+- From Runbooks to automated E2E
+- From How To Kubernetes documents to automated E2E
+- Creating Docker Registry in Kubernetes - custom domain
+- certificate - cert manager - dns - volumes - ebs
 ```
 
+### YAML
+```yaml
+- https://sidneyliebrand.io/blog/the-greatnesses-and-gotchas-of-yaml
+```
+
+### Registry / Image
+```yaml
+- https://github.com/openshift/source-to-image
+```
+
+### Kubernetes code snippets
+```yaml
+- https://github.com/stefanprodan/kustomizer/blob/main/pkg/objectutil/io.go
+- unstructured
+```
 
 ```
 // generates dynamic X.509 certificates
