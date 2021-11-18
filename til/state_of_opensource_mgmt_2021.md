@@ -1,42 +1,58 @@
 ### State of OpenSource Management 2021
 
-### Manage
-- Startup Ideas
-  - Sponsor the Maintainers
-  - Compliance Kit
-  - Post Mortem Analysis Kit -- think there is no source code or logs
-  - Learn from bugs, wars, troubleshooting, release notes, LWKD, webinars
-- Design Theories
-  - Before code
-    - setup automation
-    - release automation
-    - doc automation
-    - linter automation
-    - local dev loop automation
-    - unit &/ integration automation
-    - e2e automation
-    - issue template
-  - When code
-    - PR with couple of commits
-    - 1 commit with max 2 files
-    - WIP branch -> feature branch
-    - Plugin based, composable, extensions, library, tracing, metrics comes before API
-    - API - both with & without
-    - DB - both with & without
-    - Declarative - YAML / Starlark / HCL - on top of API as well as library
-    - when API generate the SDK
-    - when API generate the website for API schema
-    - when API then proxy, load balancer, security, analytics
-    - APIs are great to test the product
-  - Post code
-    - bugs to compliance kit
-    - bugs to post mortem analysis kit
-  - code processes
-    - private github repo with issues
-    - optionally move this issue from private to public
-    - use MIRO to understand the team's work
-      - how to commercialise
-      - how to open source
-      - what's the vision
-      - what's happening now
-      - what has changed
+### Vision
+- Ideas for projects, products, solutions, APIs, etc
+- Ideas to sponsor the maintainers & hence the open source community
+
+### Development Cycle
+- Before code
+  - setup automation
+  - release automation
+  - doc automation
+  - linter automation
+  - local dev loop automation
+  - unit &/ integration automation
+  - e2e automation
+  - issue template
+- During code
+  - PR with couple of commits
+  - rework PR immediately after above PR gets merged
+  - 1 commit with max 2 files
+  - developer have their local WIP branches
+  - when developer are done in their WIP branch they send PR from specific feature branch(-es)
+  - Plugin based, composable, extensions, library, tracing, metrics comes before API
+  - API - both with & without
+  - DB - both with & without
+  - Declarative - YAML / Starlark / HCL - on top of API as well as library
+  - when API generate the SDK
+  - when API generate the website for API schema
+  - when API then proxy, load balancer, security, analytics
+  - APIs are great to test the product
+- Post code
+  - bugs to compliance kit
+  - bugs to post mortem analysis kit
+- Process
+  - `til` repo
+    - consist of relevant learnt items / links in md file(s)
+    - similar to awesome list
+  - `proposals` repo
+    - issues will have problem statement, solutions & comments
+    - issue graduates to a proposal md file
+  - use `MIRO` to state the team's work
+    - how to commercialise
+    - effective open source
+    - confirm the vision
+    - what's happening now
+    - what has changed
+
+### Project should
+- have its own compliance kit
+- have its own Post Mortem Analysis Kit 
+  - think there is no source code or logs or maintainers & issue/bug needs to be fixed
+- learn from bugs, wars, troubleshooting articles
+- learn from other projects'
+  - release notes
+  - LWKD
+  - webinars
+  - slacks
+  - engineering blogs
