@@ -5,9 +5,9 @@
 
 ### Security
 - https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
-  - // iam // service account
+  - iam - service account
 - https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
-  - capacity planning // monitoring // kube state metrics
+  - capacity planning - monitoring - kube state metrics
   - kube_pod_container_status_restarts_total can be used to alert on a crashing pod
   - kube_deployment_status_replicas & kube_deployment_status_replicas_available
   - alert on whether a deployment is rolled out successfully or stuck
@@ -15,15 +15,15 @@
 
 ### DNS
 - https://github.com/ycd/dstp
-  - // dns // domain // testing // network // dig // troubleshoot // e2e
+  - dns - domain - testing - network - dig - troubleshoot - e2e
 
 ### SLO
 - https://github.com/kruize/autotune
-  - // tune // performance // recommendation // slo // api
+  - tune - performance - recommendation - slo - api
 
 ### Prometheus
 - https://hackernoon.com/how-to-use-prometheus-adapter-to-autoscale-custom-metrics-deployments-p1p3tl0
-  - // prometheus // e2e // curl nginx status // hpa // custom metrics
+  - prometheus - e2e - curl nginx status - hpa - custom metrics
 - Deployment specs
 ```yaml
 spec: # of nginx deployment
