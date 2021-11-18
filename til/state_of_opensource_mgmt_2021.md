@@ -1,79 +1,121 @@
 ### State of OpenSource Management 2021
 
 ### Vision
+```yaml
 - Ideas for projects, products, solutions, APIs, etc
 - Ideas to sponsor the maintainers & hence the open source community
+```
 
-### Development Cycle
-- Before code
-  - setup automation
-  - release automation
-  - doc automation
-  - linter automation
-  - local dev loop automation
-  - unit &/ integration automation
-  - e2e automation
-  - issue template
-  - website with proper domain(s)
-- During code
-  - commits with proper code level comments
-  - commits with unit &/ integration tests with proper comments
-  - [optional] rework PR immediately after above PR gets merged
-  - Plugin based, composable, extensions, library, tracing, metrics comes before API
-  - API - both with & without
-  - DB - both with & without
-  - Declarative - YAML / Starlark / HCL - on top of API as well as library
-  - when API generate the SDK
-  - when API generate the website for API schema
-  - when API then proxy, load balancer, security, analytics
-  - APIs are great to test the product
-- Post code
-  - bugs to compliance kit
-  - bugs to post mortem analysis kit
-- Process
-  - `til` repo
-    - consist of relevant learnt items / links in md file(s)
-    - similar to awesome list
-  - `proposals` repo
-    - issues will have problem statement, solutions & comments
-    - issue graduates to a proposal md file
-  - use `MIRO` to state the team's work
-    - how to commercialise
-    - effective open source
-    - confirm the vision
-    - what's happening now
-    - what has changed
-    - change or no change in strategy when customers come in
-    - change or no change in strategy when community grows
-    - change or no change in strategy when we have multiple releases
-    - change or no change in strategy at scale
-  - standups should have following (every day can have a different theme)
-    - code reviews
-    - happiness reviews
-    - retrospectives
-    - vision reviews
-  - rules
-    - no more than 2 meetings per day
-    - some days can be no meeting day
-    - team events that force team to travel together, explore things beyond code
-    - should run, manage, upgrade, automate, scale, etc. the solution in EKS
-  - tools
-    - [+] GitHub
-    - [+] MIRO
-    - [+] EKS
-    - [-] JIRA
-    - [-] Confluence
-    - [~] PPTs
+### Development Cycle - Before code
+```yaml
+- setup automation
+- release automation
+- doc automation
+- linter automation
+- local dev loop automation
+- unit &/ integration automation
+- e2e automation
+- issue template
+- website with proper domain(s)
+```
 
-### Project should
+### Development Cycle - During code
+```yaml
+- do you trust the person submitting the PR
+
+- code must have code level comments
+- code must have unit &/ integration tests 
+- unit & integration tests must have proper comments
+- let automation determine the approval or rejection of code
+
+- do not force your style of coding & in turn delay the process
+- stick to idiomatic & best practices
+- its a marathon & futile to argue over the sprints
+
+- Plugin based, composable, extensions, library, tracing, metrics comes before API
+- API - both with & without
+- DB - both with & without
+
+- Declarative 
+- YAML / Starlark / HCL 
+- on top of API as well as library
+
+- when API generate the SDK
+- when API generate the website for API schema
+- when API then proxy, load balancer, security, analytics
+
+- APIs are great to test the product
+```
+
+### Development Cycle - Post Release
+```yaml
+- bugs to compliance kit
+- bugs to post mortem analysis kit
+```
+
+### Process
+```yaml
+- `til` repo
+- consist of relevant learnt items / links in md file(s)
+- similar to awesome list
+
+- `proposals` repo
+- issues will have problem statement, solutions & comments
+- issue graduates to a proposal md file
+
+- use `MIRO` to state the team's work
+- how to commercialise
+- effective open source
+- confirm the vision
+- what's happening now
+- what has changed
+- change or no change in strategy when customers come in
+- change or no change in strategy when community grows
+- change or no change in strategy when we have multiple releases
+- change or no change in strategy at scale
+
+- standups should have following (every day can have a different theme)
+- code reviews
+- happiness reviews
+- retrospectives
+- vision reviews
+
+- rules
+- no more than 2 meetings per day
+- some days can be no meeting day
+- team events that force team to travel together, explore things beyond code
+- should run, manage, upgrade, automate, scale, etc. the solution in EKS
+
+- tools
+- [+] GitHub
+- [+] MIRO
+- [+] EKS
+- [-] JIRA
+- [-] Confluence
+- [~] PPTs
+```
+
+### Team should
+```yaml
 - have its own compliance kit
+- i.e. team knows what to test
+- i.e. team knows how to implement the scenarios
+
 - have its own Post Mortem Analysis Kit 
-  - what if there is no source code or logs or maintainers 
-  - PMA kit should still be able to identify the issue
+- i.e. team is faced with some production issue e.g. high latency
+- i.e. source code or logs wont help
+- PMA kit should still be able to identify the issue
+
+- have enough time to learn
+- avoid mistakes made by others
+- avoid reinvention of wheel
+- avoid not understood here
+- utilise existing projects as much as possible
 - learn from bugs, wars, troubleshooting articles
 - learn from other projects'
-  - release notes
-  - LWKD
-  - webinars
-  - slacks
-  - engineering blogs
+- release notes
+- LWKD
+- webinars
+- slacks
+- engineering blogs
+```
