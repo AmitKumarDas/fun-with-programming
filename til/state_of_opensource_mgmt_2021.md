@@ -24,14 +24,15 @@
 
 ### Development Cycle - During code
 ```yaml
-- Initial Days:
-- Do you trust the person submitting the PR
+- Initial Days / Minimal Viable Product With Velocity
+- Do you trust the person to submit a pull request
+- Did we do the right hire
 - Can this individual be given the full responsibility to bring up the project without a team
-- Can we have individuals mapped to specific repo instead of a team mapped to a single repo
+- Can we have one individual mapped to specific repo instead of a team mapped to a single repo
 - Let the team brainstorm over the designs only
-- Let it be optional to do code reviews
-- Let the team adopt common template that has necessary automation
-- Do we trust the individuals to bring up the code without peer reviews for code
+- In other words code reviews will be done by bots & linters
+- Human code reviews will be optional & only on-demand
+- Let the team adopt common template that has necessary automation (read bots & linters)
 
 - code must have code level comments
 - code must have unit &/ integration tests 
