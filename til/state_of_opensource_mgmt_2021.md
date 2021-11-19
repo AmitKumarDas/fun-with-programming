@@ -24,7 +24,14 @@
 
 ### Development Cycle - During code
 ```yaml
-- do you trust the person submitting the PR
+- Initial Days:
+- Do you trust the person submitting the PR
+- Can this individual be given the full responsibility to bring up the project without a team
+- Can we have individuals mapped to specific repo instead of a team mapped to a single repo
+- Let the team brainstorm over the designs only
+- Let it be optional to do code reviews
+- Let the team adopt common template that has necessary automation
+- Do we trust the individuals to bring up the code without peer reviews for code
 
 - code must have code level comments
 - code must have unit &/ integration tests 
