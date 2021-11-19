@@ -84,7 +84,10 @@
 
 - https://kubernetes.github.io/ingress-nginx/user-guide/multiple-ingress/
 - https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/opentracing/
-- design - annotation - kind: IngressClass
+- design - annotation - kind: IngressClass - tracing
+
+- https://www.sanderverbruggen.com/add-an-http-echo-service-to-your-kubernetes-cluster/
+- echo image
 
 - https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-ingress-guide-nginx-example.html
 - ingress vs nodeport vs loadbalancer
