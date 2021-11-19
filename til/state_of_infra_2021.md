@@ -50,7 +50,7 @@
 - ABAC - RABC - Node - Webhook - AlwaysAllow - AlwaysDeny
 ```
 
-### DNS
+### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
 - https://github.com/ycd/dstp
 - dns - domain - testing - network - dig - troubleshoot - e2e
@@ -63,6 +63,63 @@
 
 - https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/ns-record.md
 - namespace record - CRD - kind: DNSEndpoint - dns - external
+
+- https://kubernetes.github.io/ingress-nginx/user-guide/ingress-path-matching/
+- RE2 engine syntax - PCRE syntax - expressions
+- https://github.com/google/re2/wiki/Syntax - regex - match - filter - assert
+- host + path + service name + port ~ unique
+- warning - unwanted path matching behaviour
+
+- https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms
+- nginx can be - webserver - mailserver - proxyserver
+- server name - host - ip address - port - listen - match
+- request host's header - algorithm
+
+- https://kubernetes.github.io/ingress-nginx/user-guide/custom-errors/
+- ingress passes several http headers to backend in case of error
+
+- https://kubernetes.github.io/ingress-nginx/user-guide/default-backend/
+- /healthz returns 200
+- / returns 404
+
+- https://kubernetes.github.io/ingress-nginx/user-guide/multiple-ingress/
+- https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/opentracing/
+- design - annotation - kind: IngressClass
+
+- https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-ingress-guide-nginx-example.html
+- ingress vs nodeport vs loadbalancer
+- sample - testing - e2e - old samples
+
+- til - ingress refers to oauth2 proxy service
+- oauth proxy deployment for prometheus service exposed via ingress
+- i.e. prometheus ingress refers to oauth proxy's kubernetes service
+spec:
+  automountServiceAccountToken: true
+  containers:
+  - args:
+    - --provider=google
+    - --upstream=http://prometheus-stack-kube-prom-prometheus:9090
+    - --http-address=0.0.0.0:4180
+    - --email-domain=abc.com
+    - --htpasswd-file=/etc/htpasswd/auth
+    env:
+    - name: OAUTH2_PROXY_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+    - name: OAUTH2_PROXY_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+    - name: OAUTH2_PROXY_COOKIE_SECRET
+      valueFrom:
+        secretKeyRef:
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.1.3
+
+- https://stackoverflow.com/questions/68690185/how-to-create-dns-entries-for-localhost-kubernetes-ingress-hosts
+- kind - localhost - access from desktop browser & from inside the pod
+
+- minikube logs
+- Kubernetes master is running at https://192.168.99.100:8443
+- KubeDNS is running at https://192.168.99.100:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 ```
 
 ### SLO
