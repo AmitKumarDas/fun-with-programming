@@ -44,3 +44,24 @@ https://github.com/kubernetes-sigs/prometheus-adapter/blob/master/deploy/manifes
 // custom api server implementation
 // Kubernetes API server arguments // authentication // authorization
 ```
+
+### Programming Language / Runtime
+```yaml
+- https://blog.cloudflare.com/automatically-generated-types/
+- workers - rust - typescript - intermediate representation
+- abstract syntax tree
+```
+
+### Git
+```yaml
+- https://www.linode.com/docs/guides/git-rebase-command/
+- git - rebase vs merge
+
+- steps you need to put your commits on top of latest commit in upstream
+- git checkout main
+- git pull upstream main
+- git checkout my-feature-branch
+- git rebase main
+
+- git log --pretty=oneline
+```
