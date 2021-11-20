@@ -2,39 +2,31 @@
 
 
 ```yaml
-https://github.blog/2021-11-10-make-your-monorepo-feel-small-with-gits-sparse-index/
+- https://itnext.io/websocket-1-million-connections-using-appwrite-2d2a2c363a37
+- performance - design - testing
 
-// monorepo // git // sparse index // contributing guide
-```
+- https://github.com/processone/tsung
+- scalability testing - multi protocol - MySQL - PostgreSQL - HTTP
 
-```yaml
-https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
+- https://github.blog/2021-11-10-make-your-monorepo-feel-small-with-gits-sparse-index/
+- monorepo - git - sparse index - contributing guide
 
-// learn from release notes
-// testing // troubleshooting // api design
-// naming // standards
+- https://kubernetes.io/blog/2021/04/13/kube-state-metrics-v-2-0/
+- learn from release notes - testing - troubleshooting - api design
+- naming - standards
+- Flag --namespace was renamed to --namespaces
+- Flag --collectors was renamed to --resources
+- --metric-blacklist to --metric-denylist
+- --metric-whitelist to --metric-allowlist
+- kube_hpa_* were renamed to kube_horizontalpodautoscaler_*
+- Metric labels that relate to Kubernetes were converted to snake_case
 
-// Flag --namespace was renamed to --namespaces
-// Flag --collectors was renamed to --resources
+- https://github.com/Peripli/service-broker-proxy-k8s
+- service broker - k8s - proxy
 
-// --metric-blacklist to --metric-denylist
-// --metric-whitelist to --metric-allowlist
-
-// kube_hpa_* were renamed to kube_horizontalpodautoscaler_*
-// Metric labels that relate to Kubernetes were converted to snake_case
-```
-
-```yaml
-https://github.com/Peripli/service-broker-proxy-k8s
-
-// service broker // k8s // proxy
-```
-
-```yaml
-https://github.com/kubernetes/kube-aggregator
-https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/aggregated-api-servers.md
-
-// register // discover // proxy // multiple api servers // custom api servers
+- https://github.com/kubernetes/kube-aggregator
+- https://github.com/kubernetes/community/blob/master/contributors/design-proposals/api-machinery/aggregated-api-servers.md
+- register - discover - proxy - multiple api servers - custom api servers
 ```
 
 ```yaml
