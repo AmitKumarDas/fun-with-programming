@@ -17,6 +17,10 @@
 
 ### Security
 ```yaml
+- https://blog.aquasec.com/runtime-security-tracee-rules - bpf 
+- alerting via golang or rego
+- socket - 
+
 - https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html
 - iam - service account
 
@@ -52,8 +56,20 @@
 
 ### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
+- https://github.com/gardener/dnslb-controller-manager
+- load balancer over dns entries (til)
+- depends on https://github.com/gardener/external-dns-management
+- https://www.civo.com/learn/getting-started-with-load-balancers - basics - til
+
+- https://github.com/gardener/external-dns-management
+- manage external DNS entries for Kubernetes - custom resources - CRDs
+- https://github.com/gardener/external-dns-management#the-model - architecture - fellow - learn CRD design
+
 - https://www.digitalocean.com/community/tutorials/how-to-automatically-manage-dns-records-from-digitalocean-kubernetes-using-externaldns
 - record - external dns - either ingress or external dns (til) - A or TXT record - external dns provider i.e. DO
+
+- https://www.civo.com/learn/categories/dns - basics - testing - CNAME TXT record
+- https://www.civo.com/learn/using-civo-dns-as-a-dynamic-dns-for-your-home-server - dig - testing - e2e
 
 - https://github.com/ycd/dstp
 - dns - domain - testing - network - dig - troubleshoot - e2e
