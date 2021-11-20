@@ -2,6 +2,18 @@
 
 
 ```yaml
+- https://dev.to/harmonydevelopment/introducing-hrpc-a-simple-rpc-system-for-user-facing-apis-16ge
+- hrpc - user facing APIs - protobuf
+
+- https://blog.cloudflare.com/moving-k8s-communication-to-grpc/
+- pod to pod communciation - http vs grpc - dns pipeline - protobuf
+- large DNS zones - protobuf - quick record change propagation for serving API at the edge
+- kind: NetworkPolicy - what goes in - what goes out - ingress - egress
+- network policy - protect APIs at network level - no protection at application level
+- https://grpc.io/docs/guides/auth/
+- per rpc credentials - protection at app level - idea - mayastor
+- HTTP/3 - quic
+
 - https://itnext.io/websocket-1-million-connections-using-appwrite-2d2a2c363a37
 - performance - design - testing
 
