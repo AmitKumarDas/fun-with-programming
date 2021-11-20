@@ -52,6 +52,9 @@
 
 ### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
+- https://www.digitalocean.com/community/tutorials/how-to-automatically-manage-dns-records-from-digitalocean-kubernetes-using-externaldns
+- record - external dns - either ingress or external dns (til) - A or TXT record - external dns provider i.e. DO
+
 - https://github.com/ycd/dstp
 - dns - domain - testing - network - dig - troubleshoot - e2e
 
@@ -142,7 +145,7 @@ spec:
 
 ### Orgs
 ```yaml
-- Container Solutions Github
+- Container Solutions Github:
 - Secrets Management - platform - consulting - security
 - Helm monitoring
 - Rust via rustling - learn
@@ -152,6 +155,12 @@ spec:
 - From How To Kubernetes documents to automated E2E
 - Creating Docker Registry in Kubernetes - custom domain
 - certificate - cert manager - dns - volumes - ebs
+
+- Gardener:
+- https://github.com/gardener/remedy-controller - ip address - cloud detect - cloud remedy
+- https://github.com/gardener/cert-management/blob/master/test/functional/config/utils.go - e2e - testing
+- https://github.com/gardener/cert-management/blob/master/test/functional/basics.go - cert - crd - controller - e2e
+- https://github.com/gardener/cert-management - TLS certificate - vs cert manager - CRDs - DNS challenge - revoke
 ```
 
 ### YAML
