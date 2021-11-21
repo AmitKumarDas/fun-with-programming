@@ -1,5 +1,8 @@
 ### State of Golang Code 2021
 ```yaml
+- https://github.com/toni-moreno/syncflux
+- DB - InfluxDB - learn design
+
 - https://github.com/mojura/mojura
 - todo - learn design
 
