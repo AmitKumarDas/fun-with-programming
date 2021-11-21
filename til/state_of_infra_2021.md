@@ -1,5 +1,12 @@
 ## State of Infra 2021
 
+### Terraform
+```yaml
+- https://itnext.io/the-definitive-guide-for-setting-up-a-clean-and-working-aws-eks-kubernetes-infrastructure-for-2d4153d47e20
+- https://github.com/yandok/terraform-aws-eks-template
+- EKS - terraform - solution - workflow - basics
+```
+
 ### kubectl one liners
 ```yaml
 - kubectl-convert -f ./my-deployment.yaml --output-version apps/v1
@@ -17,6 +24,9 @@
 
 ### Security
 ```yaml
+- https://www.cncf.io/blog/2021/08/20/how-to-secure-your-kubernetes-control-plane-and-node-components/
+- best practices - certificates - all core components
+
 - https://blog.aquasec.com/runtime-security-tracee-rules - bpf 
 - alerting via golang or rego
 - socket - 
@@ -153,8 +163,18 @@ spec:
 - tune - performance - recommendation - slo - api
 ```
 
-### Prometheus
+### Prometheus | Grafana | Metrics | Logs | Observability
 ```yaml
+- https://github.com/wangjia184/pod-inspector
+- files - volumes - processes - cpu - memory - age - container - !kubectl
+
+- https://github.com/vmware/kube-fluentd-operator
+- custom resource - config reloader - fluentd
+
+- https://github.com/K-Phoen/grabana
+- https://github.com/K-Phoen/dark
+- grafana in golang - custom resource - version the dashboard as code / yaml
+
 - https://hackernoon.com/how-to-use-prometheus-adapter-to-autoscale-custom-metrics-deployments-p1p3tl0
 - prometheus - e2e - curl nginx status - hpa - custom metrics
 
