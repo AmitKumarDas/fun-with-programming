@@ -1,5 +1,11 @@
 ## State of Infra 2021
 
+### Troubleshooting | RunBook | Debug
+```yaml
+- https://github.com/up9inc/mizu
+- view traffic - between microservices - kubernetes pods - e2e - testing - network
+```
+
 ### Terraform
 ```yaml
 - https://itnext.io/the-definitive-guide-for-setting-up-a-clean-and-working-aws-eks-kubernetes-infrastructure-for-2d4153d47e20
