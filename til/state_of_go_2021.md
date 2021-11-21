@@ -1,5 +1,8 @@
 ### State of Golang Code 2021
 ```yaml
+- https://github.com/bhmj/jsonslice
+- performance - query - raw - []byte - e2e - kubernetes - assert
+
 - how to go get any private github repo?
 - set below in ~/.profile
 - machine github.com username AmitKumarDas password <my github token with relevant access>
