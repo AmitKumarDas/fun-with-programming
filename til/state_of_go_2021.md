@@ -1,5 +1,8 @@
 ### State of Golang Code 2021
 ```yaml
+- https://github.com/mojura/mojura
+- todo - learn design
+
 - https://github.com/bhmj/jsonslice
 - performance - query - raw - []byte - e2e - kubernetes - assert
 
