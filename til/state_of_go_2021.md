@@ -1,5 +1,8 @@
 ### State of Golang Code 2021
 ```yaml
+- https://rudderstack.com/blog/implementing-graceful-shutdown-in-go/
+- context - channel - goroutine - signal - shutdown
+
 - https://github.com/toni-moreno/syncflux
 - DB - InfluxDB - learn design
 
