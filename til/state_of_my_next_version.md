@@ -1,6 +1,15 @@
 ### State of My Next Version
 
 ```yaml
+- https://github.com/webx-top/echo
+- fast http - learn design
+
+- https://github.com/hofstadter-io/cuetils
+- diff - patch - yaml - json - e2e - testing - cue
+
+- https://github.com/syncthing/syncthing
+- learn design - file
+
 - https://rafaeldtinoco.com/security/qemu-security
 - linux - storage - networking - OS
 
