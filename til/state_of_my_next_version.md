@@ -1,6 +1,9 @@
 ### State of My Next Version
 
 ```yaml
+- https://github.com/lucas-clemente/quic-go
+- quic in go
+
 - https://blog.cloudflare.com/secondary-dns-deep-dive/
 - DDOS, DNS, performance, networking, socks, nat
 
@@ -8,7 +11,7 @@
 - performance
 
 - https://github.com/alitto/pond
-- goroutine worker pool
+- goroutine worker pool - learn design
 
 - https://fasterthanli.me/series/making-our-own-executable-packer
 - deep dive rust - kernel - OS
