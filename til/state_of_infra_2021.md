@@ -57,7 +57,7 @@
 ### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
 - https://blog.cloudflare.com/secondary-dns-deep-dive/
-- fellow - 
+- fellow - my next version - learn 
 
 - https://github.com/gardener/dnslb-controller-manager
 - load balancer over dns entries (til)
