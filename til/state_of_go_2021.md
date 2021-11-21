@@ -1,5 +1,8 @@
 ### State of Golang Code 2021
 ```yaml
+- https://github.com/kubernetes/kubernetes/pull/104990/
+- null - json
+
 - https://rudderstack.com/blog/implementing-graceful-shutdown-in-go/
 - context - channel - goroutine - signal - shutdown
 
