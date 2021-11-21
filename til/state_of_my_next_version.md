@@ -1,6 +1,9 @@
 ### State of My Next Version
 
 ```yaml
+- https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
+- submariner - skupper - layer 7 - cilium - DNS - NAT
+
 - https://github.com/ddosify/ddosify
 - load testing tool - learn design - cli - dns
 
