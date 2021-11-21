@@ -1,6 +1,9 @@
 ### State of My Next Version
 
 ```yaml
+- https://rafaeldtinoco.com/security/qemu-security
+- linux - storage - networking - OS
+
 - https://github.com/lucas-clemente/quic-go
 - quic in go
 
