@@ -1,5 +1,14 @@
 ## State of Infra 2021
 
+### CertManager
+```yaml
+- https://cert-manager.io/docs/concepts/issuer/
+- https://cert-manager.io/docs/usage/
+
+- ClusterIssuer - refer to CA secret - or refer to LetsEncrypt secret
+- Certificate - refer to ClusterIssuer
+```
+
 ### Controller | Client-Go
 ```yaml
 - https://github.com/kubernetes/kubernetes/pull/104483
