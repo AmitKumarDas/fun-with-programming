@@ -38,8 +38,7 @@
 ```
 
 ```go
-// simple design thinking
-// useful for e2e, testing, etc.
+// design thinking w.r.t e2e, testing, assertion
 
 import "k8s.io/apimachinery/pkg/util/sets"
 
@@ -52,6 +51,10 @@ func (s Strings) HasAll(expected []string) bool {
 }
 
 // other callers might need the resulting error
+//
+// Notes: 
+// - Don't pass *testing.T as an argument
+// - It might be a separate struct that needs *testing.T as first argument
 func (s Strings) AssertHasAll(expected []string) error {
 	if !s.HasAll(expected) {
 		actualSet := sets.NewString(s...)
