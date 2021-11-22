@@ -79,6 +79,11 @@
 
 ### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
+- https://loft.sh/blog/kubernetes-nginx-ingress-10-useful-configuration-options/
+- www redirect - ssl redirect - timeout - cors - rate limiting
+- custom max body size - whitelist - default backend for 404 (page not found)
+- client access log - backend protocol
+
 - https://blog.cloudflare.com/secondary-dns-deep-dive/
 - fellow - my next version - learn 
 
