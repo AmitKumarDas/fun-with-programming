@@ -38,6 +38,32 @@
 ```
 
 ```go
+// simple design thinking
+// useful for e2e, testing, etc.
+
+import "k8s.io/apimachinery/pkg/util/sets"
+
+type Strings []string
+
+// some callers might need the resulting bool
+func (s Strings) HasAll(expected []string) bool {
+	actualSet := sets.NewString(s...)
+	return actualSet.HasAll(expected...)
+}
+
+// other callers might need the resulting error
+func (s Strings) AssertHasAll(expected []string) error {
+	if !s.HasAll(expected) {
+		actualSet := sets.NewString(s...)
+		expectedSet := sets.NewString(expected...)
+		diff := expectedSet.Difference(actualSet)
+		return errors.Errorf("missing : %v: missing count %d:", diff.List(), diff.Len())
+	}
+	return nil
+}
+```
+
+```go
 // Node proxy via userspace socket
 //
 // Note: Check how socket level eBPF does this in 30 lines of code with best performance
