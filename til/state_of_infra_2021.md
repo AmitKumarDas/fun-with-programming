@@ -8,8 +8,20 @@
 - ClusterIssuer - refer to CA secret - or refer to LetsEncrypt secret
 - Certificate - refer to ClusterIssuer
 
+- kubectl get ing
+- kuard                         <none>   acme-test-kuard.my-test.link       xx.elb.eu-xx-1.aws.com   80, 443   6m29s # cname to below
+- sub-domain-on-existing-dns    <none>   acme-test-kuard.org-platform.net   xx.elb.eu-xx-1.aws.com   80        6m28s # above resolves to this
+
 - kubectl get svc
 - cm-acme-http-solver-4dw2q   NodePort    172.20.82.108   <none>        8089:31648/TCP   3m7s
+- kuard                       ClusterIP   172.20.7.143    <none>        8080/TCP         6m31s
+
+- kubectl get certificate
+- acme-test-kuard     True    acme-test-kuard     4m12s
+
+- kubectl get secret
+- acme-test-kuard                       kubernetes.io/tls                     2      4m42s
+- acme-test-kuard-8d6xw                 Opaque                                1      4m42s
 ```
 
 ### Controller | Client-Go
