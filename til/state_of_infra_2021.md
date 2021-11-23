@@ -22,6 +22,9 @@
 - kubectl get order
 - acme-test-kuard-certificate-2r694-2985458014   pending   21m
 
+- kubectl get challenge
+- acme-test-kuard-certificate-2r694-2985458014-2430694242   pending   acme-test-kuard.jimdo-platform-test.link   23m
+
 - kubectl get secret
 - acme-test-kuard                       kubernetes.io/tls                     2      4m42s
 - acme-test-kuard-8d6xw                 Opaque                                1      4m42s
