@@ -7,6 +7,9 @@
 
 - ClusterIssuer - refer to CA secret - or refer to LetsEncrypt secret
 - Certificate - refer to ClusterIssuer
+
+- kubectl get svc
+- cm-acme-http-solver-4dw2q   NodePort    172.20.82.108   <none>        8089:31648/TCP   3m7s
 ```
 
 ### Controller | Client-Go
