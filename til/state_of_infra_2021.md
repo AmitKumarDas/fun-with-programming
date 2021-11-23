@@ -20,10 +20,10 @@
 - acme-test-kuard     True    acme-test-kuard     4m12s
 
 - kubectl get order
-- acme-test-kuard-certificate-2r694-2985458014   pending   21m
+- acme-test-kuard-2r694-2985458014   pending   21m
 
 - kubectl get challenge
-- acme-test-kuard-certificate-2r694-2985458014-2430694242   pending   acme-test-kuard.jimdo-platform-test.link   23m
+- acme-test-kuard-2r694-2985458014-2430694242   pending   my-test.link   23m
 
 - kubectl get secret
 - acme-test-kuard                       kubernetes.io/tls                     2      4m42s
