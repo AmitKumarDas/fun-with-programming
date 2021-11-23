@@ -88,6 +88,20 @@
 
 ### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
+# nginx ingress controller's kubernetes service that uses AWS' NLB
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "false" # i.e. public facing
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:eu-west-1:xxx:certificate/axxa-xx
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+spec:
+  type: LoadBalancer
+
 - https://loft.sh/blog/kubernetes-nginx-ingress-10-useful-configuration-options/
 - www redirect - ssl redirect - timeout - cors - rate limiting
 - custom max body size - whitelist - default backend for 404 (page not found)
