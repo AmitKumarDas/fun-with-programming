@@ -9,6 +9,8 @@
 - you may not need a EKS or ETCD - just k3s maybe
 - helm - flux - kustomization - cert manager - acme - no AWS - no EKS - on-premise possible
 
+- https://github.com/k8s-at-home/awesome-home-kubernetes
+- awesome - k3s - home lab - raspberry
 ```
 
 ### Network
