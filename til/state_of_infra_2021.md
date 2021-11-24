@@ -5,6 +5,10 @@
 - https://cert-manager.io/docs/concepts/issuer/
 - https://cert-manager.io/docs/usage/
 
+- Troubleshooting | RunBook
+- clusterissuer - issuer - certificate - certificaterequest - order - challenge - pod - svc - ing 
+- logs from cert-manager
+
 - ClusterIssuer - refer to CA secret - or refer to LetsEncrypt secret
 - Certificate - refer to ClusterIssuer
 
