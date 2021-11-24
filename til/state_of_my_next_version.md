@@ -18,6 +18,7 @@
 - Golang http / service mesh
 - Golang Docker / OCI
 - Newsletters
+- https://www.bwplotka.dev/2021/efficient-go/
 
 - https://www.solo.io/open-source/
 - API - service mesh - debugging - open source - api gateway - wasm - webassembly
