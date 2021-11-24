@@ -113,7 +113,7 @@
 
 ### DNS / Domain / Ingress / Proxy / Load Balancer
 ```yaml
-# nginx ingress controller's kubernetes service that uses AWS' NLB
+- kubernetes service of nginx ingress controller - uses AWS NLB
 kind: Service
 metadata:
   annotations:
@@ -126,6 +126,21 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: nlb
 spec:
   type: LoadBalancer
+
+- ingress - cert manager - acme - cookie - proxy - timeout
+kind: Ingress
+metadata:
+ annotations:
+   kubernetes.io/ingress.class: nginx
+   cert-manager.io/issuer: letsencrypt-prod
+   nginx.ingress.kubernetes.io/rewrite-target: /
+   nginx.ingress.kubernetes.io/affinity: "cookie"
+   nginx.ingress.kubernetes.io/session-cookie-name: "route"
+   nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+   nginx.ingress.kubernetes.io/proxy-body-size: 500m
+   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+
 
 - https://loft.sh/blog/kubernetes-nginx-ingress-10-useful-configuration-options/
 - www redirect - ssl redirect - timeout - cors - rate limiting
