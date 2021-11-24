@@ -1,8 +1,11 @@
 ### State of My Next Version
 
 ```yaml
-- system - linux - c - OS
 - Golang profile tool
+- https://www.bwplotka.dev/2021/efficient-go/ 
+- book - golang
+
+- system - linux - c - OS
 - C Books
 - Kernel Books
 - Postgres DB
@@ -12,14 +15,23 @@
 - Performance Books
 - BPF Books / Blogs
 - Cilium / Tracee
+```
 
+### Golang++
+```yaml
 - golang - infra
 - Golang + Starlark / HCL
 - Golang http / service mesh
 - Golang Docker / OCI
-- Newsletters
-- https://www.bwplotka.dev/2021/efficient-go/
+```
 
+### Bookmarks
+```yaml
+- Newsletters | Important Blog Sources | Bookmarks
+- https://prometheus.io/blog/
+```
+
+```yaml
 - https://www.solo.io/open-source/
 - API - service mesh - debugging - open source - api gateway - wasm - webassembly
 
