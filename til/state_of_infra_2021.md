@@ -1,5 +1,11 @@
 ## State of Infra 2021
 
+### Helm
+```yaml
+- https://github.com/k8s-at-home/template-cluster-k3s/blob/main/cluster/apps/networking/traefik/helm-release.yaml
+- helm as custom resource - flux - kustomization
+```
+
 ### CertManager
 ```yaml
 - https://cert-manager.io/docs/concepts/issuer/
