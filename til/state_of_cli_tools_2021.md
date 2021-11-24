@@ -11,6 +11,10 @@
 
 - https://github.com/k8s-at-home/awesome-home-kubernetes
 - awesome - k3s - home lab - raspberry
+
+- https://www.cncf.io/blog/2021/11/16/prometheus-announces-an-agent-to-address-a-new-range-of-use-cases/
+- forward from preview to prod prometheus
+- makes preview environment support monitoring & still be light weight
 ```
 
 ### Network
