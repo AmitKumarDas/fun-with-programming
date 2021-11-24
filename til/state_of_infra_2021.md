@@ -39,6 +39,8 @@
 - https://github.com/kubernetes/kubernetes/pull/104483
 - impersonate users via client-go
 
+- https://github.com/kubernetes/client-go/issues/193#issuecomment-343138889
+- yaml to client go - decode - codec
 ```
 
 ### Troubleshooting | RunBook | Debug
