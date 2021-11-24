@@ -1,6 +1,24 @@
 ### State of My Next Version
 
 ```yaml
+- system - linux - c - OS
+- Golang profile tool
+- C Books
+- Kernel Books
+- Postgres DB
+- Berkeley DB
+- MySQL DB
+- LMDB
+- Performance Books
+- BPF Books / Blogs
+- Cilium / Tracee
+
+- golang - infra
+- Golang + Starlark / HCL
+- Golang http / service mesh
+- Golang Docker / OCI
+- Newsletters
+
 - https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
 - submariner - skupper - layer 7 - cilium - DNS - NAT
 
