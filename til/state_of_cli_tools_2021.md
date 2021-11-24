@@ -5,6 +5,7 @@
 - dig
 - https://gist.github.com/mrlesmithjr/c42ebb99a01e8eeeca6a5eb4fa52f852
 - dig output in json
+- dig k8s.io +noall +answer | awk '{if (NR>3){print}}'| tr '[:blank:]' ';'| jq -R 'split(";") |{Name:.[0],TTL:.[1],Class:.[2],Type:.[3],IpAddress:.[4]}' | jq --slurp '.'
 ```
 
 ### Git
