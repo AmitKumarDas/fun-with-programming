@@ -1,5 +1,15 @@
 ### State of CLI | Tools | Commands
 
+### Preview Environments
+```yaml
+- https://github.com/k8s-at-home/template-cluster-k3s
+- https://github.com/toboshii/hajimari
+- https://github.com/stakater/Forecastle
+- k3s - dns - cloudflare - ingress discovery - flux the helm - helm as custom resource
+- you may not need a EKS or ETCD - just k3s maybe
+
+```
+
 ### Network
 ```yaml
 - dig
