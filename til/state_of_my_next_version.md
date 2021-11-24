@@ -19,6 +19,9 @@
 - Golang Docker / OCI
 - Newsletters
 
+- https://www.solo.io/open-source/
+- API - service mesh - debugging - open source - api gateway - wasm - webassembly
+
 - https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
 - submariner - skupper - layer 7 - cilium - DNS - NAT
 
