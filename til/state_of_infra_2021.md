@@ -254,6 +254,9 @@ spec:
 
 ### Prometheus | Grafana | Metrics | Logs | Observability
 ```yaml
+- https://www.cncf.io/blog/2021/11/16/prometheus-announces-an-agent-to-address-a-new-range-of-use-cases/
+- remote write - preview environment
+
 - https://github.com/wangjia184/pod-inspector
 - files - volumes - processes - cpu - memory - age - container - !kubectl
 
