@@ -7,6 +7,7 @@
 - https://github.com/stakater/Forecastle
 - k3s - dns - cloudflare - ingress discovery - flux the helm - helm as custom resource
 - you may not need a EKS or ETCD - just k3s maybe
+- helm - flux - kustomization - cert manager - acme - no AWS - no EKS
 
 ```
 
