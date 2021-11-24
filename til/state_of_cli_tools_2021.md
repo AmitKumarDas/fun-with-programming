@@ -13,8 +13,17 @@
 - awesome - k3s - home lab - raspberry
 
 - https://www.cncf.io/blog/2021/11/16/prometheus-announces-an-agent-to-address-a-new-range-of-use-cases/
+- https://prometheus.io/blog/2021/11/16/agent/
 - forward from preview to prod prometheus
 - makes preview environment support monitoring & still be light weight
+
+```
+
+### Compliance | E2E
+```yaml
+- https://prometheus.io/blog/2021/10/14/prometheus-conformance-results/
+- https://prometheus.io/blog/2021/05/04/prometheus-conformance-remote-write-compliance/
+- https://prometheus.io/blog/2021/05/03/introducing-prometheus-conformance-program/
 ```
 
 ### Network
