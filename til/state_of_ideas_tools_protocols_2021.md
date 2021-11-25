@@ -1,4 +1,4 @@
-### State of CLI | Tools | Commands
+### State of CLI | Tools | Commands | Protocols | Ideas
 
 ### Preview Environments
 ```yaml
