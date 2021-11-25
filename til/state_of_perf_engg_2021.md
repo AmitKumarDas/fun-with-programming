@@ -3,9 +3,11 @@
 
 ```yaml
 - https://prometheus.io/blog/2019/10/10/remote-read-meets-streaming/
-```
 
-```yaml
+- https://github.com/google/cadvisor
+
+- https://github.com/cloudflare/ebpf_exporter
+
 - https://strace.io/
 - attach to an already running process
 - print paths & more info associated with FDs
