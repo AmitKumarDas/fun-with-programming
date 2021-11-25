@@ -5,6 +5,9 @@
 - https://docs.google.com/document/d/1LPhVRSFkGNSuU1fBd81ulhsCPR4hkSZyyBj1SZ8fWOM/edit#heading=h.3p42p5s8n0ui
 - Prometheus Remote Write Specs
 - api - wire format - protocol
+- gRPC issues - internet behind load balancers such as EC2 ELB
+- http headers - version
+- retries - backoff - http response code
 
 - https://prometheus.io/blog/2021/11/16/agent/
 - Prometheus Remote Write Specs - Write Ahead Logging - WAL - TSDB WAL
