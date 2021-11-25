@@ -1,4 +1,21 @@
-### State of CLI | Tools | Commands | Protocols | Ideas
+### State of Ideas | Tools | Protocols | Commands
+
+### Protocols
+```yaml
+- https://docs.google.com/document/d/1LPhVRSFkGNSuU1fBd81ulhsCPR4hkSZyyBj1SZ8fWOM/edit#heading=h.3p42p5s8n0ui
+- https://prometheus.io/blog/2021/11/16/agent/
+- Prometheus Remote Write Specs - Write Ahead Logging - WAL - TSDB WAL
+- idea - can / should mayastor be a Remote Write Compliant Project?
+
+- https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/
+- push vs pull vs event - at scale
+```
+
+### Serverless
+```yaml
+- https://groups.google.com/g/prometheus-developers/c/FPe0LsTfo2E/m/yS7up2YzAwAJ?pli=1
+- prometheus - serverless
+```
 
 ### Preview Environments
 ```yaml
@@ -24,6 +41,7 @@
 - https://prometheus.io/blog/2021/10/14/prometheus-conformance-results/
 - https://prometheus.io/blog/2021/05/04/prometheus-conformance-remote-write-compliance/
 - https://prometheus.io/blog/2021/05/03/introducing-prometheus-conformance-program/
+- https://github.com/prometheus/compliance/tree/main/remote_write_sender
 ```
 
 ### Network
