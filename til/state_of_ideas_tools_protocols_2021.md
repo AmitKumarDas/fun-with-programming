@@ -96,4 +96,7 @@
 - i.e:
 - resource "your_provider_name" "abc-hey" # underscores then hyphens
 - data "your_provider_name" "abc-hey" # underscores then hyphens
+
+- https://stackoverflow.com/questions/69180684/how-do-i-apply-a-crd-from-github-to-a-cluster-with-terraform
+- CRDs - yaml - apply
 ```
