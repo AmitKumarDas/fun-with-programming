@@ -88,8 +88,8 @@
 ```yaml
 - https://www.terraform.io/docs/language/meta-arguments/for_each.html#chaining-for_each-between-resources
 - https://www.terraform.io/docs/language/data-sources/index.html
-- chain - for each - loop - input - outputs
-- variables - data - good for chaining
+- https://selleo.com/til/posts/cnfrqv1ipl-foreach-over-tuples-in-terraform
+- chain - for each - loop - input - outputs - tuple - variables - data
 
 - https://www.terraform.io/docs/language/providers/index.html
 - providers offer - resources - data
