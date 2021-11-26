@@ -110,6 +110,7 @@ variable "operator-crds" {
 }
 
 data "http" "operator-crd" {
+  # http get for each operator-crd files
   count = length(var.operator-crds)
   # url is based on prometheus stack version 17.x
   url = "https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/${var.operator-crds[count.index]}"
@@ -119,6 +120,7 @@ data "http" "operator-crd" {
 }
 
 resource "kubectl_manifest" "install-operator-crd" {
+  # kubectl apply for each operator crd that was http downloaded
   count = length(data.http.operator-crd)
   yaml_body = yamldecode(data.http.operator-crd[count.index].body)
 }
