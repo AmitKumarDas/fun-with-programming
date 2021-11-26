@@ -71,3 +71,15 @@
 
 - git log --pretty=oneline
 ```
+
+### SSH | Troubleshoot
+```yaml
+- SSH-Key has not been added to the ssh-agent
+- Solve this with ssh-add -K
+- You may put that command inside your .bashrc or .zshrc
+
+- SSH does not know the host key of the bastion host yet
+- Run below
+- ssh -v <githubusername>@bastion.jimdo-platform-eks.net
+- and then accept the question with yes
+```
