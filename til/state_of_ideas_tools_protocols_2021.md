@@ -99,7 +99,11 @@
 
 - https://stackoverflow.com/questions/69180684/how-do-i-apply-a-crd-from-github-to-a-cluster-with-terraform
 - CRDs - yaml - apply
+
+- https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
+- better option - server side apply
 ```
+
 ```hcl
 variable "operator-crds" {
   type = list(string)
@@ -119,13 +123,22 @@ data "http" "operator-crd" {
   }
 }
 
+# kubectl apply for each operator crd that was http downloaded
 resource "kubectl_manifest" "install-operator-crd" {
-  # kubectl apply for each operator crd that was http downloaded
-  count = length(data.http.operator-crd)
-  yaml_body = yamldecode(data.http.operator-crd[count.index].body)
+  # convert the tuple to map where key is the url & value is the object
+  for_each = { for resp in data.http.operator-crd : resp.url => resp }
+  yaml_body = each.value.body
+}
+
+# aliter - better
+# server side apply for each operator crd that was http downloaded
+resource "kubernetes_manifest" "install-operator-crd" {
+  for_each = { for resp in data.http.operator-crd : resp.url => resp }
+  # convert to HCL specs - allows tf to handle the diff better
+  manifest = yamldecode(each.value.body)
 }
 
 resource "helm_release" "prometheus-stack" {
-  depends_on = [kubectl_manifest.install-operator-crd]
+  depends_on = [kubernetes_manifest.install-operator-crd]
 }
 ```
