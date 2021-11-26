@@ -83,3 +83,9 @@
 - ssh -v <githubusername>@bastion.jimdo-platform-eks.net
 - and then accept the question with yes
 ```
+
+### Terraform
+```yaml
+- https://www.terraform.io/docs/language/meta-arguments/for_each.html#chaining-for_each-between-resources
+- chain - for each - loop - input - outputs
+```
