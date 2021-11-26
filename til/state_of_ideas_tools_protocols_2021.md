@@ -100,3 +100,30 @@
 - https://stackoverflow.com/questions/69180684/how-do-i-apply-a-crd-from-github-to-a-cluster-with-terraform
 - CRDs - yaml - apply
 ```
+```hcl
+variable "operator-crds" {
+  type = list(string)
+  default = [
+    "monitoring.coreos.com_alertmanagerconfigs.yaml",
+    "monitoring.coreos.com_alertmanagers.yaml",
+  ]
+}
+
+data "http" "operator-crd" {
+  count = length(var.operator-crds)
+  # url is based on prometheus stack version 17.x
+  url = "https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.49.0/example/prometheus-operator-crd/${var.operator-crds[count.index]}"
+  request_headers = {
+    Accept = "text/plain"
+  }
+}
+
+resource "kubectl_manifest" "install-operator-crd" {
+  count = length(data.http.operator-crd)
+  yaml_body = yamldecode(data.http.operator-crd[count.index].body)
+}
+
+resource "helm_release" "prometheus-stack" {
+  depends_on = [kubectl_manifest.install-operator-crd]
+}
+```
