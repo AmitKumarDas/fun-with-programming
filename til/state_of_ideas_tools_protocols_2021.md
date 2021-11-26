@@ -87,5 +87,13 @@
 ### Terraform
 ```yaml
 - https://www.terraform.io/docs/language/meta-arguments/for_each.html#chaining-for_each-between-resources
+- https://www.terraform.io/docs/language/data-sources/index.html
 - chain - for each - loop - input - outputs
+- variables - data - good for chaining
+
+- https://www.terraform.io/docs/language/providers/index.html
+- providers offer - resources - data
+- i.e:
+- resource "your_provider_name" "abc-hey" # underscores then hyphens
+- data "your_provider_name" "abc-hey" # underscores then hyphens
 ```
