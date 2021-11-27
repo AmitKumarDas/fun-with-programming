@@ -35,23 +35,55 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 
 ### Golang | pprof
 ```yaml
-- Added a -cpuprofile command line flag
-- Then you can run your program you want to profile:
-- $ ./mybinary -cpuprofile=prof 'BEGIN { for (i=0; i<100000000; i++) s++ }'
+- If Go testing.B is used
+- we can use gotest’s standard -cpuprofile and -memprofile flags
+- In a standalone program - import runtime/pprof
 ```
 ```go
-if *cpuprofile != "" {
-  f, err := os.Create(*cpuprofile)
-  if err != nil {
-    errorExit("could not create CPU profile: %v", err)
+var cpuprofile = flag.String("cpuprofile", "", "write cpu profile to file")
+
+func main() {
+  flag.Parse()
+  if *cpuprofile != "" {
+    f, err := os.Create(*cpuprofile)
+    if err != nil {
+      log.Fatal(err)
+    }
+    pprof.StartCPUProfile(f)
+    defer pprof.StopCPUProfile()
   }
-  if err := pprof.StartCPUProfile(f); err != nil {
-    errorExit("could not start CPU profile: %v", err)
-  }
-}
-// ... run interp.Exec ...
-if *cpuprofile != "" {
-  pprof.StopCPUProfile()
+```
+```yaml
+- run program with -cpuprofile flag 
+- then run go tool pprof to interpret the profile
+
+- $ make havlak1.prof
+- ./havlak1 -cpuprofile=havlak1.prof
+
+- $ go tool pprof havlak1 havlak1.prof
+```
+```yaml
+- go tool pprof is a slight variant of Google’s pprof C++ profiler
+- important command is topN
+- which shows the top N samples in the profile
+
+- (pprof) top10
+- Total: 2525 samples
+-  298  11.8%  11.8%      345  13.7% runtime.mapaccess1_fast64
+-  268  10.6%  22.4%     2124  84.1% main.FindLoops
+-  251   9.9%  32.4%      451  17.9% scanblock
+```
+
+### Golang - Slice Better Than Map If You Can
+```yaml
+- Instead of map[*BasicBlock]int 
+- use a []int
+- a slice indexed by the block number
+- no reason to use a map when an array or slice will do
+```
+```go
+type BasicBlock struct {
+  Name int // use this as the index of the slice
 }
 ```
 
