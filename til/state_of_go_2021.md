@@ -1,25 +1,32 @@
 ### State of Golang Code 2021
+
+### Null | JSON
 ```yaml
 - https://github.com/kubernetes/kubernetes/pull/104990/
-- null - json
+```
 
+### Channel | Signal | Shutdown
+```yaml
 - https://rudderstack.com/blog/implementing-graceful-shutdown-in-go/
-- context - channel - goroutine - signal - shutdown
+```
 
+### JSON | Get | Performance | E2E | Assert
+```yaml
+- https://github.com/bhmj/jsonslice
+```
+
+### Design | Open API | Kubernetes | Validation
+```yaml
+- https://danielmangum.com/posts/how-kubernetes-validates-custom-resources/
+```
+
+### Learn
+```yaml
 - https://github.com/toni-moreno/syncflux
 - DB - InfluxDB - learn design
 
 - https://github.com/mojura/mojura
 - todo - learn design
-
-- https://github.com/bhmj/jsonslice
-- performance - query - raw - []byte - e2e - kubernetes - assert
-
-- https://danielmangum.com/posts/how-kubernetes-validates-custom-resources/
-- design - history - kubernetes - open api - validation - api
-
-- https://github.blog/2021-11-10-make-your-monorepo-feel-small-with-gits-sparse-index/
-- monorepo - git - sparse index - contributing guide
 
 - https://github.com/stefanprodan/kustomizer/blob/main/pkg/objectutil/io.go
 - yaml to unstruct - unstruct to yaml
@@ -60,11 +67,9 @@ defer bufpool.Put(data)
 copy(data[0:cap(data)], zeroBuf)
 ```
 
-### Snippet Performance
+### Snippet - Performance - Idiomatic - Fellow
 ```yaml
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
-
-- Fast - Idiomatic - Performant - Design
 ```
 
 ### Snippets - Error Handling
