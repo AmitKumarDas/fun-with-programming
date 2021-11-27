@@ -27,3 +27,8 @@
 - set below in ~/.profile
 - machine github.com username AmitKumarDas password <my github token with relevant access>
 ```
+
+### Monorepo | Sparse Index
+```yaml
+- https://github.blog/2021-11-10-make-your-monorepo-feel-small-with-gits-sparse-index/
+```
