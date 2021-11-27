@@ -1,12 +1,44 @@
 ### State of Performance Engineering 2021
 
-### Golang
+### Snippets - Buffers
 ```yaml
 - input and output is handled using std io.go
-
 - I/O is buffered for efficiency
-- use bufio.Scanner to read input
-- use bufio.Writer to buffer output
+```
+
+```diff
+- output = os.Stdout
++ output = bufio.NewWriterSize(os.Stdout, 64*1024)
+```
+
+```diff
+- errorOutput = os.Stderr
++ errorOutput = bufio.NewWriterSize(os.Stderr, 64*1024)
+```
+
+```go
+// https://github.com/benhoyt/goawk/commit/6ba004f5fbf9b84bc6196d50c2a0dd496ed1771b
+
+// Implement a buffered version of WriteCloser 
+// so output is buffered when redirecting to a file 
+// eg: print >"out"
+type bufferedWriteCloser struct {
+	*bufio.Writer
+	io.Closer
+}
+
+func newBufferedWriteClose(w io.WriteCloser) *bufferedWriteCloser {
+	writer := bufio.NewWriterSize(w, outputBufSize)
+	return &bufferedWriteCloser{writer, w}
+}
+
+func (wc *bufferedWriteCloser) Close() error {
+	err := wc.Writer.Flush()
+	if err != nil {
+		return err
+	}
+	return wc.Closer.Close()
+}
 ```
 
 ### Golang - Fuzz Testing
