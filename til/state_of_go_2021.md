@@ -37,6 +37,27 @@
 - load balancer - proxy - round robin - limit - socket
 ```
 
+### Fuzz Testing
+```yaml
+- https://github.com/dvyukov/go-fuzz
+- ensures no panic, crash, allocate insane amount of memory, nor hang
+
+- Fuzz function can deserialize-serialize-deserialize-serialize & assert
+- Fuzz function can feed the input into two different implementations (e.g. dumb and optimized) & assert
+
+- To communicate application-level bugs Fuzz function should panic 
+- os.Exit(1) will work too, but panic message contains more info)
+
+- Fuzz function should not output to stdout/stderr
+- it will slow down fuzzing and nobody will see the output anyway
+- The exception is printing info about a bug just before panicking
+```
+
+```yaml
+- https://blog.cloudflare.com/dns-parser-meet-go-fuzzer/
+```
+
+### Snippets - Error Handling
 ```go
 // library code
 // avoid lot of error handling
@@ -54,6 +75,7 @@ func ParseProgram(src []byte, config *ParserConfig) (prog *Program, err error) {
 }
 ```
 
+### Snippets - API Design
 ```go
 // design thinking w.r.t e2e, testing, assertion
 
@@ -83,6 +105,7 @@ func (s Strings) AssertHasAll(expected []string) error {
 }
 ```
 
+### Snippets - Sockets
 ```go
 // Node proxy via userspace socket
 //
