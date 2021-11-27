@@ -11,6 +11,10 @@
 
 - https://benhoyt.com/writings/goawk/
 - awk interpreter in go
+
+- https://blog.cloudflare.com/automatically-generated-types/
+- workers - rust - typescript - intermediate representation
+- abstract syntax tree
 ```
 
 ### Protocols
