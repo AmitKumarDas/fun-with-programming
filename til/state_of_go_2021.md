@@ -15,10 +15,6 @@
 - https://github.com/bhmj/jsonslice
 - performance - query - raw - []byte - e2e - kubernetes - assert
 
-- how to go get any private github repo?
-- set below in ~/.profile
-- machine github.com username AmitKumarDas password <my github token with relevant access>
-
 - https://danielmangum.com/posts/how-kubernetes-validates-custom-resources/
 - design - history - kubernetes - open api - validation - api
 
@@ -41,16 +37,6 @@
 ```yaml
 - https://github.com/dvyukov/go-fuzz
 - ensures no panic, crash, allocate insane amount of memory, nor hang
-
-- Fuzz function can deserialize-serialize-deserialize-serialize & assert
-- Fuzz function can feed the input into two different implementations (e.g. dumb and optimized) & assert
-
-- To communicate application-level bugs Fuzz function should panic 
-- os.Exit(1) will work too, but panic message contains more info)
-
-- Fuzz function should not output to stdout/stderr
-- it will slow down fuzzing and nobody will see the output anyway
-- The exception is printing info about a bug just before panicking
 ```
 
 ```yaml
@@ -72,6 +58,13 @@ var bufpool = sync.Pool{
 data := bufpool.Get().([]byte)
 defer bufpool.Put(data)
 copy(data[0:cap(data)], zeroBuf)
+```
+
+### Snippet Performance
+```yaml
+- https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
+
+- Fast - Idiomatic - Performant - Design
 ```
 
 ### Snippets - Error Handling
