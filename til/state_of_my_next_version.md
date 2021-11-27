@@ -1,10 +1,6 @@
 ### State of My Next Version
 
 ```yaml
-- Golang profile tool
-- https://www.bwplotka.dev/2021/efficient-go/ 
-- book - golang
-
 - system - linux - c - OS
 - C Books
 - Kernel Books
@@ -21,17 +17,25 @@
 ```yaml
 - golang - infra
 - Golang + Starlark / HCL
-- Golang http / service mesh
-- Golang Docker / OCI
 ```
 
-### Bookmarks
+### Bookmarks | Blog Source | Engineering | Books
 ```yaml
-- Newsletters | Important Blog Sources | Bookmarks
 - https://prometheus.io/blog/
+- https://www.solo.io/open-source/
+- https://blog.tilt.dev/
+
+- https://www.bwplotka.dev/2021/efficient-go/ 
+- book
 ```
 
+### Repo | How | Deep Dive
 ```yaml
+- https://menno.io/posts/golang-register-calling/
+- performance - register
+- cpu register - high speed temp memory
+- stack - top of program memory - local variables - arguments - return values - return addresses
+
 - https://www.solo.io/open-source/
 - API - service mesh - debugging - open source - api gateway - wasm - webassembly
 
