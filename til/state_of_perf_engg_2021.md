@@ -1,6 +1,6 @@
 ### State of Performance Engineering 2021
 
-### Snippets - Buffers
+### Golang Snippets - Buffers
 ```yaml
 - input and output is handled using std io.go
 - I/O is buffered for efficiency
@@ -39,6 +39,11 @@ func (wc *bufferedWriteCloser) Close() error {
 	}
 	return wc.Closer.Close()
 }
+```
+
+### Golang - Switch Seems Better Than Map
+```yaml
+- https://github.com/benhoyt/goawk/commit/ad8ff0e5f6cc89fdd480099614187ee23b20a8c9
 ```
 
 ### Golang - Fuzz Testing
@@ -126,7 +131,7 @@ func appendUnique(a []int, x int) []int {
 - Idiomatic - Performant - Fellow
 ```
 
-### Golang - Slice Better Than Map If You Can
+### Golang - Slice Better Than Map
 ```yaml
 - Instead of map[*BasicBlock]int 
 - use a []int
