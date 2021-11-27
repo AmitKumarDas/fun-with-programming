@@ -38,6 +38,23 @@
 ```
 
 ```go
+// library code
+// avoid lot of error handling
+// just panic with special YXZError
+// handle once at top of call stack
+func ParseProgram(src []byte, config *ParserConfig) (prog *Program, err error) {
+  defer func() {
+    if r := recover(); r != nil {
+      // Convert to ParseError or re-panic
+      err = r.(*ParseError)
+    }
+  }()
+  
+  // ...
+}
+```
+
+```go
 // design thinking w.r.t e2e, testing, assertion
 
 import "k8s.io/apimachinery/pkg/util/sets"
