@@ -13,12 +13,6 @@
 - Cilium / Tracee
 ```
 
-### Golang++
-```yaml
-- golang - infra
-- Golang + Starlark / HCL
-```
-
 ### Bookmarks | Blog Source | Engineering | Books
 ```yaml
 - https://prometheus.io/blog/
@@ -27,6 +21,17 @@
 
 - https://www.bwplotka.dev/2021/efficient-go/ 
 - book
+```
+
+### Language Design | Compiler | Interpreter
+```yaml
+- http://www.craftinginterpreters.com/
+- http://www.craftinginterpreters.com/contents.html
+- interpreter - create your own programming language
+
+
+- https://benhoyt.com/writings/littlelang/
+- python - javascript - golang
 ```
 
 ### Repo | How | Deep Dive
