@@ -21,16 +21,15 @@
 
 ```go
 func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
-	defer func() {
-		panicked := recover()
+  defer func() {
+    panicked := recover()
+    if panicked != nil {
+      err = errors.New("ParseError")
+    }
+  }()
 
-		if panicked != nil {
-			err = errors.New("ParseError")
-		}
-	}()
-
-	err = msg.Unpack(buf)
-	return
+  err = msg.Unpack(buf)
+  return
 }
 ```
 
