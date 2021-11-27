@@ -90,6 +90,14 @@ func ParseProgram(src []byte, config *ParserConfig) (prog *Program, err error) {
 }
 ```
 
+```yaml
+- Initially I had return just the value and panic with a special error on runtime error
+- but that was a significant slow-down
+- so switched to using more verbose but more Go-like error return values
+- This would be a lot nicer with the proposed check keyword
+- This change gave a 2-3x improvement on a lot of benchmarks
+```
+
 ### Snippets - API Design
 ```go
 // design thinking w.r.t e2e, testing, assertion
