@@ -34,7 +34,7 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 }
 ```
 
-### Golang | CPU profile
+### Golang - CPU Profile
 ```yaml
 - https://go.dev/blog/pprof
 
@@ -43,7 +43,7 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 - In a standalone program - import runtime/pprof
 ```
 
-### Golang | Memory Profile
+### Golang - Memory Profile
 ```yaml
 - https://go.dev/blog/pprof
 
@@ -91,10 +91,8 @@ func appendUnique(a []int, x int) []int {
 
 ```yaml
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
-
-- Fast - Idiomatic - Performant - Design
+- Idiomatic - Performant - Fellow
 ```
-
 
 ### Golang - Slice Better Than Map If You Can
 ```yaml
