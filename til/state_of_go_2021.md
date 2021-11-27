@@ -57,6 +57,23 @@
 - https://blog.cloudflare.com/dns-parser-meet-go-fuzzer/
 ```
 
+### Buffers - Zeroing
+```go
+// zeroBuf is a big buffer of zero bytes, used to zero out the buffers
+var zeroBuf = make([]byte, 65535)
+
+var bufpool = sync.Pool{
+    New: func() interface{} {
+        return make([]byte, 0, 2048)
+    },
+}
+
+// in some function
+data := bufpool.Get().([]byte)
+defer bufpool.Put(data)
+copy(data[0:cap(data)], zeroBuf)
+```
+
 ### Snippets - Error Handling
 ```go
 // library code
