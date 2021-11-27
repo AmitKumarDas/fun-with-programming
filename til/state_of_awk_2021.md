@@ -16,4 +16,29 @@
 - $ awk '/about/ { print $4 }' server.log 
 - 1.2.3.4
 - 2.3.4.5
+
+- determine the average response time (field 6) of all GET requests
+- sum the response time 
+- count the number of GET requests
+- print the average in the END block – 18 milliseconds
+
+- $ awk '/GET/ { total += $6; n++ } END { print total/n }' server.log 
+- 0.0186667
+
+- AWK supports hash tables 
+- i.e. “associative arrays”
+- so you can print the count of each request method
+– remember the regex pattern is optional and omitted here
+
+- $ awk '{ num[$2]++ } END { for (m in num) print m, num[m] }' server.log 
+- GET 9
+- POST 1
+- HEAD 2
+
+- AWK has two scalar types, string and number
+- but it’s been described as “stringly typed”
+
+- comparison operators like == and < 
+- do numeric comparisons if number
+- else string comparisons
 ```
