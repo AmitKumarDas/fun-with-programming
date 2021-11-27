@@ -1,5 +1,14 @@
 ### State of Performance Engineering 2021
 
+### Golang Snippets - Error Handling
+```yaml
+- Initially I had return just the value and panic with a special error on runtime error
+- but that was a significant slow-down
+- so switched to using more verbose but more Go-like error return values
+- This would be a lot nicer with the proposed check keyword
+- This change gave a 2-3x improvement on a lot of benchmarks
+```
+
 ### Golang Snippets - Buffers
 ```yaml
 - input and output is handled using std io.go
