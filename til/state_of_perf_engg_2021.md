@@ -1,5 +1,57 @@
 ### State of Performance Engineering 2021
 
+### Golang - Stack vs Heap
+```go
+// std library - go.go
+
+var (
+  // max size of the explicit variable that can get allocated to the stack
+  // var x T
+  // x := ...
+  maxStackVarSize = int64(10 * 1024 * 1024)
+
+  // max size of the implicit variable that can get allocated to the stack
+  // p := new(T)
+  // p := &T{}
+  // s := make([]T, n)
+  // s := []byte("blah")
+  maxImplicitStackVarSize = int64(64 * 1024)
+)
+```
+
+```go
+// maxImplicitStackVarSize/t.Elem().width = 65536/8(int64) = 8192
+// so, x will escape to heap
+x := make([]int64, 8192)
+
+// maxImplicitStackVarSize/t.Elem().width = 65536/1(byte) = 65536
+// so, y will escape to heap
+y := make([]byte, 65536)
+```
+
+```go
+// the difference in memory size of slice is 1 byte
+// but smaller slice stays in stack and other escapes to heap
+
+const size = 64 * 1024 // 65536
+
+func Benchmark_LargeSize_Stack_EqualOrLess65535(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    // not escape to heap when size <= 65535
+    dataLarge := make([]byte, size-1)
+    _ = dataLarge
+  }
+}
+
+func Benchmark_LargeSize_Heap_LargerThan65535(b *testing.B) {
+  for i := 0; i < b.N; i++ {
+    // escape to heap when size > 65535
+    dataLarge := make([]byte, size)
+    _ = dataLarge
+  }
+}
+```
+
 ### Golang Snippets - Error Handling
 ```yaml
 - https://github.com/benhoyt/goawk/commit/aa6aa75368afeb40897b180c5a36501012e94907
