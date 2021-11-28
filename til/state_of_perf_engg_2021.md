@@ -345,15 +345,17 @@ func VarIndex(name string) int {
 - abstract syntax tree
 ```
 
-### Blogs
+### Blogs | References
 ```yaml
 - https://prometheus.io/blog/2019/10/10/remote-read-meets-streaming/
 - https://github.com/google/cadvisor
 - https://github.com/cloudflare/ebpf_exporter
 
-
 - https://www.brendangregg.com/blog/2021-09-26/the-speed-of-time.html
 - service restarting in loop // can be invisible in top(8)
+
+- https://benhoyt.com/writings/goawk/
+- golang
 ```
 
 ### Tools
