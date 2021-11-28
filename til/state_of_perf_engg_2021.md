@@ -52,6 +52,74 @@ func Benchmark_LargeSize_Heap_LargerThan65535(b *testing.B) {
 }
 ```
 
+### Golang - Stack vs Heap - 2
+```yaml
+- https://github.com/benhoyt/goawk/commit/af993094e3e8aca2b7ab709ffcda437996c906fe?diff=split
+- Two tweaks to evalIndex
+
+- one is to simply speed up the common case
+- of a 1-dimensional index and avoid the loop entirely
+
+- other is to allocate an array of fixed size (3) to begin with
+- so the compiler can do that first allocation on the heap
+```
+
+```go
+// heap
+func (p *interp) evalIndex(indexExprs []Expr) (string, error) {
+  indices := make([]string, len(indexExprs))
+  for i, expr := range indexExprs {
+  	v, err := p.eval(expr)
+  	if err != nil {
+  		return "", err
+  	}
+  	indices[i] = p.toString(v)
+  }
+  return strings.Join(indices, p.subscriptSep), nil
+}
+```
+
+```go
+// stack
+func (p *interp) evalIndex(indexExprs []Expr) (string, error) {
+	// Up to 3-dimensional indices won't require heap allocation
+	indices := make([]string, 0, 3)
+	for _, expr := range indexExprs {
+		v, err := p.eval(expr)
+		if err != nil {
+			return "", err
+		}
+		indices = append(indices, p.toString(v))
+	}
+	return strings.Join(indices, p.subscriptSep), nil
+}
+```
+
+```go
+// stack
+func (p *interp) evalIndex(indexExprs []Expr) (string, error) {
+	// Optimize the common case of a 1-dimensional index
+	if len(indexExprs) == 1 {
+		v, err := p.eval(indexExprs[0])
+		if err != nil {
+			return "", err
+		}
+		return p.toString(v), nil
+	}
+
+	// Up to 3-dimensional indices won't require heap allocation
+	indices := make([]string, 0, 3)
+	for _, expr := range indexExprs {
+		v, err := p.eval(expr)
+		if err != nil {
+			return "", err
+		}
+		indices = append(indices, p.toString(v))
+	}
+	return strings.Join(indices, p.subscriptSep), nil
+}
+```
+
 ### Golang Snippets - Error Handling
 ```yaml
 - https://github.com/benhoyt/goawk/commit/aa6aa75368afeb40897b180c5a36501012e94907
