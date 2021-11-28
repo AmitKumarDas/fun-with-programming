@@ -2,10 +2,10 @@
 
 ### Golang Snippets - Error Handling
 ```yaml
-- Initially I had return just the value and panic with a special error on runtime error
-- but that was a significant slow-down
-- so switched to using more verbose but more Go-like error return values
-- This would be a lot nicer with the proposed check keyword - fellow
+- https://github.com/benhoyt/goawk/commit/aa6aa75368afeb40897b180c5a36501012e94907
+- Initially code returned just the value and panic with a special error on runtime error
+- But that was a significant slow-down
+- So switched to using more verbose but more Go-like error return values
 - This change gave a 2-3x improvement on a lot of benchmarks
 ```
 ```diff
