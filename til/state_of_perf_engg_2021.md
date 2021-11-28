@@ -5,8 +5,19 @@
 - Initially I had return just the value and panic with a special error on runtime error
 - but that was a significant slow-down
 - so switched to using more verbose but more Go-like error return values
-- This would be a lot nicer with the proposed check keyword
+- This would be a lot nicer with the proposed check keyword - fellow
 - This change gave a 2-3x improvement on a lot of benchmarks
+```
+```diff
+- func (p *interp) evalSafe(expr Expr) (v value, err error) {
+-   defer func() {
+-     if r := recover(); r != nil {
+-       // Convert to interpreter Error or re-panic
+-       err = r.(*Error)
+-     }
+-   }()
+-   return p.eval(expr), nil
+- }
 ```
 
 ### Golang Snippets - Buffers
