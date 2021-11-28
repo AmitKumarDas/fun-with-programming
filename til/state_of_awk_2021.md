@@ -42,3 +42,8 @@
 - do numeric comparisons if number
 - else string comparisons
 ```
+
+### dig to yaml via AWK & jq
+```sh
+dig acme-test.jimdo-platform-eks-stage.net +noall +answer | awk '{if (NR>3){print}}'| tr '[:blank:]' ';'| jq -R 'split(";") |{Name:.[0],TTL:.[1],Class:.[2],Type:.[3],IpAddress:.[4]}' | jq --slurp '.'
+```
