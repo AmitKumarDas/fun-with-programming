@@ -1,14 +1,18 @@
 ### State of Performance Engineering 2021
 
-### Repo - Learn - 1
+### Repo - QOI - 1
 ```yaml
 - https://github.com/xfmoulet/qoi
-- https://github.com/MasterQ32/zig-qoi
+```
 
-- buffered io
-- hash
-- array
-- bit map indexing
+### Repo - QOI - 2
+```yaml
+- https://github.com/MasterQ32/zig-qoi
+```
+
+### Repo - BitMap - 1
+```yaml
+- https://github.com/kelindar/bitmap
 ```
 
 ### Golang - Stack vs Heap
