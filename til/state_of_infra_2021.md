@@ -79,6 +79,9 @@
 
 ### Security
 ```yaml
+- https://github.blog/2021-11-23-secure-deployments-openid-connect-github-actions-generally-available/
+- github - oidc - tokens vs. secrets
+
 - https://www.cncf.io/blog/2021/08/20/how-to-secure-your-kubernetes-control-plane-and-node-components/
 - best practices - certificates - all core components
 
