@@ -78,3 +78,10 @@ resource "kubectl_manifest" "example" {
   yaml_body = yamlencode(locals.resource_list[count.index]) 
 }
 ```
+
+### Debugging
+```sh
+terraform workspace select my-work-xyz
+terraform init
+tarraform state list
+```
