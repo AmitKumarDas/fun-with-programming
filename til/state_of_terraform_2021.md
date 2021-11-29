@@ -26,7 +26,7 @@
 - server side apply
 ```
 
-```hcl
+```tf
 variable "operator-crds" {
   type = list(string)
   default = [
@@ -64,5 +64,17 @@ resource "kubernetes_manifest" "install-operator-crd" {
 
 resource "helm_release" "prometheus-stack" {
   depends_on = [kubernetes_manifest.install-operator-crd]
+}
+```
+
+### Parsing the file and send each fragment as a separate manifest
+```tf
+locals {
+  resource_list = yamldecode(file("${path. module}/example.yaml")).items
+}
+
+resource "kubectl_manifest" "example" {
+  count = length(locals.resource_list)
+  yaml_body = yamlencode(locals.resource_list[count.index]) 
 }
 ```
