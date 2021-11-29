@@ -1,5 +1,10 @@
 ### State of Ideas | Tools | Protocols | Commands
 
+### System
+```yaml
+- https://github.com/mudler/yip
+- cloud init
+```
 
 ### Serverless
 ```yaml
