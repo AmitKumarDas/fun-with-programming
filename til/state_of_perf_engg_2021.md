@@ -3,6 +3,8 @@
 ### Repo - Learn - 1
 ```yaml
 - https://github.com/xfmoulet/qoi
+- https://github.com/MasterQ32/zig-qoi
+
 - buffered io
 - hash
 - array
