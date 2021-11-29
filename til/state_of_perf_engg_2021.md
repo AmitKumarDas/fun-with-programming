@@ -1,5 +1,14 @@
 ### State of Performance Engineering 2021
 
+### Repo - Learn - 1
+```yaml
+- https://github.com/xfmoulet/qoi
+- buffered io
+- hash
+- array
+- bit map indexing
+```
+
 ### Golang - Stack vs Heap
 ```go
 // std library - go.go
