@@ -53,6 +53,12 @@ resource "kubectl_manifest" "install-operator-crd" {
   yaml_body = each.value.body
 }
 
+# or
+resource "kubectl_manifest" "install-operator-crd" {
+  for_each = { for idx, resp in data.http.fetch-operator-crd : idx => resp }
+  yaml_body = each.value.body
+}
+
 # aliter - better
 # server side apply for each operator crd that was http downloaded
 resource "kubernetes_manifest" "install-operator-crd" {
