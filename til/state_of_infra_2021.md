@@ -4,6 +4,13 @@
 ```yaml
 - https://github.com/inguardians/peirates
 - penetration tool
+
+- https://developer.okta.com/blog/2021/11/08/k8s-api-server-oidc
+- oidc - okta - terraform
+- users - groups - admins
+- PKCE as client authentication, which is much more secure than using a client secret
+- prepare cluster like K3s, etc to use OIDC
+- kubectl authentication via OIDC
 ```
 
 ### Helm
