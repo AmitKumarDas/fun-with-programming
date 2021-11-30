@@ -67,3 +67,73 @@ unsigned findNextPowerOf2(unsigned n)
   return k;
 }
 ```
+
+```cpp
+// Compute power of two greater than or equal to n
+unsigned findNextPowerOf2(unsigned n)
+{
+  // decrement n (to handle the case when `n` itself is a power of 2)
+  n = n - 1;
+
+  // calculate the position of the last set bit of n
+  int lg = log2(n);
+
+  // next power of two will have a bit set at position `lg+1`
+  return 1U << lg + 1;
+}
+```
+
+```yaml
+- set all bits on the right-hand side of the most significant set bit to 1 
+- then increment the value by 1 to “rollover” to two’s nearest power
+
+- e.g, consider number 20
+- convert its binary representation 00010100 to 00011111 
+- and add 1 to it which results in the next power of 2 for number 20
+- i.e. (00011111 + 1) = 00100000
+```
+
+```cpp
+// Compute power of two greater than or equal to `n`
+unsigned findNextPowerOf2(unsigned n)
+{
+  // decrement n (to handle the case when n itself is a power of 2)
+  n--;
+
+  // set all bits on the right hand side of the most significant bit set to 1
+  n |= n >> 1;
+  n |= n >> 2;
+  n |= n >> 4;
+  n |= n >> 8;
+  n |= n >> 16;
+
+  // increment n and return
+  return ++n;
+}
+```
+
+```go
+func nextPowerOf2(x uint32) uint32 {
+	if x == math.MaxUint32 {
+		return x
+	}
+
+	if x == 0 {
+		return 1
+	}
+
+	x--
+	x |= x >> 1
+	x |= x >> 2
+	x |= x >> 4
+	x |= x >> 8
+	x |= x >> 16
+
+	return x + 1
+}
+```
+
+### References
+- https://www.techiedelight.com/round-next-highest-power-2/
+- https://www.techiedelight.com/Tags/Bit-Hacks/
+- https://www.techiedelight.com/Category/Binary/
