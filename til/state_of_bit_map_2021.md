@@ -46,3 +46,9 @@
 - In this case, the bitmap is just used to determine which pages to fetch
 - the filter criteria are then applied to all rows in matching pages
 ```
+
+### Repo - BitMap - 1
+```yaml
+- https://github.com/kelindar/bitmap
+```
+
