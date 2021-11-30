@@ -16,6 +16,7 @@
 - shallow functions: avoid
 - inlining improves readability: less cognitive load to readers
 - there should be one and preferably only one obvious way to do it
+- avoid defining variables that are used only once
 ```
 
 ### Null | JSON
