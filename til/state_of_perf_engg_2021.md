@@ -10,6 +10,11 @@
 - https://github.com/MasterQ32/zig-qoi
 ```
 
+### Snippet - Performance - Idiomatic - Fellow - Russ Cox
+```yaml
+- https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
+```
+
 ### Golang - Stack vs Heap
 ```go
 // std library - go.go
