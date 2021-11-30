@@ -13,6 +13,9 @@
 - reflect is very slow: avoid
 - preallocate slices & maps
 - reuse arrarys
+- shallow functions: avoid
+- inlining improves readability: less cognitive load to readers
+- there should be one and preferably only one obvious way to do it
 ```
 
 ### Null | JSON
