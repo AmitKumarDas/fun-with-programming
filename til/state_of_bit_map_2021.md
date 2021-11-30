@@ -47,6 +47,26 @@
 - the filter criteria are then applied to all rows in matching pages
 ```
 
+### Crash Course - Bit Operations
+```go
+  fmt.Println(1 >> 1) // 0
+  fmt.Println(2 >> 1) // 1
+  fmt.Println(3 >> 1) // 1
+  fmt.Println(4 >> 1) // 2
+```
+```go
+  fmt.Println(1 >> 1) // 0
+  fmt.Println(1 >> 2) // 0
+  fmt.Println(1 >> 3) // 0
+  fmt.Println(1 >> 4) // 0
+```
+```go
+  fmt.Println(4 >> 1) // 2
+  fmt.Println(4 >> 2) // 1
+  fmt.Println(4 >> 3) // 0
+  fmt.Println(4 >> 4) // 0
+```
+
 ### Repo - BitMap - 1
 ```yaml
 - https://github.com/kelindar/bitmap
