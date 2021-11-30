@@ -1,5 +1,10 @@
 ### State of Golang Code 2021
 
+### Best Practices Guide
+```yaml
+- https://thanos.io/tip/contributing/coding-style-guide.md/
+```
+
 ### Null | JSON
 ```yaml
 - https://github.com/kubernetes/kubernetes/pull/104990/
@@ -65,11 +70,6 @@ var bufpool = sync.Pool{
 data := bufpool.Get().([]byte)
 defer bufpool.Put(data)
 copy(data[0:cap(data)], zeroBuf)
-```
-
-### Snippet - Performance - Idiomatic - Fellow
-```yaml
-- https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
 ```
 
 ### Snippets - Error Handling
