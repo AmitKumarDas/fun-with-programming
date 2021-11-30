@@ -10,11 +10,6 @@
 - https://github.com/MasterQ32/zig-qoi
 ```
 
-### Repo - BitMap - 1
-```yaml
-- https://github.com/kelindar/bitmap
-```
-
 ### Golang - Stack vs Heap
 ```go
 // std library - go.go
