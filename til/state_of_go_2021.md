@@ -3,6 +3,16 @@
 ### Best Practices Guide
 ```yaml
 - https://thanos.io/tip/contributing/coding-style-guide.md/
+
+- variable shadowing: avoid
+- package name shadowing: avoid
+- defer error: handle
+- exhaust the readers: til
+- no globals other than const are allowed: Hence, no init functions
+- never use panic: avoid dependencies who use it
+- reflect is very slow: avoid
+- preallocate slices & maps
+- reuse arrarys
 ```
 
 ### Null | JSON
