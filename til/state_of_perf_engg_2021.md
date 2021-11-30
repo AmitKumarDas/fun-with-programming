@@ -1,19 +1,46 @@
 ### State of Performance Engineering 2021
 
-### Repo - QOI - 1
-```yaml
-- https://github.com/xfmoulet/qoi
-```
-
-### Repo - QOI - 2
-```yaml
-- https://github.com/MasterQ32/zig-qoi
-```
 
 ### Snippet - Performance - Idiomatic - Fellow - Russ Cox
 ```yaml
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
 ```
+
+### Reuse Arrays
+#### AVOID
+```go
+// https://thanos.io/tip/contributing/coding-style-guide.md/
+
+var messages []string
+for _, msg := range recv {
+  messages = append(messages, msg)
+
+  if len(messages) > maxMessageLen {
+    marshalAndSend(messages)
+    // This creates new array. Previous array
+    // will be garbage collected only after
+    // some time (seconds), which
+    // can create enormous memory pressure.
+    messages = []string
+  }
+}
+```
+#### BETTER
+```go
+var messages []string
+for _, msg := range recv {
+  messages = append(messages, msg)
+
+  if len(messages) > maxMessageLen {
+    marshalAndSend(messages)
+    // Instead of new array, reuse
+    // the same, with the same capacity,
+    // just length equals to zero.
+    messages = messages[:0]
+  }
+}
+```
+
 
 ### Golang - Stack vs Heap
 ```go
@@ -377,4 +404,14 @@ func VarIndex(name string) int {
 ```yaml
 - https://strace.io/
 - attach to an already running process
+```
+
+### Repo - QOI - 1
+```yaml
+- https://github.com/xfmoulet/qoi
+```
+
+### Repo - QOI - 2
+```yaml
+- https://github.com/MasterQ32/zig-qoi
 ```
