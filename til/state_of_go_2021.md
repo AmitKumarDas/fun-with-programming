@@ -72,32 +72,6 @@ defer bufpool.Put(data)
 copy(data[0:cap(data)], zeroBuf)
 ```
 
-### Snippets - Error Handling
-```go
-// library code
-// avoid lot of error handling
-// just panic with special YXZError
-// handle once at top of call stack
-func ParseProgram(src []byte, config *ParserConfig) (prog *Program, err error) {
-  defer func() {
-    if r := recover(); r != nil {
-      // Convert to ParseError or re-panic
-      err = r.(*ParseError)
-    }
-  }()
-  
-  // ...
-}
-```
-
-```yaml
-- Initially I had return just the value and panic with a special error on runtime error
-- but that was a significant slow-down
-- so switched to using more verbose but more Go-like error return values
-- This would be a lot nicer with the proposed check keyword
-- This change gave a 2-3x improvement on a lot of benchmarks
-```
-
 ### Snippets - API Design
 ```go
 // design thinking w.r.t e2e, testing, assertion
@@ -117,7 +91,7 @@ func (s Strings) HasAll(expected []string) bool {
 // Notes: 
 // - Don't pass *testing.T as an argument
 // - It might be a separate struct that needs *testing.T as first argument
-func (s Strings) AssertHasAll(expected []string) error {
+func (s Strings) EnsureHasAll(expected []string) error {
 	if !s.HasAll(expected) {
 		actualSet := sets.NewString(s...)
 		expectedSet := sets.NewString(expected...)
