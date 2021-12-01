@@ -1,6 +1,7 @@
 ### State of Golang Code 2021
 
 ### Best Practices Guide
+#### Thanos
 ```yaml
 - https://thanos.io/tip/contributing/coding-style-guide.md/
 
@@ -17,6 +18,28 @@
 - inlining improves readability: less cognitive load to readers
 - there should be one and preferably only one obvious way to do it
 - avoid defining variables that are used only once
+```
+
+#### Uber
+```yaml
+- https://github.com/uber-go/guide/blob/master/style.md
+```
+
+#### Strconv vs fmt
+```go
+// AVOID
+
+for i := 0; i < b.N; i++ {
+  s := fmt.Sprint(rand.Int())
+}
+```
+
+```go
+// BETTER
+
+for i := 0; i < b.N; i++ {
+  s := strconv.Itoa(rand.Int())
+}
 ```
 
 ### new is not same as make
