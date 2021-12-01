@@ -19,6 +19,102 @@
 - avoid defining variables that are used only once
 ```
 
+### new is not same as make
+```yaml
+- they do different things
+- they apply to different types
+```
+
+#### new
+```yaml
+- a built-in function that ALLOCATES memory
+- it does NOT INITIALIZE the memory
+- it only zeros it
+- i.e. new(T) Allocates Zeroed Storage for a new item of type T
+- & returns its address, a value of type *T
+- In Go, it returns a Pointer to a Newly Allocated Zero Value of type T
+
+- Since the memory returned by new is Zeroed
+- it's helpful to design your data structures
+- s.t the zero value of each type can be used without further initialization
+- This means a user of the data structure can create one with new and get right to work
+
+- E.g, the documentation for bytes.Buffer states:
+- the zero value for Buffer is an empty buffer ready to use
+- Similarly, sync.Mutex does not have an explicit constructor or Init method
+- Instead, the zero value for a sync.Mutex is defined to be an unlocked mutex
+```
+
+#### make
+```yaml
+- make(T, args) serves a purpose different from new(T)
+- it is applicable for slices, maps, and channels only
+- it returns an Initialized (not zeroed) value of type T (not *T)
+
+- The reason for the distinction is that these 3 types represent, under the covers:
+- references to data structures that Must be Initialized before use
+
+- E.g slice is a three-item descriptor:
+- a pointer to the data
+- the length &
+- the capacity
+- until those items are initialized, the slice is nil
+
+- make([]int, 10, 100)
+- allocates an array of 100 ints
+- then creates a slice structure with length 10 &
+- a capacity of 100 Pointing at the First 10 elements of the array
+```
+
+#### new([]int)
+```yaml
+- returns a pointer to a newly allocated
+- zeroed slice structure
+- i.e. a pointer to a nil slice value
+```
+
+#### Conclusion
+```yaml
+- make vs new:
+- Initialized Value vs Zeroed Allocation
+```
+
+```go
+// To obtain an explicit pointer:
+// - allocate with new or
+// - take the address of a variable explicitly
+
+var p *[]int = new([]int)       // allocates slice structure; *p == nil; rarely useful
+var v  []int = make([]int, 100) // the slice v now refers to a new array of 100 ints
+
+// Unnecessarily complex:
+var p *[]int = new([]int)
+*p = make([]int, 100, 100)
+
+// Idiomatic:
+v := make([]int, 100)
+```
+
+
+### Zero Value Just Works
+```go
+type SyncedBuffer struct {
+  lock    sync.Mutex
+  buffer  bytes.Buffer
+}
+```
+```yaml
+- Values of type SyncedBuffer are also ready to use immediately:
+- upon allocation or
+- just via declaration
+```
+```go
+// both p and v will work correctly without further arrangement
+
+p := new(SyncedBuffer)  // type *SyncedBuffer
+var v SyncedBuffer      // type  SyncedBuffer
+```
+
 ### Null | JSON
 ```yaml
 - https://github.com/kubernetes/kubernetes/pull/104990/
