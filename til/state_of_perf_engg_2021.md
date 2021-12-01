@@ -32,7 +32,7 @@ func FindDigits(filename string) []byte {
 // by using append
 func CopyDigits(filename string) []byte {
   b, _ := ioutil.ReadFile(filename)
-  b = digitRegexp.Find(b) // len is way smaller than cap of b
+  b = digitRegexp.Find(b) // len of b is way smaller than cap of b
   c := make([]byte, len(b)) // both len & cap of c equals to len(b)
   copy(c, b)
   return c
