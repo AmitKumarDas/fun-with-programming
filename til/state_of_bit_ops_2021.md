@@ -1,3 +1,55 @@
+### Bit Operators' Table
+```
+<<   Left Shift
+>>   Right Shift
+|    Bitwise OR
+&    Bitwise AND
+^    Exclusive OR
+~    One's Complement
+1+~x Two's Complement of x
+```
+
+### Negative Numbers
+
+#### Signed Representation in Computer
+```yaml
+- signed data is represented in two's complement
+```
+
+#### One's Complement of a Number
+```yaml
+- ~x is one's complement of x
+- negate every binary bit of the number
+```
+
+
+#### Two's Complement of a Number
+```yaml
+- add 1 to one's complement
+```
+
+### Extract jth Bit of a number w
+```c
+// r can be either 1 or 0
+r = (w>>j)&1 // shift w to right by j places & bitwise AND with 1
+```
+
+### 0x0F
+```yaml
+- 0x0F represents a hex value of 1 byte
+- rightmost 4 bits are all 1s
+- i.e. first 4 bits are all 1s
+- leftmost 4 bits are all 0s
+- i.e. next 4 bits are all 0s
+- i.e. 00001111
+```
+
+#### Work with 0x0F
+```c
+r = x | 0x0F // set first 4 bits (i.e. right most) of x to 1
+r = x & 0x0F // set left most 4 bits of x to 0
+```
+
 ### Crash Course - Bit Operations
 ```go
   fmt.Println(1 >> 1) // 0
