@@ -6,6 +6,25 @@
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
 ```
 
+### Granular Control of Your Array's Growth
+```go
+// https://go.dev/blog/slices-intro
+
+func AppendByte(slice []byte, data ...byte) []byte {
+  m := len(slice)
+  n := m + len(data)
+  if n > cap(slice) { // if necessary, reallocate
+    // allocate double what's needed, for future growth
+    newSlice := make([]byte, (n+1)*2)
+    copy(newSlice, slice)
+    slice = newSlice
+  }
+  slice = slice[0:n] // reuse existing array with existing capacity & length = n
+  copy(slice[m:n], data) // append data into exact positions
+  return slice
+}
+```
+
 ### Reuse Arrays
 #### AVOID
 ```go
@@ -17,10 +36,10 @@ for _, msg := range recv {
 
   if len(messages) > maxMessageLen {
     marshalAndSend(messages)
-    // This creates new array. Previous array
-    // will be garbage collected only after
-    // some time (seconds), which
-    // can create enormous memory pressure.
+    // This creates new array
+    //
+    // Previous array will be garbage collected only after
+    // some time (seconds), which can create enormous memory pressure
     messages = []string
   }
 }
@@ -33,9 +52,9 @@ for _, msg := range recv {
 
   if len(messages) > maxMessageLen {
     marshalAndSend(messages)
-    // Instead of new array, reuse
-    // the same, with the same capacity,
-    // just length equals to zero.
+    // Instead of new array
+    // reuse the existing array with same capacity
+    // just length equals to zero
     messages = messages[:0]
   }
 }
