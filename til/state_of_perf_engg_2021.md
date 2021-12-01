@@ -6,7 +6,40 @@
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
 ```
 
-### Granular Control of Your Array's Growth
+### Golang - Careful About Inadvertent Reuse of Backing Array
+#### AVOID
+```go
+// https://go.dev/blog/slices-intro
+
+var digitRegexp = regexp.MustCompile("[0-9]+")
+
+func FindDigits(filename string) []byte {
+  b, _ := ioutil.ReadFile(filename)
+
+  // The returned []byte points the array containing the entire file
+  // Since the slice references the original array, as long as the slice
+  // is kept around, the garbage collector can’t release the array
+  //
+  // side effect: the few useful bytes of the file keep the entire contents
+  // in memory
+  return digitRegexp.Find(b)
+}
+```
+
+#### BETTER
+```go
+// Note: A more concise version of this function could be constructed 
+// by using append
+func CopyDigits(filename string) []byte {
+  b, _ := ioutil.ReadFile(filename)
+  b = digitRegexp.Find(b) // len is way smaller than cap of b
+  c := make([]byte, len(b)) // both len & cap of c equals to len(b)
+  copy(c, b)
+  return c
+}
+```
+
+### Golang - Granular Control of Your Array's Growth
 ```go
 // https://go.dev/blog/slices-intro
 
@@ -25,7 +58,7 @@ func AppendByte(slice []byte, data ...byte) []byte {
 }
 ```
 
-### Reuse Arrays
+### Golang - Reuse Arrays
 #### AVOID
 ```go
 // https://thanos.io/tip/contributing/coding-style-guide.md/
