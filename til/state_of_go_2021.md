@@ -25,23 +25,6 @@
 - https://github.com/uber-go/guide/blob/master/style.md
 ```
 
-#### Strconv vs fmt
-```go
-// AVOID
-
-for i := 0; i < b.N; i++ {
-  s := fmt.Sprint(rand.Int())
-}
-```
-
-```go
-// BETTER
-
-for i := 0; i < b.N; i++ {
-  s := strconv.Itoa(rand.Int())
-}
-```
-
 ### new is not same as make
 ```yaml
 - they do different things
