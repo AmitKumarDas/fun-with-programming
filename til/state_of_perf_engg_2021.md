@@ -6,6 +6,20 @@
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
 ```
 
+### Golang - Prefer Strconv Over Fmt
+#### AVOID
+```go
+for i := 0; i < b.N; i++ {
+  s := fmt.Sprint(rand.Int())
+}
+```
+#### BETTER
+```go
+for i := 0; i < b.N; i++ {
+  s := strconv.Itoa(rand.Int())
+}
+```
+
 ### Golang - Careful About Inadvertent Reuse of Backing Array
 #### AVOID
 ```go
