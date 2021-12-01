@@ -1,5 +1,11 @@
 ## State of Infra 2021
 
+### Autoscale
+```yaml
+- https://github.com/aws/karpenter
+- public.ecr.aws/eks-distro/kubernetes/pause:3.2
+```
+
 ### Security
 ```yaml
 - https://github.com/inguardians/peirates
