@@ -36,6 +36,8 @@
 
 ### Repo | How | Deep Dive
 ```yaml
+- https://github.com/aquasecurity/tracee
+
 - https://menno.io/posts/golang-register-calling/
 - performance - register
 - cpu register - high speed temp memory
@@ -58,6 +60,10 @@
 
 - https://github.com/hofstadter-io/cuetils
 - diff - patch - yaml - json - e2e - testing - cue
+
+- envoyproxy/proxy
+
+- jaegertracing/jaeger
 
 - https://github.com/syncthing/syncthing
 - learn design - file
@@ -84,6 +90,7 @@
 - topic - publish - subscribe - events
 
 - https://github.com/ipld/go-datalark
+- cruise-automation/isopod
 - decentralised web - API - starlark - data interchange format - protocol
 ```
 
