@@ -20,8 +20,14 @@
 ```yaml
 - ~x is one's complement of x
 - negate every binary bit of the number
+- ~ negates every bit i.e. all 0s to 1s & all 1s to 0s
 ```
 
+### Bit Representation - Go vs C
+```yaml
+- x &^ y // in go
+- x & ~y // same thing in c
+```
 
 #### Two's Complement of a Number
 ```yaml
@@ -80,8 +86,6 @@ int setBit(int w, unsigned j, short value){
 - So to set the bit 4 of w = 000000000 to 1, we can use
 - w = setBit(w,4,1)
 - The result is w = 000010000
-
-- ~ negates every bit i.e. all 0s to 1s & all 1s to 0s
 ```
 
 ### 0x0F
@@ -238,7 +242,39 @@ func nextPowerOf2(x uint32) uint32 {
 }
 ```
 
+### Bitmask
+```yaml
+- A bitmask is a small SET of booleans
+- Often called flags
+- Represented by the bits in a single number
+```
+```go
+type Bits uint8 // a single number
+
+const (
+  F0 Bits = 1 << iota // 1 << 0
+  F1                  // 1 << 1
+  F2                  // 1 << 2
+)
+
+func Set(b, flag Bits) Bits    { return b | flag }
+func Clear(b, flag Bits) Bits  { return b &^ flag }     // b & ~flag
+func Toggle(b, flag Bits) Bits { return b ^ flag }
+func Has(b, flag Bits) bool    { return b&flag != 0 }
+
+func main() {
+  var b Bits
+  b = Set(b, F0)
+  b = Toggle(b, F2)
+  for i, flag := range []Bits{F0, F1, F2} {
+    fmt.Println(i, Has(b, flag))
+  }
+}
+```
+
+
 ### References
 - https://www.techiedelight.com/round-next-highest-power-2/
 - https://www.techiedelight.com/Tags/Bit-Hacks/
 - https://www.techiedelight.com/Category/Binary/
+- https://yourbasic.org/golang/bitmask-flag-set-clear/
