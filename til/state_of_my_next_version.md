@@ -37,6 +37,10 @@
 ### Repo | How | Deep Dive
 ```yaml
 - https://github.com/aquasecurity/tracee
+- https://github.com/xdp-project/xdp-tutorial
+- https://www.brendangregg.com/blog/2021-09-26/the-speed-of-time.html
+- https://www.brendangregg.com/Articles/Netflix_Linux_Perf_Analysis_60s.pdf
+- https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html
 
 - https://menno.io/posts/golang-register-calling/
 - performance - register
