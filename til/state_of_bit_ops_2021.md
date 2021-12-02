@@ -5,7 +5,7 @@
 |    Bitwise OR
 &    Bitwise AND
 ^    Exclusive OR
-~    One's Complement
+~    One's Complement i.e. Negate Each Bit
 1+~x Two's Complement of x
 ```
 
@@ -34,6 +34,56 @@
 r = (w>>j)&1 // shift w to right by j places & bitwise AND with 1
 ```
 
+### Even or Odd
+```c
+if (x&1)
+  printf("odd\n");
+else
+  printf("even\n");
+```
+
+
+### When is Masking used
+```yaml
+- mask:
+- to find specific bit
+- to find a group of bits
+```
+
+#### Access jth bit
+```c
+// weird that (1<<j) is defined as mask
+
+#define MASK(j) (1<<j)
+int getBit(int w, unsigned j) {
+  return (( w & MASK(j)) == 0) ? 0 : 1; // why not return (w & MASK(j))
+}
+```
+
+#### Get ith bit of w
+```c
+// aliter: write a macro
+#define getBit(w,i) ((w>>i)&1)
+```
+
+#### Set Specific Bit of the Word
+```c
+#define MASK(j) (1<<j)
+int setBit(int w, unsigned j, short value){
+  if (value == 0) return (w & ~MASK(j));
+  else if (value == 1) return w | MASK(j);
+  else return w;
+}
+```
+
+```yaml
+- So to set the bit 4 of w = 000000000 to 1, we can use
+- w = setBit(w,4,1)
+- The result is w = 000010000
+
+- ~ negates every bit i.e. all 0s to 1s & all 1s to 0s
+```
+
 ### 0x0F
 ```yaml
 - 0x0F represents a hex value of 1 byte
@@ -50,7 +100,7 @@ r = x | 0x0F // set first 4 bits (i.e. right most) of x to 1
 r = x & 0x0F // set left most 4 bits of x to 0
 ```
 
-### Crash Course - Bit Operations
+### Right Shift
 ```go
   fmt.Println(1 >> 1) // 0
   fmt.Println(2 >> 1) // 1
@@ -72,12 +122,15 @@ r = x & 0x0F // set left most 4 bits of x to 0
   fmt.Println(4 >> 4) // 0
 ```
 
+### Left Shift
 ```go
   fmt.Println(4 << 1) // 8, a power of 2
   fmt.Println(4 << 2) // 16, a power of 2
   fmt.Println(3 << 1) // 6, a power of 2
   fmt.Println(3 << 2) // 12, a power of 2
 ```
+
+### Next Number Power of 2
 
 ```yaml
 - For n = 12 => Next number power of 2 is 16
