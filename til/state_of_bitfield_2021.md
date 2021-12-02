@@ -4,7 +4,7 @@
 - https://golangexample.com/go-structure-annotations-that-supports-encoding-and-decoding/
 ```
 
-### defining arbitrary-width fields within a structure
+### Define Arbitrary Width Fields Within a Structure
 ```go
 // https://stackoverflow.com/questions/5793098/go-bitfields-and-bit-packing
 
