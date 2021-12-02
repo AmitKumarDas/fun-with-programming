@@ -58,24 +58,28 @@ func main() {
 
 - height        = 00000000HHHHHHH
 
-- Combine these into one variable:
+- Pack / Combine them into one variable:
 - Use | operator
+
+- Pack using ((x << X) | (y << Y) | z):
 - packed_info   = (age << 8) | (gender << 7) | height
 - packed_info   = AAAAAAAGHHHHHHH
 
 - Unpack the bits:
 - Use & operator
+
 - Get the height:
 - packed_info          = AAAAAAAGHHHHHHH
 - 0x7F                 = 000000001111111
 - (packed_info & 0x7F) = 00000000HHHHHHH = height
+
 - Get the age:
 - To get the age, push everything 8 places to the right
 - age = (packed_info >> 8)
 - age                  = 0000000AAAAAAAA
 
 - Get the gender:
-- push everything 7 places to the right to get rid of the height
+- Push everything 7 places to the right to get rid of the height
 - We now care the last bit only
 - packed_info            = AAAAAAAGHHHHHHH
 - (packed_info >> 7)     = 0000000AAAAAAAG
