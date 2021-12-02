@@ -30,7 +30,7 @@
 - https://buttondown.email/hillelwayne/archive/comment-the-why-and-the-what/
 ```
 
-### new is not same as make
+### New Is Not Same As Make
 ```yaml
 - they do different things
 - they apply to different types
