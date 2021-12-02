@@ -25,6 +25,11 @@
 - https://github.com/uber-go/guide/blob/master/style.md
 ```
 
+#### Comments
+```yaml
+- https://buttondown.email/hillelwayne/archive/comment-the-why-and-the-what/
+```
+
 ### new is not same as make
 ```yaml
 - they do different things
