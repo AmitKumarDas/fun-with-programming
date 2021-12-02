@@ -47,8 +47,9 @@
 - the filter criteria are then applied to all rows in matching pages
 ```
 
-### Repo - BitMap - 1
+### Repos
 ```yaml
 - https://github.com/kelindar/bitmap
+- https://github.com/kelindar/intmap
 ```
 
