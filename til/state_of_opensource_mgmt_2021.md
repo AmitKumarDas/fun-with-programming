@@ -28,11 +28,16 @@
 - Do you trust the person to submit a pull request
 - Did we do the right hire
 - Can this individual be given the full responsibility to bring up the project without a team
+
 - Can we have one individual mapped to specific repo instead of a team mapped to a single repo
 - Let the team brainstorm over the designs only
 - In other words code reviews will be done by bots & linters
 - Human code reviews will be optional & only on-demand
 - Let the team adopt common template that has necessary automation (read bots & linters)
+
+- small commits
+- small PRs
+- every feature is feature gated
 
 - code must have code level comments
 - code must have unit &/ integration tests 
