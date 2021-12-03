@@ -30,6 +30,11 @@
 - https://buttondown.email/hillelwayne/archive/comment-the-why-and-the-what/
 ```
 
+### Test Fixtures
+```yaml
+- https://ieftimov.com/post/testing-in-go-fixtures/
+```
+
 ### Type Cast to an Interface -- Just In Time
 ```go
 func Unwrap(err error) error {
