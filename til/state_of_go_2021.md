@@ -30,6 +30,19 @@
 - https://buttondown.email/hillelwayne/archive/comment-the-why-and-the-what/
 ```
 
+### Type Cast to an Interface -- Just In Time
+```go
+func Unwrap(err error) error {
+  u, ok := err.(interface {
+    Unwrap() error
+  })
+  if !ok {
+    return nil
+  }
+  return u.Unwrap()
+}
+```
+
 ### New Is Not Same As Make
 ```yaml
 - they do different things
