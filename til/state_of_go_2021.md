@@ -43,6 +43,16 @@ func Unwrap(err error) error {
 }
 ```
 
+### Nil Used to Represent any Interface
+```go
+func ReasonForError(err error) metav1.StatusReason {
+  if status := APIStatus(nil); errors.As(err, &status) { // APIStatus is an interface
+    return status.Status().Reason
+  }
+  return metav1.StatusReasonUnknown
+}
+```
+
 ### New Is Not Same As Make
 ```yaml
 - they do different things
