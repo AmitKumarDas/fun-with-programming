@@ -7,6 +7,13 @@
 ```
 
 ### Development Cycle - Before code
+
+#### Watch These
+```yaml
+- https://www.youtube.com/watch?v=0Zbh_vmAKvk
+```
+
+#### Few Points To Remember
 ```yaml
 - setup automation
 - release automation
