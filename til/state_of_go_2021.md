@@ -38,6 +38,7 @@
 ### Property Testing && testing/quick package
 ```yaml
 - https://earthly.dev/blog/property-based-testing/
+- https://github.com/leanovate/gopter
 ```
 
 ### err.(type) & Nil Check
