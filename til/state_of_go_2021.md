@@ -35,6 +35,11 @@
 - https://ieftimov.com/post/testing-in-go-fixtures/
 ```
 
+### Property Testing && testing/quick package
+```yaml
+- https://earthly.dev/blog/property-based-testing/
+```
+
 ### err.(type) & Nil Check
 ```go
 // hashicorp/go-multierror
