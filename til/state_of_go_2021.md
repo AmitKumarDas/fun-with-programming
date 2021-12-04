@@ -41,61 +41,10 @@
 ```
 
 ### err.(type) & Nil Check
-```go
-// hashicorp/go-multierror
-
-type ErrorFormatFunc func([]error) string
-
-type Error struct {
-  Errors      []error
-  ErrorFormat ErrorFormatFunc
-}
-
-func (e *Error) Error() string {
-  fn := e.ErrorFormat
-  if fn == nil {
-    fn = MyDefaultFormat
-  }
-
-  return fn(e.Errors)
-}
-
-func Append(err error, errs ...error) *Error {
-  switch err := err.(type) { // err.(type) works even if err is nil
-  case *Error:
-		// Typed nils can reach here
-		if err == nil {
-			err = new(Error) // Error is a struct
-		}
-
-		// Go through each error and flatten
-		for _, e := range errs {
-			switch e := e.(type) {
-			case *Error:
-				if e != nil { // can be nil
-					err.Errors = append(err.Errors, e.Errors...)
-				}
-			default:
-				if e != nil {
-					err.Errors = append(err.Errors, e)
-				}
-			}
-		}
-
-  	return err
-  default:
-  	newErrs := make([]error, 0, len(errs)+1)
-    if err != nil {
-      newErrs = append(newErrs, err)
-    }
-  	newErrs = append(newErrs, errs...)
-
-  	return Append(&Error{}, newErrs...)
-  }
-}
+```yaml
+- hashicorp/go-multierror
+- err.(type) works even if err is nil
 ```
-
-
 
 ### Type Cast to an Interface -- Just In Time
 ```go
