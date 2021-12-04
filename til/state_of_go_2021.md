@@ -35,10 +35,11 @@
 - https://ieftimov.com/post/testing-in-go-fixtures/
 ```
 
-### Property Testing && testing/quick package
+### Property Testing - QuickCheck
 ```yaml
 - https://earthly.dev/blog/property-based-testing/
 - https://github.com/leanovate/gopter
+- https://github.com/golang/go/tree/master/src/testing/quick
 ```
 
 ### err.(type) & Nil Check
