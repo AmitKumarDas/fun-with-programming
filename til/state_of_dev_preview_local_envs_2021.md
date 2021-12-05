@@ -3,6 +3,12 @@
 ### monday.com - dev env in cloud
 ```yaml
 - https://engineering.monday.com/development-environments-in-the-cloud/
+- faster developr onboarding
+- development experience as close as possible to local development
+- enable pair programming - debugging
+- scale down when no active development - e.g. during weekends
+- preview environments
+- state toggles - volume sharing
 ```
 
 ### Preview Environments
