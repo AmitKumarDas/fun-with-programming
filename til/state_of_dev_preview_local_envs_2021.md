@@ -1,4 +1,4 @@
-### State of Local Development Env | Inner Dev Loop
+### State of Local Development Env | Inner Loop
 
 ### monday.com - dev env in cloud
 ```yaml
