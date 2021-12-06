@@ -1,5 +1,15 @@
 ### State of Local Development Env | Inner Loop
 
+```yaml
+- https://eng.lyft.com/scaling-productivity-on-microservices-at-lyft-part-2-optimizing-for-fast-local-development-9f27a98b47ee
+- tilt 
+- proxy 
+- protobuf over http
+- json over http
+- grpc
+```
+
+
 ### monday.com - dev env in cloud
 ```yaml
 - https://engineering.monday.com/development-environments-in-the-cloud/
