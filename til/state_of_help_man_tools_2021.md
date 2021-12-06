@@ -1,5 +1,45 @@
 ### Network
 
+### domain profiler
+```yaml
+- https://github.com/jpf/domain-profiler
+```
+```sh
+$ ./profile github.com
+Fetching data for github.com: DNS Whois SSL ...
+
+
+==========[ github.com ]==========
+Web Hosting:
+  (Rackspace)
+      207.97.227.239
+
+DNS Hosting:
+  (anchor.net.au)
+      ns1.anchor.net.au.
+      ns2.anchor.net.au.
+  (EveryDNS.net)
+      ns1.everydns.net.
+      ns2.everydns.net.
+      ns3.everydns.net.
+      ns4.everydns.net.
+
+Email Hosting:
+  (Google)
+      1 ASPMX.L.GOOGLE.com.
+      10 ASPMX2.GOOGLEMAIL.com.
+      10 ASPMX3.GOOGLEMAIL.com.
+      5 ALT1.ASPMX.L.GOOGLE.com.
+      5 ALT2.ASPMX.L.GOOGLE.com.
+
+Domain Registrar:
+  (Go Daddy)
+
+SSL Issuer:
+  (GoDaddy.com, Inc.)
+      Common Name: *.github.com
+```
+
 ### dig
 ```yaml
 - https://gist.github.com/mrlesmithjr/c42ebb99a01e8eeeca6a5eb4fa52f852
