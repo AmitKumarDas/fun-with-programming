@@ -1,4 +1,10 @@
 ```yaml
+- https://cloud.google.com/blog/topics/retail/shopify-and-google-cloud-team-up-for-an-epic-bfcm-weekend
+- google virtual private cloud - https://cloud.google.com/vpc
+- multi region - disaster recovery
+```
+
+```yaml
 - https://engineering.monday.com/monday-coms-multi-regional-architecture-a-deep-dive/
 - saas platform
 - multi region - privacy & compliance - latency - availability
