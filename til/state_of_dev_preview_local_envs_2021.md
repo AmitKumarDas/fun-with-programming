@@ -1,5 +1,11 @@
 ### State of Local Development Env | Inner Loop
 
+### Source
+```yaml
+- https://changelog.com/
+```
+
+### lyft.com - fast local development
 ```yaml
 - https://eng.lyft.com/scaling-productivity-on-microservices-at-lyft-part-2-optimizing-for-fast-local-development-9f27a98b47ee
 - tilt 
