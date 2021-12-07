@@ -1,4 +1,9 @@
 ```yaml
+- https://github.com/cloudposse
+- terraform - automation - aws - helm
+```
+
+```yaml
 - https://engineering.monday.com/kubernetes_migration/
 - hpa - aws cloudwatch - argo rollouts
 ```
