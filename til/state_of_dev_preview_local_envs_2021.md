@@ -12,6 +12,13 @@
 - HCL for bash
 - HCL for everything
 - DSL
+
+- Tilt still seems a better choice!
+```
+
+### Kubernetes - Clouds - Up & Running
+```yaml
+- https://github.com/ContainerSolutions/terraform-examples
 ```
 
 ### lyft.com - fast local development
