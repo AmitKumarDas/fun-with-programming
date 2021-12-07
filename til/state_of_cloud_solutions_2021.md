@@ -1,4 +1,9 @@
 ```yaml
+- https://engineering.monday.com/kubernetes_migration/
+- hpa - aws cloudwatch - argo rollouts
+```
+
+```yaml
 - https://docs.webhookrelay.com/installation-options/containerized/kubernetes-installation
 - ingress tunnel
 ```
