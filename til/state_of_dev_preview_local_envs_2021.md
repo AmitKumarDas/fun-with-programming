@@ -8,6 +8,10 @@
 ### One Tool Rules it All
 ```yaml
 - https://github.com/cloudposse/atmos
+- https://github.com/mumoshu/variant2
+- HCL for bash
+- HCL for everything
+- DSL
 ```
 
 ### lyft.com - fast local development
