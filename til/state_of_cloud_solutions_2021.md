@@ -1,3 +1,8 @@
+### One Page Terraform to Create EC2 Instance
+```yaml
+- https://gist.github.com/ankyit/d180cdc2843a21204f27473a6c7eeb2c
+```
+
 ```yaml
 - https://thenewstack.io/weave-gitops-core-integrates-git-with-kubernetes/
 - git - kubernetes - gitops
