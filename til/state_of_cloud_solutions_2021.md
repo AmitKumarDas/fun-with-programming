@@ -1,4 +1,9 @@
 ```yaml
+- https://thenewstack.io/weave-gitops-core-integrates-git-with-kubernetes/
+- git - kubernetes - gitops
+```
+
+```yaml
 - https://github.com/cloudposse
 - terraform - automation - aws - helm
 ```
