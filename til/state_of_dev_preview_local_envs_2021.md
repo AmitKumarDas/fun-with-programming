@@ -5,6 +5,11 @@
 - https://changelog.com/
 ```
 
+### Infer Log
+```yaml
+- https://github.com/aybabtme/humanlog
+```
+
 ### One Tool Rules it All
 ```yaml
 - https://github.com/cloudposse/atmos
