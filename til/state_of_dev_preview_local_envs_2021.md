@@ -10,7 +10,7 @@
 - https://changelog.com/
 ```
 
-### Infer Log
+### Infer From Log - UI
 ```yaml
 - https://github.com/aybabtme/humanlog
 ```
