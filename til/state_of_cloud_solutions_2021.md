@@ -1,3 +1,8 @@
+### Ingress Based Solutions - Examples / Samples
+```yaml
+- https://github.com/nginxinc/kubernetes-ingress/tree/master/examples
+```
+
 ### Solutioning via Helm
 ```
 - https://github.com/tilt-dev/tilt/tree/master/configs/storybook
