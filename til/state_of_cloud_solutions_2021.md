@@ -17,6 +17,12 @@
   - Controllers via Flux, K3s, etc.
 ```
 
+#### Declarative Helming
+```yaml
+- https://www.openfaas.com/blog/tilt/
+- Helmfile
+```
+
 ### Architecture Diagram
 ```yaml
 - https://threedots.tech/post/auto-generated-c4-architecture-diagrams-in-go/
