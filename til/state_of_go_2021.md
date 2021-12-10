@@ -71,6 +71,55 @@ func ReasonForError(err error) metav1.StatusReason {
 }
 ```
 
+### Types
+```yaml
+- https://www.sohamkamani.com/golang/type-assertions-vs-type-conversions/
+- https://github.com/spf13/cast
+```
+
+#### Type Assertion
+```yaml
+- The second value, ok, is a boolean value
+- Is true if our assertion is correct and false otherwise
+- This also implies that type assertions are performed at runtime
+```
+
+```go
+var val interface{} = "10"
+valStr, ok := val.(string)
+```
+
+#### Type Conversion
+```go
+h := []byte("hwdy")
+h1 := string(h)
+```
+
+#### Type Switch
+```yaml
+- when you aren’t sure of the type of an interface
+```
+
+```go
+var whatami interface{} = "did you get me"
+
+switch w := whatami.(type) {
+  case string:
+    // ...
+  case int:
+    // ...
+  default:
+    // ...
+}
+```
+
+#### Feasibility of Type Conversion
+```yaml
+- Type’s can only be converted if the underlying data structure is the same
+- Perhaps both structures should have their field names & types exactly same?
+```
+
+
 ### New Is Not Same As Make
 ```yaml
 - they do different things
