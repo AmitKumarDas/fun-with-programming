@@ -4,6 +4,21 @@
 - Helm chart, Tiltfile, Dockerfile
 ```
 
+### Tilt With Ingress - Inner Dev Loop
+```yaml
+- https://medium.com/clear-street/why-we-moved-to-local-kubernetes-development-at-clear-street-523045dd2ac8
+- caching images
+- cluster interaction
+```
+
+#### Ingress Kind Config
+```yaml
+- https://kind.sigs.k8s.io/docs/user/ingress 
+- ingress - route53 - kubefwd
+- Route53 redirects *.xyz.me.io to the loopback address, 127.0.0.1, which the Kubernetes Ingress is listening to
+- Developers can use this to test subdomain routing or access their services through ingresses locally
+```
+
 ### Testing via Helm
 ```yaml
 - Test via a Pod that is Helm-ed
