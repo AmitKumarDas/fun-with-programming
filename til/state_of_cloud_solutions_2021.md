@@ -3,6 +3,11 @@
 - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples
 ```
 
+### CI CD
+```yaml
+- https://cloud.google.com/blog/topics/developers-practitioners/devops-and-cicd-google-cloud-explained
+```
+
 ### Solutioning via Helm
 ```
 - https://github.com/tilt-dev/tilt/tree/master/configs/storybook
