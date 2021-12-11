@@ -3,6 +3,11 @@
 - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples
 ```
 
+### Troubleshooting
+```yaml
+- https://learnk8s.io/troubleshooting-deployments
+```
+
 ### CI CD
 ```yaml
 - https://cloud.google.com/blog/topics/developers-practitioners/devops-and-cicd-google-cloud-explained
