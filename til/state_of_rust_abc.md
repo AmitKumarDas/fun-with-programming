@@ -8,6 +8,10 @@
 - https://llogiq.github.io/ // rust maintainer
 ```
 
+```yaml
+- http://smallcultfollowing.com/babysteps/
+```
+
 ### Examples
 ```yaml
 - https://www.sheshbabu.com/posts/rust-module-system/
