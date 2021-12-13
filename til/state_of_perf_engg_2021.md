@@ -1,12 +1,12 @@
 ### State of Performance Engineering 2021
 
 
-### Snippet - Performance - Idiomatic - Fellow - Russ Cox
+### Performance - Idiomatic - Fellow - Russ Cox
 ```yaml
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
 ```
 
-### Golang - Prefer Strconv Over Fmt
+### Prefer Strconv Over Fmt
 #### AVOID
 ```go
 for i := 0; i < b.N; i++ {
@@ -20,7 +20,7 @@ for i := 0; i < b.N; i++ {
 }
 ```
 
-### Golang - Careful About Inadvertent Reuse of Backing Array
+### Careful About Inadvertent Reuse of Backing Array
 #### AVOID
 ```go
 // https://go.dev/blog/slices-intro
@@ -53,7 +53,7 @@ func CopyDigits(filename string) []byte {
 }
 ```
 
-### Golang - Granular Control of Your Array's Growth
+### Granular Control of Your Array's Growth
 ```go
 // https://go.dev/blog/slices-intro
 
@@ -108,7 +108,7 @@ for _, msg := range recv {
 ```
 
 
-### Golang - Stack vs Heap
+### Stack vs Heap
 ```go
 // std library - go.go
 
@@ -160,7 +160,7 @@ func Benchmark_LargeSize_Heap_LargerThan65535(b *testing.B) {
 }
 ```
 
-### Golang - Stack vs Heap - 2
+### Stack vs Heap - 2
 ```yaml
 - https://github.com/benhoyt/goawk/commit/af993094e3e8aca2b7ab709ffcda437996c906fe?diff=split
 - Two tweaks to evalIndex
@@ -228,7 +228,7 @@ func (p *interp) evalIndex(indexExprs []Expr) (string, error) {
 }
 ```
 
-### Golang Snippets - Error Handling
+### Error Handling
 ```yaml
 - https://github.com/benhoyt/goawk/commit/aa6aa75368afeb40897b180c5a36501012e94907
 - Initially code returned just the value and panic with a special error on runtime error
@@ -248,11 +248,7 @@ func (p *interp) evalIndex(indexExprs []Expr) (string, error) {
 - }
 ```
 
-### Golang Snippets - Buffers
-```yaml
-- input and output is handled using std io.go
-- I/O is buffered for efficiency
-```
+### Buffers - 1
 
 ```diff
 - output = os.Stdout
@@ -264,37 +260,22 @@ func (p *interp) evalIndex(indexExprs []Expr) (string, error) {
 + errorOutput = bufio.NewWriterSize(os.Stderr, 64*1024)
 ```
 
-```go
-// https://github.com/benhoyt/goawk/commit/6ba004f5fbf9b84bc6196d50c2a0dd496ed1771b
-
-// Implement a buffered version of WriteCloser 
-// so output is buffered when redirecting to a file 
-// eg: print >"out"
-type bufferedWriteCloser struct {
-	*bufio.Writer
-	io.Closer
-}
-
-func newBufferedWriteClose(w io.WriteCloser) *bufferedWriteCloser {
-	writer := bufio.NewWriterSize(w, outputBufSize)
-	return &bufferedWriteCloser{writer, w}
-}
-
-func (wc *bufferedWriteCloser) Close() error {
-	err := wc.Writer.Flush()
-	if err != nil {
-		return err
-	}
-	return wc.Closer.Close()
-}
+```yaml
+- https://github.com/benhoyt/goawk/commit/6ba004f5fbf9b84bc6196d50c2a0dd496ed1771b
 ```
 
-### Golang - Switch Seems Better Than Map
+### Buffers - 2
+
+```yaml
+- https://github.com/gorilla/websocket/commit/b378caee5b2a673abe3897c40fde529bff7b986e
+```
+
+### Switch Seems Better Than Map
 ```yaml
 - https://github.com/benhoyt/goawk/commit/ad8ff0e5f6cc89fdd480099614187ee23b20a8c9
 ```
 
-### Golang - Fuzz Testing
+### Fuzz Testing
 ```yaml
 - https://blog.cloudflare.com/dns-parser-meet-go-fuzzer/
 - RRDNS in-house DNS server
@@ -319,7 +300,7 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 }
 ```
 
-### Golang - CPU Profile
+### CPU Profile
 ```yaml
 - https://go.dev/blog/pprof
 
@@ -328,7 +309,7 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 - In a standalone program - import runtime/pprof
 ```
 
-### Golang - Memory Profile
+#### Memory Profile
 ```yaml
 - https://go.dev/blog/pprof
 - https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
@@ -340,7 +321,7 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 - Does not make your program slow
 ```
 
-### Golang - Slice Better Than Map
+### Slice Better Than Map
 ```yaml
 - Instead of map[*BasicBlock]int 
 - use a []int
@@ -353,7 +334,7 @@ type BasicBlock struct {
 }
 ```
 
-### Golang - Slice Better Than Map - 2
+### Slice Better Than Map - 2
 ```yaml
 - https://github.com/benhoyt/goawk/commit/e0d7287ac1580bd0f144c763b222b9db8a858c54
 - Resolve variable names to indexes at parse time
@@ -425,20 +406,4 @@ func VarIndex(name string) int {
 
 - https://benhoyt.com/writings/goawk/
 - golang
-```
-
-### Tools
-```yaml
-- https://strace.io/
-- attach to an already running process
-```
-
-### Repo - QOI - 1
-```yaml
-- https://github.com/xfmoulet/qoi
-```
-
-### Repo - QOI - 2
-```yaml
-- https://github.com/MasterQ32/zig-qoi
 ```
