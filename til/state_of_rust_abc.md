@@ -1,3 +1,8 @@
+### Invest a Day
+```yaml
+- https://fasterthanli.me/articles/a-half-hour-to-learn-rust
+```
+
 ### Examples
 ```yaml
 - https://www.sheshbabu.com/posts/rust-module-system/
