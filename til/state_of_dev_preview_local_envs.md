@@ -3,6 +3,7 @@
 ```yaml
 - https://github.com/square/spincycle
 - automate complex infra stuff
+- DB, DNS, Job, Containers
 ```
 
 ### Inner Dev Loop via Helm - WDYT
