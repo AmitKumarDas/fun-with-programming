@@ -1,8 +1,3 @@
-### Bring Your Own CA - Cert Management
-```yaml
-- https://github.com/square/certstrap
-- https://github.com/square?q=&type=all&language=go&sort=
-```
 
 ### State of Local Development Env | Inner Loop
 
