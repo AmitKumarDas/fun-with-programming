@@ -331,52 +331,13 @@ func ParseDNSPacketSafely(buf []byte, msg *old.Msg) (err error) {
 ### Golang - Memory Profile
 ```yaml
 - https://go.dev/blog/pprof
-
-- If program is spending most of its time allocating memory and garbage collecting
-- I.e. runtime.mallocgc - it allocates and runs periodic garbage collections 
-- Add memory profiling to the program
-```
-
-```yaml
-- use go tool pprof exactly the same way
-- Now the samples we are examining are memory allocations, not clock ticks
-
-- To reduce overhead
-- Memory profiler only records information for approximately ONE BLOCK per HALF MEGABYTE allocated 
-- i.e. “1-in-524288 sampling rate”
-- So these are approximations to the actual counts
-- To find the memory allocations - list those functions
-```
-
-```yaml
-- If we run go tool pprof with the --inuse_objects flag
-- it will report ALLOCATION COUNTS instead of SIZES
-
-- Instead of using a map, we can use a simple slice to list the elements
-- In all but one of the cases where maps are being used
-- It is impossible for the algorithm to insert a duplicate element
-- In the one remaining case, write a simple variant of the append
-```
-
-```go
-func appendUnique(a []int, x int) []int {
-  for _, y := range a {
-    if x == y {
-      return a
-    }
-  }
-  return append(a, x)
-}
+- https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
+- Idiomatic - Performant - Fellow
 ```
 
 ```yaml
 - Writing idiomatic Go style, using data structures and methods 
 - Does not make your program slow
-```
-
-```yaml
-- https://github.com/rsc/benchgraffiti/blob/master/havlak/havlak6.go
-- Idiomatic - Performant - Fellow
 ```
 
 ### Golang - Slice Better Than Map
