@@ -5,7 +5,7 @@
 
 ### Invest a Year
 ```yaml
-- https://llogiq.github.io/
+- https://llogiq.github.io/ // rust maintainer
 ```
 
 ### Examples
