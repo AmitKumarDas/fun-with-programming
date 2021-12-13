@@ -1,6 +1,7 @@
-### Certificate - Management - Bootstrap
+### Certificate - Management - Bootstrap - AWS
 ```yaml
 - https://github.com/square/certstrap
+- https://github.com/square/spiffe-aws-assume-role
 - https://github.com/square?q=&type=all&language=go&sort=
 
 - bring your own certificate authority
