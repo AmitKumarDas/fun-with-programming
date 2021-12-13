@@ -1,8 +1,15 @@
-### Certificate Management - Bootstrap
+### Certificate - Management - Bootstrap
 ```yaml
 - https://github.com/square/certstrap
-- your own certificate authority
-- your own public key infrastructure
+- https://github.com/square?q=&type=all&language=go&sort=
+
+- bring your own certificate authority
+- bring your own public key infrastructure
+- SPIFFE JWT to authenticate to AWS APIs
+- examine and validate certificates in a variety of formats
+- bootstrap CAs, certificate requests, and signed certificates
+- service for managing certificates for use by OpenSSH
+- periodically downloads secrets from Keywhiz
 ```
 
 ### Pod Security
