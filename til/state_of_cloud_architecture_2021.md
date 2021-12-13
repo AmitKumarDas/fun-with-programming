@@ -1,79 +1,18 @@
-### Bring Your Own CA
-```yaml
-- https://github.com/square/certstrap
-```
-
-### Ingress Based Solutions - Examples / Samples
-```yaml
-- https://github.com/nginxinc/kubernetes-ingress/tree/master/examples
-```
-
-### Troubleshooting
-```yaml
-- https://learnk8s.io/troubleshooting-deployments
-```
-
-### CI CD
-```yaml
-- https://cloud.google.com/blog/topics/developers-practitioners/devops-and-cicd-google-cloud-explained
-```
-
-### Solutioning via Helm
-```
-- https://github.com/tilt-dev/tilt/tree/master/configs/storybook
-- Maybe Helm for Inner Dev Loop
-
-- Helm's Unique Selling Point
-  - Broad Community
-  - Registry
-  - Push
-  - Artifacts
-  - Code Generators
-  - Controllers via Flux, K3s, etc.
-```
-
-#### Declarative Helming
-```yaml
-- https://www.openfaas.com/blog/tilt/
-- Helmfile
-```
 
 ### Architecture Diagram
 ```yaml
 - https://threedots.tech/post/auto-generated-c4-architecture-diagrams-in-go/
 ```
 
-### One Page Terraform to Create EC2 Instance
-```yaml
-- https://gist.github.com/ankyit/d180cdc2843a21204f27473a6c7eeb2c
-```
-
-```yaml
-- https://thenewstack.io/weave-gitops-core-integrates-git-with-kubernetes/
-- git - kubernetes - gitops
-```
-
-```yaml
-- https://github.com/cloudposse
-- terraform - automation - aws - helm
-```
-
-```yaml
-- https://engineering.monday.com/kubernetes_migration/
-- hpa - aws cloudwatch - argo rollouts
-```
-
-```yaml
-- https://docs.webhookrelay.com/installation-options/containerized/kubernetes-installation
-- ingress tunnel
-```
-
+### Google VPC
 ```yaml
 - https://cloud.google.com/blog/topics/retail/shopify-and-google-cloud-team-up-for-an-epic-bfcm-weekend
 - google virtual private cloud - https://cloud.google.com/vpc
 - multi region - disaster recovery
 ```
 
+
+### Monday.com
 ```yaml
 - https://engineering.monday.com/monday-coms-multi-regional-architecture-a-deep-dive/
 - saas platform
