@@ -1,3 +1,8 @@
+### Bring Your Own CA
+```yaml
+- https://github.com/square/certstrap
+```
+
 ### Ingress Based Solutions - Examples / Samples
 ```yaml
 - https://github.com/nginxinc/kubernetes-ingress/tree/master/examples
