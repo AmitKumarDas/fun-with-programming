@@ -8,3 +8,8 @@
 - https://engineering.monday.com/kubernetes_migration/
 - hpa - aws cloudwatch
 ```
+
+### Google Cloud
+```yaml
+- https://cloud.google.com/blog/topics/developers-practitioners/devops-and-cicd-google-cloud-explained
+```
