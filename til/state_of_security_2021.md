@@ -1,3 +1,10 @@
+### Certificate Management - Bootstrap
+```yaml
+- https://github.com/square/certstrap
+- your own certificate authority
+- your own public key infrastructure
+```
+
 ### Pod Security
 ```yaml
 - https://kubernetes.io/blog/2021/12/09/pod-security-admission-beta/
