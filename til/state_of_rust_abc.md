@@ -3,6 +3,11 @@
 - https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 ```
 
+### Invest a Year
+```yaml
+- https://llogiq.github.io/
+```
+
 ### Examples
 ```yaml
 - https://www.sheshbabu.com/posts/rust-module-system/
