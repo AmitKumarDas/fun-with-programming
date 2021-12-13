@@ -1,4 +1,15 @@
-### Terraform
+### EC2 - AWS
+```yaml
+- https://gist.github.com/ankyit/d180cdc2843a21204f27473a6c7eeb2c
+```
+
+### Modules
+```yaml
+- https://github.com/cloudposse
+- terraform - automation - aws - helm
+```
+
+### Syntax
 ```yaml
 - https://www.terraform.io/docs/language/meta-arguments/for_each.html#chaining-for_each-between-resources
 - https://www.terraform.io/docs/language/data-sources/index.html
