@@ -15,3 +15,9 @@
 - HTTP retries are the new TCP retransmissions
 - What used to be solved with blackhole routes is called circuit breaking today
 ```
+
+### Envoy - Namespaces
+```yaml
+- Envoy has an initial concept of Linux namespaces, they are called listeners
+- Listeners can carry individual configurations and operate independently
+```
