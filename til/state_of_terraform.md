@@ -86,7 +86,7 @@ resource "helm_release" "prometheus-stack" {
 }
 ```
 
-### Parsing the file and send each fragment as a separate manifest
+### File Parse - Split - Build Each As A Separate Manifest
 ```tf
 locals {
   resource_list = yamldecode(file("${path. module}/example.yaml")).items
