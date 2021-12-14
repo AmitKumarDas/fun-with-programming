@@ -10,33 +10,35 @@
 ```
 
 ### Syntax
+#### Chain - for each - loop
 ```yaml
 - https://www.terraform.io/docs/language/meta-arguments/for_each.html#chaining-for_each-between-resources
 - https://www.terraform.io/docs/language/data-sources/index.html
-- chain - for each - loop
+```
 
+#### Tuple
+```yaml
 - https://selleo.com/til/posts/cnfrqv1ipl-foreach-over-tuples-in-terraform
-- tuple
+```
 
+#### Providers
+```yaml
 - https://www.terraform.io/docs/language/providers/index.html
-- providers offer:
-- resources 
-- data
+```
 
-- naming
+#### Naming
+```yaml
 - underscores then hyphens
 - resource "your_provider_name" "abc-hey" 
 - data "your_provider_name" "abc-hey"
-
-- https://stackoverflow.com/questions/69180684/how-do-i-apply-a-crd-from-github-to-a-cluster-with-terraform
-- CRDs - yaml - apply
-
-- https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
-- better option 
-- tf can parse hcl & hence track the diff
-- server side apply
 ```
 
+#### Manifest - HCL - Track Diff - Server Side Apply
+```yaml
+- https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/manifest
+```
+
+#### Kubectl - CRD - Helm
 ```tf
 variable "operator-crds" {
   type = list(string)
@@ -93,6 +95,28 @@ locals {
 resource "kubectl_manifest" "example" {
   count = length(locals.resource_list)
   yaml_body = yamlencode(locals.resource_list[count.index]) 
+}
+```
+
+### Dynamic
+```hcl
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.my_vpc.id
+
+  # multiple route(s)
+  dynamic "route" {
+    for_each = local.peer_route_mapping
+    content {
+      cidr_block                = route.value["ip_range"]
+      vpc_peering_connection_id = route.value["peering_id"]
+    }
+  }
+  
+  # one more
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.my_ig.id
+  }
 }
 ```
 
