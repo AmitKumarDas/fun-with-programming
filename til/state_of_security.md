@@ -32,14 +32,3 @@
 ```yaml
 - kubectl get --raw /metrics | grep pod_security_evaluations_total
 ```
-
-### Sign Verify & Protect Software
-```yaml
-- https://github.com/sigstore
-- https://dlorenc.medium.com/the-sigstore-trust-model-4b146b2ecf2c
-- https://github.com/golang/go/issues/25530
-
-- go - rust - fellow
-- sigstore vs pgp
-- oidc - domains
-```
