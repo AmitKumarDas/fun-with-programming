@@ -3,7 +3,7 @@
 - https://gist.github.com/ankyit/d180cdc2843a21204f27473a6c7eeb2c
 ```
 
-### Modules
+### Modular Programming - Best Practices
 ```yaml
 - https://github.com/cloudposse
 - terraform - automation - aws - helm
@@ -86,7 +86,7 @@ resource "helm_release" "prometheus-stack" {
 }
 ```
 
-### File Parse - Split - Build Each As A Separate Manifest
+#### File Parse - Split - Build Each As A Separate Manifest
 ```tf
 locals {
   resource_list = yamldecode(file("${path. module}/example.yaml")).items
@@ -98,7 +98,7 @@ resource "kubectl_manifest" "example" {
 }
 ```
 
-### Dynamic
+#### Dynamic
 ```hcl
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.my_vpc.id
