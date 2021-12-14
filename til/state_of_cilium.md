@@ -18,6 +18,7 @@
 
 ### Envoy - Namespaces
 ```yaml
+- https://www.youtube.com/watch?v=08opgZkdYIw
 - Envoy has an initial concept of Linux namespaces, they are called listeners
 - Listeners can carry individual configurations and operate independently
 ```
