@@ -1,5 +1,10 @@
 ### State of Linux 2021
 
+### PID Namespace
+```yaml
+- https://www.youtube.com/watch?v=l4I2TVAnBuw
+```
+
 ### Memory
 ```yaml
 - https://www.bwplotka.dev/2019/golang-memory-monitoring/
