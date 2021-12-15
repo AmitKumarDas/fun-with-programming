@@ -21,6 +21,11 @@
 - https://developers.facebook.com/blog/post/2020/06/03/build-smart-bookmarking-tool-rust-rocket/
 ```
 
+### Bible
+```yaml
+- https://towardsdatascience.com/you-want-to-learn-rust-but-you-dont-know-where-to-start-fc826402d5ba
+```
+
 ### Books
 ```yaml
 - https://stevedonovan.github.io/rust-gentle-intro/readme.html#a-gentle-introduction-to-rust
