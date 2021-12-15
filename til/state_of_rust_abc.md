@@ -36,6 +36,10 @@
 - https://doc.rust-lang.org/stable/rust-by-example/index.html
 ```
 
+```yaml
+- https://doc.rust-lang.org/book/title-page.html
+```
+
 ### Macros
 ```yaml
 - assert_eq!
