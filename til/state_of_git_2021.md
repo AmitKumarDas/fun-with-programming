@@ -12,6 +12,17 @@
 - git rebase main
 ```
 
+### Change Older Commit Messages
+
+```yaml
+- Display last n commits in your current branch:
+ - git rebase -i HEAD~n
+ - `reword` instead of `pick` for all the commits you want to reword
+- Save and close the commit list file
+- In each resulting commit file, type the new commit message, save the file, and close it
+- git push --force
+```
+
 ### Pretty Print Log
 ```yaml
 - git log --pretty=oneline
