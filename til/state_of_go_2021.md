@@ -1,5 +1,10 @@
 ### State of Golang Code 2021
 
+### Minimal Version Selection - go.mod
+```
+- https://go.dev/ref/mod#minimal-version-selection
+```
+
 ### Best Practices Guide
 #### Thanos
 ```yaml
