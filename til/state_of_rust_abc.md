@@ -40,13 +40,9 @@
 - https://doc.rust-lang.org/book/title-page.html
 ```
 
-### Macros
+### Benchmarking Tool
 ```yaml
-- assert_eq!
-- println!
-- print!
-- eprint!
-- format!
+- https://github.com/sharkdp/hyperfine
 ```
 
 ### Tips
