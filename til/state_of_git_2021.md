@@ -1,3 +1,8 @@
+### Application Source Code vs Environments
+```yaml
+- https://medium.com/containers-101/stop-using-branches-for-deploying-to-different-gitops-environments-7111d0632402
+```
+
 ### Rebase Better than Merge
 ```yaml
 - https://www.linode.com/docs/guides/git-rebase-command/
