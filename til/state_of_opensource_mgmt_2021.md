@@ -1,5 +1,10 @@
 ### State of OpenSource Management 2021
 
+### Software Truths
+```yaml
+- https://buttondown.email/hillelwayne/archive/uncomfortable-truths-in-software-engineering/
+```
+
 ### Vision
 ```yaml
 - Ideas for projects, products, solutions, APIs, etc
