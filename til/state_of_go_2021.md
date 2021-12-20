@@ -35,6 +35,25 @@
 - https://buttondown.email/hillelwayne/archive/comment-the-why-and-the-what/
 ```
 
+### Options & Option
+```go
+type MergeFromWithOptimisticLock struct{}
+
+// Note: receiver is value type
+// Note: argument is reference type
+func (m MergeFromWithOptimisticLock) ApplyToMergeFrom(in *MergeFromOptions) {
+  in.OptimisticLock = true
+}
+
+type MergeFromOption interface {
+  ApplyToMergeFrom(*MergeFromOptions)
+}
+
+type MergeFromOptions struct {
+  OptimisticLock bool
+}
+```
+
 ### Testing - What is Fixture?
 ```yaml
 - https://ieftimov.com/post/testing-in-go-fixtures/
