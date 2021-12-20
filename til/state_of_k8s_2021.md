@@ -1,5 +1,18 @@
 ## State of Infra 2021
 
+### PreStop + SIGTERM + Linkerd wait
+```yaml
+- https://linkerd.io/2.10/tasks/graceful-shutdown/
+- https://livebook.manning.com/concept/kubernetes/pre-stop-hook:
+  - linkerd wait + prestop hook: https://linkerd.io/2.10/tasks/graceful-shutdown/
+  - https://medium.com/trendyol-tech/graceful-shutdown-of-spring-boot-applications-in-kubernetes-f80e0b3a30b0:
+    - high traffic needs
+  - PreStop hook and SIGTERM signal are run in parallel:
+    - PreStop hook keeps the service ON for X seconds:
+      - So that in-progress requests don't throw exceptions or errors to clients
+    - SIGTERM will signal applications to close the connections
+```
+
 ### Liveness != Readiness
 ```yaml
 - https://tech.trivago.com/2021/06/09/proper-java-application-life-cycle-management-in-kubernetes/
