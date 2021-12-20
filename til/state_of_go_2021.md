@@ -54,6 +54,40 @@ type MergeFromOptions struct {
 }
 ```
 
+### Typed Value
+```yaml
+- typedVal := val.(type)
+```
+
+### IsZero
+
+#### Sample - 1
+```go
+func IsZero(v reflect.Value) bool {
+  switch v.Kind() {
+  default:
+    z := reflect.Zero(v.Type())
+    return v.Interface() == z.Interface() // will this catch empty string?
+  case reflect.Float64, reflect.Int64:
+    return false
+  case reflect.Func, reflect.Map, reflect.Slice:
+    return v.IsNil()
+  case reflect.Array:
+    z := true
+    for i := 0; i < v.Len(); i++ {
+      z = z && IsZero(v.Index(i)) // recursive call
+    }
+    return z
+  case reflect.Struct:
+    z := true
+    for i := 0; i < v.NumField(); i++ {
+      z = z && IsZero(v.Field(i)) // recursive call
+    }
+    return z
+  }
+}
+```
+
 ### Testing - What is Fixture?
 ```yaml
 - https://ieftimov.com/post/testing-in-go-fixtures/
