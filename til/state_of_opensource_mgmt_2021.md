@@ -1,5 +1,10 @@
 ### State of OpenSource Management 2021
 
+### Happiness
+```yaml
+- https://world.hey.com/dhh/i-won-t-let-you-pay-me-for-my-open-source-d7cf4568
+```
+
 ### Software Truths
 ```yaml
 - https://buttondown.email/hillelwayne/archive/uncomfortable-truths-in-software-engineering/
