@@ -72,3 +72,9 @@ SSL Issuer:
 - ssh -v <githubusername>@bastion.jimdo-platform-eks.net
 - and then accept the question with yes
 ```
+
+## Makefile
+### Define A Function
+```yaml
+- https://coderwall.com/p/cezf6g/define-your-own-function-in-a-makefile
+```
