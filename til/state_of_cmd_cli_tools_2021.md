@@ -1,6 +1,17 @@
+### Kubernetes
+
+#### Fetch Status of Previously Terminated Containers
+```yaml
+- kubectl get pod with the -o go-template=...
+  - kubectl get pod -o go-template='{{range.status.containerStatuses}}{{"Container Name: "}}{{.name}}{{"\r\nLastState: "}}{{.lastState}}{{end}}'  simmemleak-hra99
+- O/P:
+  - Container Name: simmemleak
+  - LastState: map[terminated:map[exitCode:137 reason:OOM Killed startedAt:2015-07-07T20:58:43Z finishedAt:2015-07-07T20:58:43Z containerID:docker://0e4095bba1feccdfe7ef9fb6ebffe972b4b14285d5acdec6f0d3ae8a22fad8b2]]
+```
+
 ### Network
 
-### domain profiler
+### Domain Profiler
 ```yaml
 - https://github.com/jpf/domain-profiler
 ```
@@ -40,7 +51,7 @@ SSL Issuer:
       Common Name: *.github.com
 ```
 
-### dig
+### Dig
 ```yaml
 - https://gist.github.com/mrlesmithjr/c42ebb99a01e8eeeca6a5eb4fa52f852
 - dig output in json
@@ -50,7 +61,7 @@ SSL Issuer:
 - https://github.com/inguardians/peirates/blob/master/portscan.go
 ```
 
-### SSH | Troubleshoot
+## SSH | Troubleshoot
 ```yaml
 - SSH-Key has not been added to the ssh-agent
 - Solve this with ssh-add -K
