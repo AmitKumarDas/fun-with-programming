@@ -109,7 +109,7 @@ struct body {
 
 ### std::mem::MaybeUninit
 ```yaml
-- expressing storage locations that might be uninitialized
+- expressing storage locations i.e. pointers that might be uninitialized
 
 - MaybeUninit<T> is a T that might not be initialized
 - MaybeUninit::uninit() is an uninitialized value
@@ -128,40 +128,36 @@ struct body {
 - writes data into the pointed-to memory without reading it first
 ```
 
+### Read Before Write
 ```yaml
-- Read Before Write
-
 - Why would writing to memory involve reading it first?
 - In Rust, it’s usually because the type you’re storing has a **destructor**
 - f64 doesn’t have any destructor. Why?
 ```
 
+### std::mem::transmute - Why Memory Transmute?
 ```yaml
-- std::mem::transmute
-
 - converts between any two types as long as they’re the same size
 - without running any code or changing any data
 - it simply reinterprets the bits of one type as the other
+```
 
-- convert (say) a floating point number into a pointer
+### Convert A Floating Point Number Into A Pointer
+```yaml
 - or any three-word struct into any other, it is firmly, gloriously unsafe
-- And incredibly useful
-
-- Transmute only if target is fully initialized
+- Transmute only if target is fully initialized else you get garbage
 ```
 
+### Transmute in C - From Float to Int
 ```yaml
-- Transmute in C
-- From Float to int
-  - float x = something();
-  - int y = *(int *) &x;
+- float x = something();
+- int y = *(int *) &x; // Why Do You Need to Transmute Via Address Route
 ```
 
+### let position_Delta: [f64; 3] = mem::transmute(position_Delta);
 ```yaml
-- let position_Delta: [f64; 3] = mem::transmute(position_Delta);
-
 - Consuming using the same name
-- This is common idiom in Rust to change type or mutability
+- This is common idiom in Rust to change 1/ type or 2/ mutability
 
 - **Name Shadowing** may be scary
 - You do not have to use it if you do not like
