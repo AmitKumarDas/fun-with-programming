@@ -2,7 +2,13 @@
 - http://cliffle.com/p/dangerust/
 ```
 
-### Syntax
+### Cast an Integer to a Char In Rust
+```yaml
+- let character = 97 as char;
+```
+
+
+### Lint
 ```rust
 // silence the opinions about naming conventions
 #![allow(
@@ -12,6 +18,7 @@
 )]
 ```
 
+### Layout - Alignment
 ```rust
 // Rust to lay out the struct exactly like C
 // repr is applied to only types e.g. struct(s), variables
@@ -26,70 +33,71 @@ struct body {
 }
 ```
 
+### #define to const
 ```yaml
 - `#define` can be replaced by Rust `const`
 ```
 
+### Array =~ Pointers in C
 ```yaml
-- In C:
-  - body bodies[] is same as body *bodies
-  - i.e. passing an array is same as passing a pointer
-  - _Note: body is the datatype while bodies is the name_
+- body bodies[] is same as body *bodies
+- i.e. passing an array is same as passing a pointer
+- _Note: body is the datatype while bodies is the name_
 ```
 
+### C Pointer becomes *mut data_type in Rust
 ```yaml
 - body *bodies becomes *mut body in Rust
-  - where body is a datatype
-  - bodies is an array of body items
 
-- _Superpower_: *mut
-  - Explicitly & Carefully Handled via unsafe
+- where body is a datatype
+- bodies is an array of body items
 ```
 
+### _Superpower_: *mut
+```yaml
+- Explicitly & Carefully Handled via unsafe
+```
+
+### Pointer i.e. Array Index is now
 ```yaml
 - bodies[0] becomes *bodies.add(0) in Rust
 ```
 
+### unsafe
 ```yaml
 - unsafe fn offset_Momentum(bodies: *mut body) {...}
 
-- unsafe is an explicit statement to the caller:
-  - fn may do dumb things with pointers
-  - fn might corrupt the passed pointer
+- unsafe is an explicit statement to the caller
+- fn may do dumb things with pointers
+- fn might corrupt the passed pointer
 ```
 
+### In C - bodies[i] is same as *(bodies + i)
 ```yaml
-- In C:
-  - bodies[i] is same as *(bodies + i)
-  - C assumes that i is a valid index of the array
+- C ASSUMES that i is a valid index of the array
 
 - a[0] is same as *a
 - a[1] is same as *(a + 1)
 
-- a[1] is not *a + 1
+- a[1] is NOT *a + 1
 ```
 
+### *(a + i) in C becomes *a.add(i) in Rust
 ```yaml
-- Instead of *(a + i) you write *a.add(i) in Rust
-
-- Rust:
-  - does not overload arithmetic operators
-  - Pointers provide add, sub & other operations
-  - _Note: Easy to spot in code review_
+- does not overload arithmetic operators
+- Pointers provide add, sub & other operations - WOW!!!
+- _Note: Easy to SPOT in CODE REVIEW_
 ```
 
+### for m in 0..3 {...} in Rust
 ```yaml
-- for m in 0..3 {...}
-  - In Rust this is **0,1,2**
+- Resulting indexes are 0, 1 & 2
 ```
 
+### double position_Delta[3] in C leads to Unpredicatable Values
 ```yaml
-- In C:
-  - double position_Delta[3]
-
-- Above contain arbitrary unpredictable values
 - Reason for serious bugs in C
-- Sometimes, leaving memory un-initialized is important for performance
+- However, sometimes leaving memory Un-Initialized is important for performance
 ```
 
 ```yaml
