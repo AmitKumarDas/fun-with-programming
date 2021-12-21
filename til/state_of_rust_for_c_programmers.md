@@ -1,3 +1,4 @@
+### Reference
 ```yaml
 - http://cliffle.com/p/dangerust/
 ```
@@ -163,25 +164,29 @@ struct body {
 - You do not have to use it if you do not like
 ```
 
+### Align to 16 Byte Boundary
 ```rust
 // Align16 is a struct that contains an array of ROUNDED_INTERACTIONS_COUNT f64s
-// Aligns to 16 byte boundary
 // Its a tuple struct with un-named fields
 #[repr(align(16))]
 #[derive(Copy, Clone)]
 struct Align16([f64; ROUNDED_INTERACTIONS_COUNT]);
 ```
 
+### Static Function
 ```rust
-// static when within a function implies its initialized only once at 1st fn call
+// static within a function implies its initialized only once 
+// during the very first 1st fn call
+//
 // Hence static mut is not threadsafe
-// Hence advanced fn is tagged with unsafe
+// Hence fn is tagged with unsafe
+//
 // Callers need to implement thread safety
 unsafe fn advance(bodies: *mut body) {
   // ...
 
   // look how double array is initialized
-  static mut position_Deltas: [Align16; 3] =
+  static mut positions: [Align16; 3] =
     [Align16([0.; ROUNDED_INTERACTIONS_COUNT]); 3];
 
   static mut magnitudes: Align16 =
@@ -189,9 +194,11 @@ unsafe fn advance(bodies: *mut body) {
 }
 ```
 
+### Access Unnamed Field
 ```yaml
-- position_Deltas[m].0[k]
+- positions[m].0[k]
+
 - .0 is accessing the first (& only) unnamed field in the tuple struct Align16
-- where Align16 struct is an element of the arrary position_Deltas
+- where Align16 struct is an element of the arrary positions
 - where Align16 is itself an array
 ```
