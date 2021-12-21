@@ -94,27 +94,22 @@ struct body {
 - Resulting indexes are 0, 1 & 2
 ```
 
-### double position_Delta[3] in C leads to Unpredicatable Values
+### In C double position_Delta[3] Leads to Unpredicatable Values
 ```yaml
 - Reason for serious bugs in C
 - However, sometimes leaving memory Un-Initialized is important for performance
 ```
 
+### let mut position_Delta = [mem::MaybeUninit::<f64>::uninit(); 3];
 ```yaml
-- double position_Delta[3]
-  - Is translated to Rust as following:
-
-- let mut position_Delta = [mem::MaybeUninit::<f64>::uninit(); 3];
-  - Which is shorthand for following:
-
-- let mut position_Delta: [mem::MaybeUninit<f64>; 3] =
-    [mem::MaybeUninit::uninit(); 3];
-    - An array of three f64s containing arbitrary uninitialized memory
+- Which is shorthand for:
+  - let mut position_Delta: [mem::MaybeUninit<f64>; 3] = [mem::MaybeUninit::uninit(); 3];
+- An array of three f64s containing arbitrary uninitialized memory
 ```
 
+### std::mem::MaybeUninit
 ```yaml
-- std::mem::MaybeUninit
-  - expressing storage locations that might be uninitialized
+- expressing storage locations that might be uninitialized
 
 - MaybeUninit<T> is a T that might not be initialized
 - MaybeUninit::uninit() is an uninitialized value
@@ -124,13 +119,13 @@ struct body {
 - The first thing the Rust code does, like C, is to write the array elements with valid data
 ```
 
+### position_Delta[m].as_mut_ptr().write(value_goes_here);
 ```yaml
-- position_Delta[m].as_mut_ptr().write(value_goes_here);
-
 - MaybeUninit::as_mut_ptr()
-  - produces a mutable pointer to the possibly uninitialized memory
-  - write is another raw pointer operation
-    - writes data into the pointed-to memory without reading it first
+  
+- produces a mutable pointer to the possibly uninitialized memory
+- write is another raw pointer operation - WOW !!!
+- writes data into the pointed-to memory without reading it first
 ```
 
 ```yaml
