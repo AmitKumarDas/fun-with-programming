@@ -86,6 +86,18 @@ resource "helm_release" "prometheus-stack" {
 }
 ```
 
+#### kubectl_path_documents
+
+```hcl
+data "kubectl_path_documents" "docs" {
+  pattern = "${path.module}/manifests/*.yaml"
+}
+resource "kubectl_manifest" "test" {
+  for_each  = toset(data.kubectl_path_documents.docs.documents)
+  yaml_body = each.value
+}
+```
+
 #### File Parse - Split - Build Each As A Separate Manifest
 ```tf
 locals {
