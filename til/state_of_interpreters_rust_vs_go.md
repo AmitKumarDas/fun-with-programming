@@ -36,7 +36,7 @@ pub enum TokenType {
 }
 ```
 
-### Detecting An End Of File In Go
+### Setting EOF In Go
 ```go
 // uses integer 0 (as a byte) to indicate when the end of file is reached
 func (l *Lexer) readChar() {
@@ -47,5 +47,38 @@ func (l *Lexer) readChar() {
   }
   l.position = l.readPosition
   l.readPosition += 1
+}
+```
+
+### Idiomatic Go to Find EOF
+```go
+switch l.ch {
+case '=':
+  // [...]
+case 0: // char can be an integer i.e. a byte
+  tok.Literal = ""
+  tok.Type = token.EOF
+default:
+  // [...]
+}
+```
+
+#### Idiomatic Rust to Find EOF
+
+```yaml
+- Use an Option<char> and return None in case the end of the file is reached
+- May be more idiomatic to return a Result with an EOF error
+```
+
+```rust
+match self.ch {
+  Some(ch @ '=') => {
+  [...]
+
+  // Handle EOF
+  None => {
+    tok.literal = String::new();
+    tok.token_type = token::TokenType::EndOfFile;
+  }
 }
 ```
