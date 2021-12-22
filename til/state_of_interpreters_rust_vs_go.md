@@ -82,3 +82,60 @@ match self.ch {
   }
 }
 ```
+
+#### Main
+```rust
+use std::io::{self, BufRead, Write}; // How Is BufRead used?
+
+pub mod lexer;
+pub mod token;
+
+fn main() {
+  let stdin = io::stdin();
+
+  loop { // For Ever Loop
+    // Stdout needs to be flushed, due to missing newline
+    print!(">> ");
+    io::stdout().flush().expect("Error flushing stdout");
+
+    let mut line = String::new(); // String CapitalCased?
+    stdin.lock().read_line(&mut line).expect("Error reading from stdin");
+    let mut lexer = lexer::Lexer::new(&mut line); // CapitalCased Lexer ?
+
+    loop { // For Ever Loop
+      let tok = lexer.next_token();
+      println!("{:?}", tok);
+      if tok.token_type == token::TokenType::EndOfFile { // CapitalCased TokenType?
+          break;
+      }
+    }
+  }
+}
+```
+
+#### Source Code => Lexer => Tokens
+```sh
+$ cargo run
+    Finished debug [unoptimized + debuginfo] target(s) in 0.0 secs
+     Running `target/debug/writing_an_interpreter_in_rust`
+
+>> let add = fn(x, y) { x + y; };
+Token { token_type: Let, literal: "let" }
+Token { token_type: Ident, literal: "add" }
+Token { token_type: Assign, literal: "=" }
+Token { token_type: Function, literal: "fn" }
+Token { token_type: LeftParenthesis, literal: "(" }
+Token { token_type: Ident, literal: "x" }
+Token { token_type: Comma, literal: "," }
+Token { token_type: Ident, literal: "y" }
+Token { token_type: RightParenthesis, literal: ")" }
+Token { token_type: LeftBrace, literal: "{" }
+Token { token_type: Ident, literal: "x" }
+Token { token_type: Plus, literal: "+" }
+Token { token_type: Ident, literal: "y" }
+Token { token_type: Semicolon, literal: ";" }
+Token { token_type: RightBrace, literal: "}" }
+Token { token_type: Semicolon, literal: ";" }
+Token { token_type: EndOfFile, literal: "" }
+>>
+```
