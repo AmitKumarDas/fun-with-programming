@@ -3,6 +3,7 @@
 ### Happiness
 ```yaml
 - https://world.hey.com/dhh/i-won-t-let-you-pay-me-for-my-open-source-d7cf4568
+- https://www.bwplotka.dev/2021/have-fun/
 ```
 
 ### Software Truths
