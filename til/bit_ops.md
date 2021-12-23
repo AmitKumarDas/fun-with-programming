@@ -131,6 +131,13 @@ r = x | 0x0F // set first 4 bits (i.e. right most) of x to 1
 r = x & 0x0F // set left most 4 bits of x to 0
 ```
 
+### KB, MB, GB
+```yaml
+- 64<<20 is 64MB
+- 64<<10 is 64KB
+- 64<<30 is 64GB
+```
+
 ### Right Shift
 ```go
   fmt.Println(1 >> 1) // 0
