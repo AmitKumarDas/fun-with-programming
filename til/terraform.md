@@ -1,15 +1,14 @@
-### EC2 - AWS
+#### EC2 - AWS
 ```yaml
 - https://gist.github.com/ankyit/d180cdc2843a21204f27473a6c7eeb2c
 ```
 
-### Modular Programming - Best Practices
+#### Modular Programming - Best Practices
 ```yaml
 - https://github.com/cloudposse
 - terraform - automation - aws - helm
 ```
 
-### Syntax
 #### Chain - for each - loop
 ```yaml
 - https://www.terraform.io/docs/language/meta-arguments/for_each.html#chaining-for_each-between-resources
@@ -132,7 +131,7 @@ resource "aws_route_table" "public" {
 }
 ```
 
-### Debugging
+#### Debugging
 ```sh
 terraform workspace select my-work-xyz
 terraform init
