@@ -141,6 +141,10 @@ tarraform state list
 #### Exclude
 
 ```yaml
+- https://github.com/hashicorp/terraform/issues/2253
+```
+
+```yaml
 - implement a bool variable enable_vsphere_host_number_1, and set it to false when needed
 - Here is how it would look:
 ```
