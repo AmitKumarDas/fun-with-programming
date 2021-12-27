@@ -138,3 +138,38 @@ terraform workspace select my-work-xyz
 terraform init
 tarraform state list
 ```
+
+#### Exclude
+
+```yaml
+- implement a bool variable enable_vsphere_host_number_1, and set it to false when needed
+- Here is how it would look:
+```
+
+##### variables.tf
+```hcl
+variable "enable_vsphere_host_number_1" {
+  default = false
+  type = bool
+}
+```
+
+##### main.tf
+```hcl
+resource "vsphere_host" "myhost" {
+
+count = enable_vsphere_host_number_1 ? 1 : 0
+
+}
+```
+
+```yaml
+- if enable_vsphere_host_number_1 = true, then count = 1 and the resource will be created
+- if enable_vsphere_host_number_1 = false, then count = 0 and the resource is skipped
+- conditional expressions: 
+  - https://www.terraform.io/docs/language/expressions/conditionals.html
+- count meta-argument: 
+  - https://www.terraform.io/docs/language/meta-arguments/count.html
+- usage:
+  - terraform apply -var='enable_vsphere_host_number_1=false'
+```
