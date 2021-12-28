@@ -46,3 +46,14 @@ struct Message
 - that are shared in a interface between machines differing in either the compiler
 - and/or microprocessor
 ```
+
+#### Structure Alignment for Efficiency
+```yaml
+- Sometimes array indexing efficiency can also determine the pad bytes in the structure
+- Note that compilers index into arrays by calculating the address of the indexed entry:
+  - by the multiplying the index with the size of the structure
+- This number is then added to the array base address to obtain the final address
+- Since this operation involves a multiply, indexing into arrays can be expensive
+- Array indexing can be speeded up by making sure that the structure size is a power of 2
+- The compiler can then replace the multiply with a simple shift operation
+```
