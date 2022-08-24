@@ -5,8 +5,9 @@ In this repo, I document my operations' experiences as reports
 A report is a markdown file whose code blocks can be executed
 For example take a look at `k8s/carvel-packaging` folder
 
-Note: _One needs to install `mask` to run these markdown files_
-Note: _A report file is named as `maskfile.md`_
+Notes: 
+- _One needs to install `mask` to run these markdown files_
+- _A report file is named as `maskfile.md`_
 
 ```shell
 brew install mask
