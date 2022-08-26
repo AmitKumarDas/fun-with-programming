@@ -1,0 +1,14 @@
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  #! This will be the name of our package
+  name: simple-app.corp.com
+spec:
+  displayName: "Simple App"
+  longDescription: "A package consisting of a k8s deployment and service"
+  shortDescription: "Packaging for demoing"
+  categories:
+  - demo

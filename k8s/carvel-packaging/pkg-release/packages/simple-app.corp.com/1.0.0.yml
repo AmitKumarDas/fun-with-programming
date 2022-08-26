@@ -1,0 +1,41 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: simple-app.corp.com.1.0.0
+spec:
+  refName: simple-app.corp.com
+  version: 1.0.0
+  releaseNotes: |
+    Initial release of the simple app package
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        svc_port:
+          type: integer
+          description: Port number for the service.
+          default: 80
+        app_port:
+          type: integer
+          description: Target port for the application.
+          default: 80
+        hello_msg:
+          type: string
+          description: Name used in hello message from app when app is pinged.
+          default: stranger
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: kind-registry.local:5000/packages/simple-app:1.0.0
+      template:
+      - ytt:
+          paths:
+          - config/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}

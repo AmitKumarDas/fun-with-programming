@@ -1,0 +1,4 @@
+# Added while setting up kind & carvel
+# To force imgpkg to use http instead of https
+127.0.0.1 kind-registry.local
+# End of section

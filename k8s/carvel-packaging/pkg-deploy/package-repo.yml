@@ -1,0 +1,12 @@
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: pkg-repo
+  namespace: default
+spec:
+  fetch:
+    imgpkgBundle:
+      image: kind-registry.local:5000/packages/pkg-repo:1.0.0
