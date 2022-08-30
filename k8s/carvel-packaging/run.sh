@@ -2,12 +2,10 @@
 set -o errexit
 
 # -----------------------
-# Learn Carvel Packaging
+# Release via Carvel Packaging
 # -----------------------
 
-# This helps understand the inner workings of carvel kapp-controller
-
-# This file remains the **Single Source of Truth**. All other folders & files found
+# This file remains as the **Single Source of Truth**. All other folders & files found
 # in the parent folder are generated while running this file. Note that all files
 # should be git versioned even if some of them are generated.
 
@@ -21,58 +19,66 @@ echo "++ ------------------------------"
 echo "++ configuration"
 echo "++ ------------------------------"
 
+# Note: These configurations are logged & are set as well
+
 echo "++ configuring local image registry"
-REG_NAME="kind-registry.local"
-REG_PORT="5000"
+echo "REG_NAME=${REG_NAME:=kind-registry.local}"
+echo "REG_PORT=${REG_PORT:=5000}"
+echo "RUN_REGISTRY_AS_A_LOCAL_CONTAINER=${RUN_REGISTRY_AS_A_LOCAL_CONTAINER:=yes}"
 
 echo "++ configuring kubernetes rbac"
-K8S_NAMESPACE="default"
-K8S_SERVICE_ACCOUNT="default-ns-sa"
-K8S_ROLE="default-ns-role"
-K8S_ROLE_BINDING="default-ns-role-binding"
+echo "K8S_NAMESPACE=${K8S_NAMESPACE:=default}"
+echo "K8S_SERVICE_ACCOUNT=${K8S_SERVICE_ACCOUNT:=default-ns-sa}"
+echo "K8S_ROLE=${K8S_ROLE:=default-ns-role}"
+echo "K8S_ROLE_BINDING=${K8S_ROLE_BINDING:=default-ns-role-binding}"
 
 echo "++ configuring carvel versions"
-KAPP_CTRL_VERSION="v0.40.0"
+echo "KAPP_CTRL_VERSION=${KAPP_CTRL_VERSION:=v0.40.0}"
 
-echo "++ configuring location for carvel binaries"
-LOCAL_BIN="local-bin"
-KBLD="${LOCAL_BIN}/kbld"
-IMGPKG="${LOCAL_BIN}/imgpkg"
-YTT="${LOCAL_BIN}/ytt"
-KAPP="${LOCAL_BIN}/kapp"
+echo "++ configuring full paths for carvel binaries"
+echo "LOCAL_BIN=${LOCAL_BIN:=local-bin}"
+echo "KBLD=${KBLD:=${LOCAL_BIN}/kbld}"
+echo "IMGPKG=${IMGPKG:=${LOCAL_BIN}/imgpkg}"
+echo "YTT=${YTT:=${LOCAL_BIN}/ytt}"
+echo "KAPP=${KAPP:=${LOCAL_BIN}/kapp}"
 
-echo "++ configuring location for kind binary"
-KIND="${LOCAL_BIN}/kind"
+echo "++ configuring full path for kind binary"
+echo "KIND=${KIND:=${LOCAL_BIN}/kind}"
 
-echo "++ configuring workload bundle"
-WORKLOAD_BUNDLE_NAME="simple-app"
-WORKLOAD_BUNDLE_VERSION="1.0.0"
+echo "++ configuring options for kind"
+echo "TEST_RELEASE_ON_KIND=${TEST_RELEASE_ON_KIND:=yes}"
+echo "INSTALL_KIND=${INSTALL_KIND:=${TEST_RELEASE_ON_KIND}}"
+echo "SETUP_KIND_CLUSTER=${SETUP_KIND_CLUSTER:=${TEST_RELEASE_ON_KIND}}"
+
+echo "++ configuring workload / application bundle"
+echo "WORKLOAD_BUNDLE_NAME=${WORKLOAD_BUNDLE_NAME:=simple-app}"
+echo "WORKLOAD_BUNDLE_VERSION=${WORKLOAD_BUNDLE_VERSION:=1.0.0}"
 
 echo "++ configuring package"
-PACKAGE_NAME="simple-app.corp.com"
-PACKAGE_VERSION="1.0.0"
+echo "PACKAGE_NAME=${PACKAGE_NAME:=simple-app.corp.com}"
+echo "PACKAGE_VERSION=${PACKAGE_VERSION:=1.0.0}"
 
 echo "++ configuring package repository"
-PACKAGE_REPOSITORY_NAME="pkg-repo"
-PACKAGE_REPOSITORY_VERSION="1.0.0"
+echo "PACKAGE_REPOSITORY_NAME=${PACKAGE_REPOSITORY_NAME:=pkg-repo}"
+echo "PACKAGE_REPOSITORY_VERSION=${PACKAGE_REPOSITORY_VERSION:=1.0.0}"
 
 echo "++ configuring package install"
-PACKAGE_INSTALL_NAME="pkg-demo"
+echo "PACKAGE_INSTALL_NAME=${PACKAGE_INSTALL_NAME:=pkg-demo}"
 
 echo "++ configuring folder names"
-FOLDER_KIND="kind"
-FOLDER_PKG_SOURCE="pkg-source"
-FOLDER_PKG_SOURCE_CONFIG="config"
-FOLDER_PKG_RELEASE="pkg-release"
-FOLDER_PKG_K8S_DEPLOY="pkg-deploy"
+echo "FOLDER_KIND=${FOLDER_KIND:=kind}"
+echo "FOLDER_PKG_SOURCE=${FOLDER_PKG_SOURCE:=pkg-source}"
+echo "FOLDER_PKG_SOURCE_CONFIG=${FOLDER_PKG_SOURCE_CONFIG:=config}"
+echo "FOLDER_PKG_RELEASE=${FOLDER_PKG_RELEASE:=pkg-release}"
+echo "FOLDER_PKG_K8S_DEPLOY=${FOLDER_PKG_K8S_DEPLOY:=pkg-deploy}"
 
 echo "++ configuring file names"
-FILE_RESULTING_PACKAGE_TEMPLATE="package-template.yml"
-FILE_RESULTING_PACKAGE_VALUES="schema-openapi.yml"
+echo "FILE_RESULTING_PACKAGE_TEMPLATE=${FILE_RESULTING_PACKAGE_TEMPLATE:=package-template.yml}"
+echo "FILE_RESULTING_PACKAGE_VALUES=${FILE_RESULTING_PACKAGE_VALUES:=schema-openapi.yml}"
 
-echo "configuring workload names"
-WORKLOAD_DEPLOYMENT_NAME="simple-app"
-WORKLOAD_SERVICE_NAME="simple-app"
+echo "++ configuring workload names"
+echo "WORKLOAD_DEPLOYMENT_NAME=${WORKLOAD_DEPLOYMENT_NAME:=simple-app}"
+echo "WORKLOAD_SERVICE_NAME=${WORKLOAD_SERVICE_NAME:=simple-app}"
 
 echo "++ ------------------------------"
 echo "++ prerequisites"
@@ -83,17 +89,34 @@ mkdir -p ${LOCAL_BIN}/
 ls ${KBLD} && ls ${IMGPKG} && ls ${YTT}
 [ $? == '0' ] || curl -L https://carvel.dev/install.sh | K14SIO_INSTALL_BIN_DIR=${LOCAL_BIN} bash
 
-echo "++ installing kind locally"
-IS_KIND_INSTALLED=$(ls ${KIND} || echo "no")
-[ ${IS_KIND_INSTALLED} == 'no' ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-darwin-arm64
-[ ${IS_KIND_INSTALLED} == 'no' ] && chmod +x ./kind
-[ ${IS_KIND_INSTALLED} == 'no' ] && mv ./kind ${KIND}
+if [ ${INSTALL_KIND} == 'yes' ];then
+  echo "++ installing kind locally"
+  IS_KIND_INSTALLED=$(ls ${KIND} || echo "no")
+  [ ${IS_KIND_INSTALLED} == 'no' ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-darwin-arm64
+  [ ${IS_KIND_INSTALLED} == 'no' ] && chmod +x ./kind
+  [ ${IS_KIND_INSTALLED} == 'no' ] && mv ./kind ${KIND}
+fi
 
-echo "++ list of locally installed binaries"
-ls -ltra ${LOCAL_BIN}
+echo "++ list of binaries installed at ${LOCAL_BIN}"
+ls -ltr ${LOCAL_BIN}
 
 echo "++ installing jq (system wide)"
 which jq || brew install jq
+
+echo "++ ------------------------------"
+echo "++ setup image registry"
+echo "++ ------------------------------"
+
+echo "++ [manual] turn on the docker runtime if image registry is local"
+
+if [ ${RUN_REGISTRY_AS_A_LOCAL_CONTAINER} == 'yes' ];then
+  echo "++ creating local registry container"
+  if [ "$(docker inspect -f '{{.State.Running}}' "${REG_NAME}" 2>/dev/null || true)" != 'true' ]; then
+    docker run \
+      -d --restart=always -p "127.0.0.1:${REG_PORT}:5000" --name "${REG_NAME}" \
+      registry:2
+  fi
+fi
 
 echo "++ ------------------------------"
 echo "++ bundle workload artifacts as an OCI image"
@@ -256,24 +279,18 @@ ${IMGPKG} push -b ${REG_NAME}:${REG_PORT}/packages/${PACKAGE_REPOSITORY_NAME}:${
 echo "++ verifying registry catalog for presence of package repository bundle"
 curl ${REG_NAME}:${REG_PORT}/v2/_catalog
 
-echo "++ ------------------------------"
-echo "++ set up kind cluster"
-echo "++ ------------------------------"
+if [ ${SETUP_KIND_CLUSTER} == 'yes' ]; then
+  echo "++ ------------------------------"
+  echo "++ set up kind cluster"
+  echo "++ ------------------------------"
 
-echo "++ [manual] turn on the docker runtime"
+  echo "++ [manual] turn on the docker runtime to set up kind"
 
-echo "++ creating registry container for kind"
-if [ "$(docker inspect -f '{{.State.Running}}' "${REG_NAME}" 2>/dev/null || true)" != 'true' ]; then
-  docker run \
-    -d --restart=always -p "127.0.0.1:${REG_PORT}:5000" --name "${REG_NAME}" \
-    registry:2
-fi
+  echo "++ creating folder for kind artifacts"
+  mkdir -p ${FOLDER_KIND}
 
-echo "++ creating folder for kind artifacts"
-mkdir -p ${FOLDER_KIND}
-
-echo "++ creating config for kind cluster with the local registry"
-cat > ${FOLDER_KIND}/kind-cluster.yml << EOF
+  echo "++ creating config for kind cluster with the local registry"
+  cat > ${FOLDER_KIND}/kind-cluster.yml << EOF
 #!
 #! Note: Do Not EDIT. This file is GENERATED
 #!
@@ -285,16 +302,16 @@ containerdConfigPatches:
     endpoint = ["http://${REG_NAME}:${REG_PORT}"]
 EOF
 
-kubectl cluster-info --context kind-kind
-[ $? == '0' ] || ${KIND} create cluster --config=${FOLDER_KIND}/kind-cluster.yml
+  kubectl cluster-info --context kind-kind
+  [ $? == '0' ] || ${KIND} create cluster --config=${FOLDER_KIND}/kind-cluster.yml
 
-echo "++ connecting registry to kind cluster network"
-if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "${REG_NAME}")" = 'null' ]; then
-  docker network connect "kind" "${REG_NAME}"
-fi
+  echo "++ connecting registry to kind cluster network"
+  if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "${REG_NAME}")" = 'null' ]; then
+    docker network connect "kind" "${REG_NAME}"
+  fi
 
-echo "++ documenting local registry as a config map"
-cat > ${FOLDER_KIND}/local-registry-hosting.yml << EOF
+  echo "++ documenting local registry as a config map"
+  cat > ${FOLDER_KIND}/local-registry-hosting.yml << EOF
 #!
 #! Note: Do Not EDIT. This file is GENERATED
 #!
@@ -310,38 +327,40 @@ data:
     help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
 EOF
 
-echo "++ applying local registry config map"
-kubectl apply -f ${FOLDER_KIND}/local-registry-hosting.yml
+  echo "++ applying local registry config map"
+  kubectl apply -f ${FOLDER_KIND}/local-registry-hosting.yml
 
-echo "++ creating etchosts.txt"
-cat > ${FOLDER_KIND}/etchosts.txt << EOF
+  echo "++ creating etchosts.txt"
+  cat > ${FOLDER_KIND}/etchosts.txt << EOF
 # Added while setting up kind & carvel
 # To force imgpkg to use http instead of https
 127.0.0.1 ${REG_NAME}
 # End of section
 EOF
 
-echo "++ [manual] append /etc/hosts with contents from ${FOLDER_KIND}/etchosts.txt \_(^^)_/"
+  echo "++ [manual] append /etc/hosts with contents from ${FOLDER_KIND}/etchosts.txt \_(^^)_/"
+fi
 
-echo "++ deploying carvel kapp controller ${KAPP_CTRL_VERSION}"
-kubectl apply -f \
-  https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/${KAPP_CTRL_VERSION}/release.yml
+if [ ${TEST_RELEASE_ON_KIND} == 'yes' ]; then
+  echo "++ ------------------------------"
+  echo "++ test the release by deploying it in the kind cluster"
+  echo "++ ------------------------------"
 
-echo "++ verifying kapp controller installations"
-kubectl get all -n kapp-controller
-kubectl api-resources --api-group packaging.carvel.dev
-kubectl api-resources --api-group data.packaging.carvel.dev
-kubectl api-resources --api-group kappctrl.k14s.io
+  echo "++ deploying carvel kapp controller ${KAPP_CTRL_VERSION}"
+  kubectl apply -f \
+    https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/${KAPP_CTRL_VERSION}/release.yml
 
-echo "++ ------------------------------"
-echo "++ test the release by deploying it in the cluster"
-echo "++ ------------------------------"
+  echo "++ verifying kapp controller installations"
+  kubectl get all -n kapp-controller
+  kubectl api-resources --api-group packaging.carvel.dev
+  kubectl api-resources --api-group data.packaging.carvel.dev
+  kubectl api-resources --api-group kappctrl.k14s.io
 
-echo "++ creating folder for k8s artifacts"
-mkdir -p ${FOLDER_PKG_K8S_DEPLOY}
+  echo "++ creating folder for k8s artifacts"
+  mkdir -p ${FOLDER_PKG_K8S_DEPLOY}
 
-echo "++ creating PackageRepository custom resource"
-cat > ${FOLDER_PKG_K8S_DEPLOY}/package-repo.yml << EOF
+  echo "++ creating PackageRepository custom resource"
+  cat > ${FOLDER_PKG_K8S_DEPLOY}/package-repo.yml << EOF
 #!
 #! Note: Do not EDIT. This file is GENERATED
 #!
@@ -356,22 +375,22 @@ spec:
       image: ${REG_NAME}:${REG_PORT}/packages/${PACKAGE_REPOSITORY_NAME}:${PACKAGE_REPOSITORY_VERSION}
 EOF
 
-echo "++ applying PackageRepository CR to the cluster"
-kubectl delete -f ${FOLDER_PKG_K8S_DEPLOY}/package-repo.yml || true
-kubectl apply -f ${FOLDER_PKG_K8S_DEPLOY}/package-repo.yml
+  echo "++ applying PackageRepository CR to the cluster"
+  kubectl delete -f ${FOLDER_PKG_K8S_DEPLOY}/package-repo.yml || true
+  kubectl apply -f ${FOLDER_PKG_K8S_DEPLOY}/package-repo.yml
 
-echo "++ waiting for availability of package repository"
-sleep 10
-kubectl get packagerepository -n ${K8S_NAMESPACE}
+  echo "++ waiting for availability of package repository"
+  sleep 10
+  kubectl get packagerepository -n ${K8S_NAMESPACE}
 
-echo "++ listing PackageMetadata"
-kubectl get packagemetadatas -n ${K8S_NAMESPACE}
+  echo "++ listing PackageMetadata"
+  kubectl get packagemetadatas -n ${K8S_NAMESPACE}
 
-echo "++ listing Package"
-kubectl get packages -n ${K8S_NAMESPACE} --field-selector spec.refName=${PACKAGE_NAME}
+  echo "++ listing Package"
+  kubectl get packages -n ${K8S_NAMESPACE} --field-selector spec.refName=${PACKAGE_NAME}
 
-echo "++ creating rbac for workload"
-cat > ${FOLDER_PKG_K8S_DEPLOY}/workload-rbac.yml << EOF
+  echo "++ creating rbac for workload"
+  cat > ${FOLDER_PKG_K8S_DEPLOY}/workload-rbac.yml << EOF
 #!
 #! Note: Do not EDIT. This file is GENERATED
 #!
@@ -407,12 +426,12 @@ roleRef:
   name: ${K8S_ROLE}
 EOF
 
-echo "++ applying workload rbac to the cluster"
-kubectl delete -f ${FOLDER_PKG_K8S_DEPLOY}/workload-rbac.yml || true
-kubectl apply -f ${FOLDER_PKG_K8S_DEPLOY}/workload-rbac.yml
+  echo "++ applying workload rbac to the cluster"
+  kubectl delete -f ${FOLDER_PKG_K8S_DEPLOY}/workload-rbac.yml || true
+  kubectl apply -f ${FOLDER_PKG_K8S_DEPLOY}/workload-rbac.yml
 
-echo "++ creating PackageInstall CR with a secret resource (to provide customized values)"
-cat > ${FOLDER_PKG_K8S_DEPLOY}/package-install.yml << EOF
+  echo "++ creating PackageInstall CR with a secret resource (to provide customized values)"
+  cat > ${FOLDER_PKG_K8S_DEPLOY}/package-install.yml << EOF
 #!
 #! Note: Do not EDIT. This file is GENERATED
 #!
@@ -445,15 +464,16 @@ stringData:
     hello_msg: "to all my internet friends from carvel packaging demo"
 EOF
 
-echo "++ deploying PackageInstall CR"
-kubectl delete -f ${FOLDER_PKG_K8S_DEPLOY}/package-install.yml || true
-kubectl delete app ${PACKAGE_INSTALL_NAME} -n ${K8S_NAMESPACE} || true
-kubectl delete deployment ${WORKLOAD_DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} || true
-kubectl delete service ${WORKLOAD_SERVICE_NAME} -n ${K8S_NAMESPACE} || true
-kubectl apply -f ${FOLDER_PKG_K8S_DEPLOY}/package-install.yml
+  echo "++ deploying PackageInstall CR"
+  kubectl delete -f ${FOLDER_PKG_K8S_DEPLOY}/package-install.yml || true
+  kubectl delete app ${PACKAGE_INSTALL_NAME} -n ${K8S_NAMESPACE} || true
+  kubectl delete deployment ${WORKLOAD_DEPLOYMENT_NAME} -n ${K8S_NAMESPACE} || true
+  kubectl delete service ${WORKLOAD_SERVICE_NAME} -n ${K8S_NAMESPACE} || true
+  kubectl apply -f ${FOLDER_PKG_K8S_DEPLOY}/package-install.yml
 
-echo "++ verify if workload is running"
-sleep 10
-kubectl get app -n ${K8S_NAMESPACE}
-kubectl get service -n ${K8S_NAMESPACE}
-kubectl get pod -n ${K8S_NAMESPACE}
+  echo "++ verify if workload is running"
+  sleep 10
+  kubectl get app -n ${K8S_NAMESPACE}
+  kubectl get service -n ${K8S_NAMESPACE}
+  kubectl get pod -n ${K8S_NAMESPACE}
+fi
