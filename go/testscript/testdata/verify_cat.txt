@@ -1,0 +1,7 @@
+# verify contents of hello text
+exec cat hello.text
+stdout 'hello world\n'
+! stderr .
+
+-- hello.text --
+hello world

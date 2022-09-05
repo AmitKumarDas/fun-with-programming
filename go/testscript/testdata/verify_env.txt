@@ -1,0 +1,7 @@
+# verify env
+env NAME_KEY=testscript
+env HELLO_KEY='hi from '$NAME_KEY
+
+exec echo $HELLO_KEY
+stdout 'hi from testscript'
+! stderr .
