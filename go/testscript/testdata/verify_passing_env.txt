@@ -1,0 +1,4 @@
+# verify passed env
+exec echo 'hi from '$WHAT
+stdout 'hi from testing'
+! stderr .

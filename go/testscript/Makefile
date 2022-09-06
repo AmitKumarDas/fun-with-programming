@@ -1,5 +1,5 @@
 test:
-	go test -v
+	go test -run=TestScript
 
 test-cat:
 	go test -v -run=TestScript/verify_cat
