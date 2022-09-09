@@ -1,5 +1,12 @@
-## [idea] Use Go for scripting
+## Ideas
+- Use Go for scripting
+- Go for GitHub actions
 
+## GitHub Actions using Go
+### References
+- https://github.com/posener/goaction
+
+## Go Scripting
 ### Try Converting These To Go scripts
 - https://github.com/kubernetes/community/tree/master/contributors/devel/sig-release
 - https://github.com/kubernetes/test-infra/tree/master/images
