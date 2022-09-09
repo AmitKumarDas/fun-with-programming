@@ -112,13 +112,13 @@ func init() {
 
 		// versions & names
 		EnvKappCtrlVersion:    "v0.40.0",
-		EnvAppImageName:       "tkg-remediator",
+		EnvAppImageName:       "k8s-remediator",
 		EnvAppImageVersion:    version,
-		EnvAppBundleName:      "tkg-remediator-app",
+		EnvAppBundleName:      "k8s-remediator-app",
 		EnvAppBundleVersion:   version,
-		EnvPackageName:        "tkg-remediator.tanzu.vmware.com",
+		EnvPackageName:        "k8s-remediator.experiment.dev.com",
 		EnvPackageVersion:     version,
-		EnvPackageRepoName:    "tkg-remediator-repo.tanzu.vmware.com",
+		EnvPackageRepoName:    "k8s-remediator-repo.experiment.dev.com",
 		EnvPackageRepoVersion: version,
 	}
 	for k, v := range envs {
