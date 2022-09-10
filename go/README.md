@@ -5,6 +5,7 @@
 ## GitHub Actions using Go
 ### References
 - https://github.com/posener/goaction
+- https://goreleaser.com/
 
 ## Go Scripting
 ### Try Converting These To Go scripts
