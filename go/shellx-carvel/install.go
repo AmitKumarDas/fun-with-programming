@@ -7,7 +7,7 @@ func installCarvelCLIs() error {
 		return err
 	}
 	if isErr(whichKbld(), whichImgpkg(), whichYtt()) {
-		installScriptPath := binPathCarvel + "/install-carvel.sh"
+		installScriptPath := "$BIN_PATH_CARVEL/install-carvel.sh"
 		if err := curl("https://carvel.dev/install.sh", "-Lo", installScriptPath); err != nil {
 			return err
 		}
@@ -24,7 +24,7 @@ func installKind() error {
 		return err
 	}
 	if isErr(whichKind()) {
-		installPath := binPathKind + "/kind"
+		installPath := "$BIN_PATH_KIND/kind"
 		if err := curl("https://kind.sigs.k8s.io/dl/$KIND_VERSION/kind-$GOOS-$GOARCH", "-Lo", installPath); err != nil {
 			return err
 		}

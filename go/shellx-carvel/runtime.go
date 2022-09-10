@@ -7,18 +7,16 @@ import (
 	"strings"
 )
 
-// setEnv sets the given environment key with the given value
-// only if this env key is not set
-func setEnv(envKey, defaultVal string) string {
+func maybeSetEnv(envKey, defaultVal string) string {
 	if value := os.Getenv(envKey); value == "" {
 		os.Setenv(envKey, defaultVal)
 	}
 	return os.Getenv(envKey)
 }
 
-func setEnvTrimPrefix(envKey, defaultVal string) string {
+func maybeSetEnvTrimKey(envKey, defaultVal string) string {
 	k := strings.TrimPrefix(envKey, "$")
-	return setEnv(k, defaultVal)
+	return maybeSetEnv(k, defaultVal)
 }
 
 func isErr(err error, more ...error) bool {
@@ -63,12 +61,12 @@ var (
 	EnvPackageRepoVersion = "$PACKAGE_REPO_VERSION"
 )
 
-var version = setEnvTrimPrefix(EnvVersion, "v1.0.1")
+// Environment values that are accessed directly i.e. not as expanded format
+var version = maybeSetEnvTrimKey(EnvVersion, "v1.0.1")
+var binPathCarvel = maybeSetEnvTrimKey(EnvBinPathCarvel, "tmp")
+var binPathKind = maybeSetEnvTrimKey(EnvBinPathKind, "tmp")
 
-var binPathCarvel = setEnvTrimPrefix(EnvBinPathCarvel, "tmp")
-var binPathKind = setEnvTrimPrefix(EnvBinPathKind, "tmp")
-
-// carvel binaries / CLIs as functions
+// Carvel binaries / CLIs as functions
 var kbld = sh.RunCmd(binPathCarvel + "/kbld")
 var whichKbld = sh.RunCmd("ls", binPathCarvel+"/kbld")
 var imgpkg = sh.RunCmd(binPathCarvel + "/imgpkg")
@@ -76,11 +74,14 @@ var whichImgpkg = sh.RunCmd("ls", binPathCarvel+"/imgpkg")
 var ytt = sh.RunCmd(binPathCarvel + "/ytt")
 var whichYtt = sh.RunCmd("ls", binPathCarvel+"/ytt")
 
-// kind CLI as function
+// KIND CLI as function
 var kind = sh.RunCmd(binPathKind + "/kind")
 var whichKind = sh.RunCmd("ls", binPathKind+"/kind")
 
-// unix & generic commands as functions
+// Docker CLI as function
+var docker = sh.RunCmd("docker")
+
+// Unix & generic commands as functions
 var mkdir = sh.RunCmd("mkdir", "-p")
 var curl = sh.RunCmd("curl")
 var ls = sh.RunCmd("ls")
@@ -122,7 +123,7 @@ func init() {
 		EnvPackageRepoVersion: version,
 	}
 	for k, v := range envs {
-		setEnvTrimPrefix(k, v)
+		maybeSetEnvTrimKey(k, v)
 	}
 
 	// display all the environment variables for debuggability
