@@ -6,7 +6,7 @@ import (
 )
 
 func TestFilterInvalidEnvs(t *testing.T) {
-	var tmpEnvKey = "TESTING_TMP"
+	var tmpEnvKey = "TESTING_FILTER_INVALID_ENVS_FUNC"
 	os.Setenv(tmpEnvKey, "")
 	defer func() {
 		os.Unsetenv(tmpEnvKey)
