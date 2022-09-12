@@ -64,3 +64,8 @@ func TestFilterInvalidEnvs(t *testing.T) {
 		})
 	}
 }
+
+func TestFile(t *testing.T) {
+	requireErr(t, file("tmp/will-not-create.txt", "I $WILL_NOT_EXIST due to this unset env\n", 0644))
+	requireNoErr(t, file("tmp/will-create.txt", "I WILL EXIST\n", 0644))
+}
