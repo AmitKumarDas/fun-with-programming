@@ -160,6 +160,17 @@ func runCmdStrict(cmd string, args ...string) func(args ...string) error {
 	}
 }
 
+func file(name, data string, perm os.FileMode) error {
+	if err := verifyArgs(data); err != nil {
+		return err
+	}
+	out, outErr := sh.Output("echo", data)
+	if outErr != nil {
+		return outErr
+	}
+	return os.WriteFile(name, []byte(out), perm)
+}
+
 // Environment variables in a format that can be expanded
 var (
 	EnvGOOS                  = "$GOOS"
