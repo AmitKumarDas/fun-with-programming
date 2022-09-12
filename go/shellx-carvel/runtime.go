@@ -176,6 +176,7 @@ var (
 	EnvK8sRole            = "$K8S_ROLE"
 	EnvK8sRoleBinding     = "$K8S_ROLE_BINDING"
 	EnvKappCtrlVersion    = "$KAPP_CTRL_VERSION"
+	EnvAppDeploymentName  = "$APP_DEPLOYMENT_NAME"
 	EnvAppImageName       = "$APP_IMAGE_NAME"
 	EnvAppImageVersion    = "$APP_IMAGE_VERSION"
 	EnvAppBundleName      = "$APP_BUNDLE_NAME"
@@ -187,6 +188,8 @@ var (
 )
 
 // Environment values that are accessed directly i.e. not as expanded format
+var appName = "k8s-remediator"
+var packageDomain = "experiment.dev.com"
 var version = maybeSetEnvTrimKey(EnvVersion, "v1.0.1")
 var binPathCarvel = maybeSetEnvTrimKey(EnvBinPathCarvel, "tmp")
 var binPathKind = maybeSetEnvTrimKey(EnvBinPathKind, "tmp")
@@ -231,20 +234,21 @@ func init() {
 		EnvRegistryPort: "5000",
 
 		// k8s rbac
-		EnvK8sNamespace:      "shell-system",
-		EnvK8sServiceAccount: "shell",
-		EnvK8sRole:           "shell-role",
-		EnvK8sRoleBinding:    "shell-role-binding",
+		EnvK8sNamespace:      appName + "-system",
+		EnvK8sServiceAccount: appName,
+		EnvK8sRole:           appName + "-role",
+		EnvK8sRoleBinding:    appName + "-role-binding",
 
 		// versions & names
 		EnvKappCtrlVersion:    "v0.40.0",
-		EnvAppImageName:       "k8s-remediator",
+		EnvAppDeploymentName:  appName,
+		EnvAppImageName:       appName,
 		EnvAppImageVersion:    version,
-		EnvAppBundleName:      "k8s-remediator-app",
+		EnvAppBundleName:      appName + "-app",
 		EnvAppBundleVersion:   version,
-		EnvPackageName:        "k8s-remediator.experiment.dev.com",
+		EnvPackageName:        appName + "." + packageDomain,
 		EnvPackageVersion:     version,
-		EnvPackageRepoName:    "k8s-remediator-repo.experiment.dev.com",
+		EnvPackageRepoName:    appName + "-repo." + packageDomain,
 		EnvPackageRepoVersion: version,
 	}
 	for k, v := range envs {
