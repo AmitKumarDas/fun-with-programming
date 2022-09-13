@@ -1,6 +1,18 @@
 package shellx_carvel
 
-var configYML = `
+var appValuesYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+#@data/values-schema
+---
+#@schema/desc "Port for metrics"
+metrics_port: 8080
+#@schema/desc "Port for health"
+health_port: 9440
+`
+
+var appDeploymentYML = `
 #!
 #! Note: Do not EDIT. This file is GENERATED
 #!
