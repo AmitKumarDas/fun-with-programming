@@ -29,3 +29,10 @@ func requireTrue(t *testing.T, actual bool) {
 	}
 	t.Fatal("expected true got false")
 }
+
+func requireEqual(t *testing.T, expected, actual string) {
+	if expected == actual {
+		return
+	}
+	t.Fatalf("expected %s got %s", expected, actual)
+}
