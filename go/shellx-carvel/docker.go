@@ -1,10 +1,13 @@
 package shellx_carvel
 
-import "errors"
+import (
+	"carvel.shellx.dev/internal/sh"
+	"errors"
+)
 
 func setupRegistryAsLocalDockerContainer() error {
 	if err := docker("inspect", "-f", "{{.State.Running}}", "${REGISTRY_NAME}"); err != nil {
-		var envErr *invalidArgError
+		var envErr *sh.InvalidArgError // Must be a pointer
 		if errors.As(err, &envErr) {
 			return err
 		}
