@@ -1,8 +1,13 @@
 package shellx_carvel
 
-func createConfigYML() error {
-	if err := mkdir("config"); err != nil {
+// This file provides functions that cater to Carvel related packaging
+
+func createAppConfigs(dir string) error {
+	if err := mkdir(dir); err != nil {
 		return err
 	}
-	return file("config/config.yml", configYML, 0644)
+	if err := file(dir+"/config.yml", appDeploymentYML, 0644); err != nil {
+		return err
+	}
+	return file(dir+"/values.yml", appValuesYML, 0644)
 }
