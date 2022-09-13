@@ -1,6 +1,7 @@
 package shellx_carvel
 
 import (
+	shx "carvel.shellx.dev/internal/sh"
 	"github.com/magefile/mage/sh"
 	"os"
 	"runtime"
@@ -36,14 +37,29 @@ var (
 	EnvPackageRepoVersion    = "$PACKAGE_REPO_VERSION"
 )
 
-// Environment values that are accessed directly i.e. not as expanded format
-var appName = "k8s-remediator"
-var packageDomain = "experiment.dev.com"
+// Immediate setting of few environment variables
 var version = maybeSetEnvTrimKey(EnvVersion, "v1.0.1")
 var binPathCarvel = maybeSetEnvTrimKey(EnvBinPathCarvel, "tmp")
 var binPathKind = maybeSetEnvTrimKey(EnvBinPathKind, "tmp")
 
+// Carvel binaries / CLIs as functions
+var kbld = shx.RunCmdStrict(binPathCarvel + "/kbld")
+var whichKbld = shx.RunCmdStrict("ls", binPathCarvel+"/kbld")
+var imgpkg = shx.RunCmdStrict(binPathCarvel + "/imgpkg")
+var whichImgpkg = shx.RunCmdStrict("ls", binPathCarvel+"/imgpkg")
+var ytt = shx.RunCmdStrict(binPathCarvel + "/ytt")
+var whichYtt = shx.RunCmdStrict("ls", binPathCarvel+"/ytt")
+
+// KIND CLI as function
+var kind = shx.RunCmdStrict(binPathKind + "/kind")
+var whichKind = shx.RunCmdStrict("ls", binPathKind+"/kind")
+
 func init() {
+	const (
+		appName       = "k8s-remediator"
+		packageDomain = "experiment.dev.com"
+	)
+
 	// environment keys & corresponding default values
 	//
 	// Note: This helps in expanding an env variable as $ENV_KEY_NAME
@@ -72,8 +88,8 @@ func init() {
 		EnvAppDeploymentName:     appName,
 		EnvAppDeploymentLabelKey: packageDomain + "/app",
 		EnvAppDeploymentLabelVal: appName + "-controller",
-		EnvAppImageName:          appName,
-		EnvAppImageVersion:       version,
+		EnvAppImageName:          "amitnist/tkg-remediator", // should exist
+		EnvAppImageVersion:       "latest",                  // should exist
 		EnvAppBundleName:         appName + "-app",
 		EnvAppBundleVersion:      version,
 		EnvPackageName:           appName + "." + packageDomain,
@@ -99,6 +115,11 @@ func maybeSetEnv(envKey, defaultVal string) string {
 func maybeSetEnvTrimKey(envKey, defaultVal string) string {
 	k := strings.TrimPrefix(envKey, "$")
 	return maybeSetEnv(k, defaultVal)
+}
+
+func getEnvTrimKey(envKey string) string {
+	k := strings.TrimPrefix(envKey, "$")
+	return os.Getenv(k)
 }
 
 func isErr(err error, more ...error) bool {
