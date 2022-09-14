@@ -1,6 +1,9 @@
 package shellx_carvel
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func requireCount(t *testing.T, expected int, actual int) {
 	if expected == actual {
@@ -35,4 +38,11 @@ func requireEqual(t *testing.T, expected, actual string) {
 		return
 	}
 	t.Fatalf("expected %s got %s", expected, actual)
+}
+
+func requireContains(t *testing.T, actual, expectedSubStr string) {
+	if strings.Contains(actual, expectedSubStr) {
+		return
+	}
+	t.Fatalf("expected substring %q actual %q", expectedSubStr, actual)
 }

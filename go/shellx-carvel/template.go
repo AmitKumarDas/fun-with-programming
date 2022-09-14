@@ -93,3 +93,55 @@ spec:
         - name: temp
           emptyDir: {}
 `
+
+var packageMetadataYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  #! This will be the name of our package
+  name: ${PACKAGE_NAME}
+spec:
+  displayName: "K8s remediator"
+  longDescription: "Package consists of a K8s controller as a K8s deployment "
+  shortDescription: ""
+  categories:
+  - release
+`
+
+var packageTemplateYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+#@ load("@ytt:data", "data")  #! read data values (generated via ytt's data-values-schema-inspect mode)
+#@ load("@ytt:yaml", "yaml")  #! dynamically decode the output of ytt's data-values-schema-inspect
+---
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: #@ "${PACKAGE_NAME}." + data.values.version
+spec:
+  refName: ${PACKAGE_NAME}
+  version: #@ data.values.version
+  releaseNotes: |
+        Initial release of the tkg-remediator package
+  valuesSchema: #! configurable properties that exist for the version
+    openAPIv3: #@ yaml.decode(data.values.openapi)["components"]["schemas"]["dataValues"]
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle: #! fetch workload imgpkg bundle
+          image: #@ "${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${APP_BUNDLE_NAME}:" + data.values.version
+      template:
+      - ytt: #! run the templates through ytt
+          paths:
+          - "config/"
+      - kbld: #! kbld transformations
+          paths:
+          - ".imgpkg/images.yml"
+          - "-"
+      deploy:
+      - kapp: {} #! deploy the resulting manifests through kapp
+`

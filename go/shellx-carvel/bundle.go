@@ -2,33 +2,46 @@ package shellx_carvel
 
 // This file provides functions that cater to Carvel related packaging
 
-func getDefaultAppSourceDir() string {
+func getDefaultSourceDir() string {
 	return "package/source"
 }
 
 func getDefaultAppConfigDir() string {
-	return getDefaultAppSourceDir() + "/config"
+	return getDefaultSourceDir() + "/config"
 }
 
 func getDefaultAppImgpkgDir() string {
-	return getDefaultAppSourceDir() + "/.imgpkg"
+	return getDefaultSourceDir() + "/.imgpkg"
 }
 
-func createAppConfigs(configDir string) error {
-	if err := mkdir(configDir); err != nil {
-		return err
-	}
-	if err := file(configDir+"/config.yml", appDeploymentYML, 0644); err != nil {
-		return err
-	}
-	return file(configDir+"/values.yml", appValuesYML, 0644)
+func getDefaultAppConfigFile() string {
+	return getDefaultAppConfigDir() + "/config.yml"
 }
 
-func createAppBundle(imgpkgDir, configDir string) error {
-	if err := mkdir(imgpkgDir); err != nil {
+func getDefaultAppValuesFile() string {
+	return getDefaultAppConfigDir() + "/values.yml"
+}
+
+func getDefaultAppImgpkgFile() string {
+	return getDefaultAppImgpkgDir() + "/images.yml"
+}
+
+func createAppDirs(appConfigDir, appImgpkgDir string) error {
+	if err := mkdir(appConfigDir); err != nil {
 		return err
 	}
-	return kbld("-f", configDir, "--imgpkg-lock-output", imgpkgDir+"/images.yml")
+	return mkdir(appImgpkgDir)
+}
+
+func createAppConfigs(appConfigFile, appConfigValuesFile string) error {
+	if err := file(appConfigFile, appDeploymentYML, 0644); err != nil {
+		return err
+	}
+	return file(appConfigValuesFile, appValuesYML, 0644)
+}
+
+func createAppBundle(appConfigDir, appImgpkgFile string) error {
+	return kbld("-f", appConfigDir, "--imgpkg-lock-output", appImgpkgFile)
 }
 
 func publishAppBundle(sourceDir string) error {
