@@ -10,3 +10,9 @@
 
 ## Usage
 - `make`
+
+### References
+- https://github.com/gohugoio/hugo/blob/master/magefile.go
+- https://github.com/magefile/mage/blob/master/sh/cmd.go
+- https://godoc.org/gopkg.in/pipe.v2
+- https://github.com/bitfield/script
