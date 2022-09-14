@@ -2,9 +2,9 @@
 - This codebase showcases use of Golang to script a project's release
 - Note: _Release management is done by Carvel_
 - Motivation:
-  - Similarity to bash but with compile time checks
+  - Goodness of bash coupled with correctness of Golang
   - Granular error handling
-  - Unit tested
+  - 100% unit tested
   - Modular code base
 
 ## Usage

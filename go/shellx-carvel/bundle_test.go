@@ -6,22 +6,24 @@ import (
 	"testing"
 )
 
-func TestCreateAndPublishAppBundle(t *testing.T) {
+func tryAppBundleCreateAndPublish(t *testing.T) {
 	sourceDir := "tmp/source"
 	configDir := sourceDir + "/config"
 	imgpkgDir := sourceDir + "/.imgpkg"
 
-	requireNoErr(t, createAppConfigs(configDir))
+	requireNoErr(t, createAppDirs(configDir, imgpkgDir))
 	requireTrue(t, exists(configDir))
+	requireTrue(t, exists(imgpkgDir))
+
+	requireNoErr(t, createAppConfigs(configDir+"/config.yml", configDir+"/values.yml"))
 	requireTrue(t, exists(configDir+"/config.yml"))
 	requireTrue(t, exists(configDir+"/values.yml"))
 
-	requireNoErr(t, createAppBundle(imgpkgDir, configDir))
-	requireTrue(t, exists(imgpkgDir))
+	requireNoErr(t, createAppBundle(configDir, imgpkgDir+"/images.yml"))
 	requireTrue(t, exists(imgpkgDir+"/images.yml"))
 
 	requireNoErr(t, publishAppBundle(sourceDir))
 	out, outErr := sh.Output("curl", "${REGISTRY_NAME}:${REGISTRY_PORT}/v2/_catalog")
 	requireNoErr(t, outErr)
-	requireEqual(t, fmt.Sprintf("{\"repositories\":[\"packages/%s\"]}", getEnvTrimKey(EnvAppBundleName)), out)
+	requireContains(t, out, fmt.Sprintf("packages/%s", getEnvTrimKey(EnvAppBundleName)))
 }
