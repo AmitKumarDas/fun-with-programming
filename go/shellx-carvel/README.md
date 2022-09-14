@@ -6,6 +6,7 @@
   - Granular error handling
   - 100% unit tested
   - Modular code base
+  - Reduced bash & make spaghetti
 
 ## Usage
 - `make`
