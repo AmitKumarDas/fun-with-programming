@@ -7,10 +7,12 @@ import (
 )
 
 func tryPackageRelease(t *testing.T) {
-	sourceDir := "tmp/source"
-	configDir := sourceDir + "/config"
+	sourceDir := "tmp/packaging/source"
+	releaseDir := "tmp/packaging/release"
 
-	releaseDir := "tmp/release"
+	// config related
+	configDir := sourceDir + "/config"
+	// release related
 	pkgRepoDir := releaseDir + "/packages"
 	pkgImgpkgDir := releaseDir + "/.imgpkg"
 	pkgDir := pkgRepoDir + "/" + getEnvTrimKey(EnvPackageName)

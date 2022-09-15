@@ -7,8 +7,9 @@ import (
 
 // This file provides functions that cater to releasing a Carvel package
 
+// TODO: Should these be environment variables?
 func getDefaultReleaseDir() string {
-	return "package/release"
+	return getDefaultCarvelPackagingDir() + "/release"
 }
 
 func getDefaultPackageImgpkgDir() string {

@@ -23,7 +23,7 @@ func requireNoErr(t *testing.T, err error) {
 	if err == nil {
 		return
 	}
-	t.Fatal(err)
+	t.Fatalf("expected no err got %+v", err)
 }
 
 func requireTrue(t *testing.T, actual bool) {
@@ -37,7 +37,7 @@ func requireEqual(t *testing.T, expected, actual string) {
 	if expected == actual {
 		return
 	}
-	t.Fatalf("expected %s got %s", expected, actual)
+	t.Fatalf("expected %q got %q", expected, actual)
 }
 
 func requireContains(t *testing.T, actual, expectedSubStr string) {
