@@ -2,8 +2,13 @@ package shellx_carvel
 
 // This file provides functions that cater to Carvel related packaging
 
+// TODO: Should these be environment variables?
+func getDefaultCarvelPackagingDir() string {
+	return "packaging"
+}
+
 func getDefaultSourceDir() string {
-	return "package/source"
+	return getDefaultCarvelPackagingDir() + "/source"
 }
 
 func getDefaultAppConfigDir() string {

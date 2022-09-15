@@ -7,7 +7,7 @@ import (
 )
 
 func tryAppBundleCreateAndPublish(t *testing.T) {
-	sourceDir := "tmp/source"
+	sourceDir := "tmp/packaging/source"
 	configDir := sourceDir + "/config"
 	imgpkgDir := sourceDir + "/.imgpkg"
 
