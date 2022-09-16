@@ -145,3 +145,15 @@ spec:
       deploy:
       - kapp: {} #! deploy the resulting manifests through kapp
 `
+
+var kindClusterLocalRegistryYML = `
+#!
+#! Note: Do Not EDIT. This file is GENERATED
+#!
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+containerdConfigPatches:
+- |-
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${REGISTRY_PORT}"]
+    endpoint = ["http://${REGISTRY_NAME}:${REGISTRY_PORT}"]
+`

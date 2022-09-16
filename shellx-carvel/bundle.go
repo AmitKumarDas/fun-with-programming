@@ -50,5 +50,6 @@ func createAppBundle(appConfigDir, appImgpkgFile string) error {
 }
 
 func publishAppBundle(sourceDir string) error {
-	return imgpkg("push", "-b", "${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${APP_BUNDLE_NAME}:${APP_BUNDLE_VERSION}", "-f", sourceDir)
+	bundle := format("%s:%s/packages/%s:%s", EnvRegistryName, EnvRegistryPort, EnvAppBundleName, EnvAppBundleVersion)
+	return imgpkg("push", "-b", bundle, "-f", sourceDir)
 }

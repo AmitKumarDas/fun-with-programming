@@ -1,7 +1,6 @@
 package shellx_carvel
 
 import (
-	"fmt"
 	"github.com/magefile/mage/sh"
 	"testing"
 )
@@ -15,8 +14,8 @@ func tryPackageRelease(t *testing.T) {
 	// release related
 	pkgRepoDir := releaseDir + "/packages"
 	pkgImgpkgDir := releaseDir + "/.imgpkg"
-	pkgDir := pkgRepoDir + "/" + getEnvTrimKey(EnvPackageName)
-	pkgVersion := getEnvTrimKey(EnvPackageVersion)
+	pkgDir := pkgRepoDir + "/" + getEnv(EnvPackageName)
+	pkgVersion := getEnv(EnvPackageVersion)
 
 	requireNoErr(t, createReleaseDirs(pkgDir, pkgImgpkgDir))
 	requireTrue(t, exists(pkgDir))
@@ -39,7 +38,7 @@ func tryPackageRelease(t *testing.T) {
 	requireTrue(t, exists(pkgImgpkgDir+"/images.yml"))
 
 	requireNoErr(t, publishPackageRepoBundle(releaseDir))
-	out, outErr := sh.Output("curl", "${REGISTRY_NAME}:${REGISTRY_PORT}/v2/_catalog")
+	out, outErr := sh.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
 	requireNoErr(t, outErr)
-	requireContains(t, out, fmt.Sprintf("packages/%s", getEnvTrimKey(EnvPackageRepoName)))
+	requireContains(t, joinPaths("packages", EnvPackageRepoName), out)
 }

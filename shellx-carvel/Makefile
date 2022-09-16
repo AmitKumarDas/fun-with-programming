@@ -1,6 +1,6 @@
 GO_TEST_ARGS ?=
 
-.PHONY: test
-test:
+.PHONY: test-carvel-release
+test-carvel-release:
 	go clean -testcache
-	go test ./... ${GO_TEST_ARGS}
+	SETUP_LOCAL_REGISTRY=true go test ./... ${GO_TEST_ARGS} -run TestReleaseOfCarvelPackage
