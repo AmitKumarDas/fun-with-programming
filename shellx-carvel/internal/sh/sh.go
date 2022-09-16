@@ -102,20 +102,24 @@ func ExpandEnvStrict(s string) (string, error) {
 
 // VerifyArgs returns error if the arguments makes use of unset
 // environment variables
-func VerifyArgs(args ...string) error {
+func VerifyArgs(args ...string) ([]string, error) {
 	if len(args) == 0 {
-		return nil
+		return nil, nil
 	}
 	var invalidArgs = make([]string, 0, len(args))
+	var expandedArgs = make([]string, 0, len(args))
 	for _, arg := range args {
-		if _, err := ExpandEnvStrict(arg); err != nil {
-			invalidArgs = append(invalidArgs, err.Error())
+		expanded, expandErr := ExpandEnvStrict(arg)
+		if expandErr != nil {
+			invalidArgs = append(invalidArgs, expandErr.Error())
+			continue
 		}
+		expandedArgs = append(expandedArgs, expanded)
 	}
 	if len(invalidArgs) == 0 {
-		return nil
+		return expandedArgs, nil
 	}
-	return &InvalidArgError{fmt.Sprintf("verify args ['%s']: %s", strings.Join(args, "', '"), strings.Join(invalidArgs, ", "))}
+	return nil, &InvalidArgError{fmt.Sprintf("verify args ['%s']: %s", strings.Join(args, "', '"), strings.Join(invalidArgs, ", "))}
 }
 
 // RunCmdStrict is a wrapper over sh.Run. The returned function
@@ -124,7 +128,7 @@ func VerifyArgs(args ...string) error {
 func RunCmdStrict(cmd string, args ...string) func(args ...string) error {
 	return func(args2 ...string) error {
 		allArgs := append(args, args2...)
-		if err := VerifyArgs(allArgs...); err != nil {
+		if _, err := VerifyArgs(allArgs...); err != nil {
 			return err
 		}
 		return sh.Run(cmd, allArgs...)
@@ -132,12 +136,17 @@ func RunCmdStrict(cmd string, args ...string) func(args ...string) error {
 }
 
 func File(name, data string, perm os.FileMode) error {
-	if err := VerifyArgs(data); err != nil {
+	out, err := VerifyArgs(data)
+	if err != nil {
 		return err
 	}
-	out, outErr := sh.Output("echo", data)
-	if outErr != nil {
-		return outErr
+	//out, outErr := sh.Output("echo", data)
+	//if outErr != nil {
+	//	return outErr
+	//}
+	if expandedName := os.Getenv(name); expandedName != "" {
+		// mutate the given name
+		name = expandedName
 	}
-	return os.WriteFile(name, []byte(out), perm)
+	return os.WriteFile(name, []byte(out[0]), perm)
 }

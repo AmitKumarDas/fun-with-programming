@@ -7,7 +7,7 @@ func installCarvelCLIs() error {
 		return err
 	}
 	if isErr(whichKbld(), whichImgpkg(), whichYtt()) {
-		installScriptPath := "$BIN_PATH_CARVEL/install-carvel.sh"
+		installScriptPath := format("%s/install-carvel.sh", EnvBinPathCarvel)
 		if err := curl("https://carvel.dev/install.sh", "-Lo", installScriptPath); err != nil {
 			return err
 		}

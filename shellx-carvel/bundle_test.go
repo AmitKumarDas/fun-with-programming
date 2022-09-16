@@ -1,7 +1,6 @@
 package shellx_carvel
 
 import (
-	"fmt"
 	"github.com/magefile/mage/sh"
 	"testing"
 )
@@ -23,7 +22,7 @@ func tryAppBundleCreateAndPublish(t *testing.T) {
 	requireTrue(t, exists(imgpkgDir+"/images.yml"))
 
 	requireNoErr(t, publishAppBundle(sourceDir))
-	out, outErr := sh.Output("curl", "${REGISTRY_NAME}:${REGISTRY_PORT}/v2/_catalog")
+	out, outErr := sh.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
 	requireNoErr(t, outErr)
-	requireContains(t, out, fmt.Sprintf("packages/%s", getEnvTrimKey(EnvAppBundleName)))
+	requireContains(t, joinPaths("packages", EnvAppBundleName), out)
 }

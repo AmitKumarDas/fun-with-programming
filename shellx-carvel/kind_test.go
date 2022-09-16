@@ -7,3 +7,8 @@ func tryInstallKindCLI(t *testing.T) {
 	requireNoErr(t, ls(EnvBinPathKind))
 	requireTrue(t, isNoErr(whichKind()))
 }
+
+func trySetupKindCluster(t *testing.T) {
+	requireNoErr(t, createKindClusterConfigForLocalRegistry())
+	requireNoErr(t, setupKindCluster())
+}

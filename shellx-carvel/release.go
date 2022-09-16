@@ -9,35 +9,35 @@ import (
 
 // TODO: Should these be environment variables?
 func getDefaultReleaseDir() string {
-	return getDefaultCarvelPackagingDir() + "/release"
+	return joinPaths(getDefaultCarvelPackagingDir(), "release")
 }
 
 func getDefaultPackageImgpkgDir() string {
-	return getDefaultReleaseDir() + "/.imgpkg"
+	return joinPaths(getDefaultReleaseDir(), ".imgpkg")
 }
 
 func getDefaultPackageRepoDir() string {
-	return getDefaultReleaseDir() + "/packages"
+	return joinPaths(getDefaultReleaseDir(), "packages")
 }
 
 func getDefaultPackageDir() string {
-	return getDefaultPackageRepoDir() + "/" + getEnvTrimKey(EnvPackageName)
+	return joinPaths(getDefaultPackageRepoDir(), EnvPackageName)
 }
 
 func getDefaultPackageMetadataFile() string {
-	return getDefaultPackageDir() + "/package-metadata.yml"
+	return joinPaths(getDefaultPackageDir(), "package-metadata.yml")
 }
 
 func getDefaultPackageTemplateFile() string {
-	return getDefaultPackageDir() + "/package-template.yml"
+	return joinPaths(getDefaultPackageDir(), "package-template.yml")
 }
 
 func getDefaultPackageVersionFile() string {
-	return getDefaultPackageDir() + "/" + getEnvTrimKey(EnvPackageVersion) + ".yml"
+	return joinPaths(getDefaultPackageDir(), EnvPackageVersion+".yml")
 }
 
 func getDefaultPackageImgpkgFile() string {
-	return getDefaultPackageImgpkgDir() + "/images.yml"
+	return joinPaths(getDefaultPackageImgpkgDir(), "images.yml")
 }
 
 func createReleaseDirs(pkgDir, pkgImgpkgDir string) error {
@@ -55,7 +55,7 @@ func generateOpenAPISchema(inputValuesFile, outputValuesFile string) error {
 	if !exists(inputValuesFile) {
 		return fmt.Errorf("file %s not found", inputValuesFile) // TODO: Check if this error message is helpful
 	}
-	out, outErr := sh.Output("${BIN_PATH_CARVEL}/ytt", "-f", inputValuesFile, "--data-values-schema-inspect", "-o", "openapi-v3")
+	out, outErr := sh.Output(format("%s/ytt", EnvBinPathCarvel), "-f", inputValuesFile, "--data-values-schema-inspect", "-o", "openapi-v3")
 	if outErr != nil {
 		return outErr
 	}
@@ -67,7 +67,7 @@ func createPackageTemplate(pkgTemplateFile string) error {
 }
 
 func createPackageVersion(pkgTemplateFile, pkgValuesFile, pkgVersion, pkgVersionFile string) error {
-	out, outErr := sh.Output("${BIN_PATH_CARVEL}/ytt", "-f", pkgTemplateFile, "--data-value-file", "openapi="+pkgValuesFile, "-v", "version="+pkgVersion)
+	out, outErr := sh.Output(format("%s/ytt", EnvBinPathCarvel), "-f", pkgTemplateFile, "--data-value-file", "openapi="+pkgValuesFile, "-v", "version="+pkgVersion)
 	if outErr != nil {
 		return outErr
 	}
@@ -79,5 +79,5 @@ func createPackageRepoBundle(pkgRepoDir, pkgImgpkgFile string) error {
 }
 
 func publishPackageRepoBundle(releaseDir string) error {
-	return imgpkg("push", "-b", "${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${PACKAGE_REPO_NAME}:${PACKAGE_REPO_VERSION}", "-f", releaseDir)
+	return imgpkg("push", "-b", format("%s:%s/packages/%s:%s", EnvRegistryName, EnvRegistryPort, EnvPackageRepoName, EnvPackageRepoVersion), "-f", releaseDir)
 }
