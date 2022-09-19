@@ -12,15 +12,16 @@ var (
 	EnvGOARCH  = "${GOARCH}"
 	EnvVersion = "${VERSION}"
 
-	EnvBinPathKind       = "${BIN_PATH_KIND}" // Kind envs
-	EnvArtifactsPathKind = "${ARTIFACTS_PATH_KIND}"
-	EnvFileKindCluster   = "${FILE_KIND_CLUSTER}"
-	EnvSetupKindCluster  = "${SETUP_KIND_CLUSTER}"
-	EnvKindVersion       = "${KIND_VERSION}"
+	EnvBinPathKind                        = "${BIN_PATH_KIND}" // Kind envs
+	EnvArtifactsPathKind                  = "${ARTIFACTS_PATH_KIND}"
+	EnvFileKindCluster                    = "${FILE_KIND_CLUSTER}"
+	EnvFileKindConfigLocalRegistryHosting = "${FILE_KIND_CONFIG_LOCAL_REGISTRY_HOSTING}"
+	EnvSetupKindCluster                   = "${SETUP_KIND_CLUSTER}"
+	EnvKindVersion                        = "${KIND_VERSION}"
 
-	EnvSetupLocalRegistry = "${SETUP_LOCAL_REGISTRY}" // Registry envs
-	EnvRegistryName       = "${REGISTRY_NAME}"
+	EnvRegistryName       = "${REGISTRY_NAME}" // Registry envs
 	EnvRegistryPort       = "${REGISTRY_PORT}"
+	EnvSetupLocalRegistry = "${SETUP_LOCAL_REGISTRY}"
 
 	EnvK8sNamespace      = "${K8S_NAMESPACE}" // K8s envs
 	EnvK8sServiceAccount = "${K8S_SERVICE_ACCOUNT}"
@@ -32,6 +33,8 @@ var (
 	EnvAppDeploymentLabelVal = "${APP_DEPLOYMENT_LABEL_VAL}"
 	EnvAppImageName          = "${APP_IMAGE_NAME}"
 	EnvAppImageVersion       = "${APP_IMAGE_VERSION}"
+	EnvArtifactsPathK8s      = "${ARTIFACTS_PATH_K8S}"
+	EnvFilePackageRepository = "${FILE_PACKAGE_REPO}"
 
 	EnvBinPathCarvel      = "${BIN_PATH_CARVEL}" // Carvel envs
 	EnvKappCtrlVersion    = "${KAPP_CTRL_VERSION}"
@@ -41,6 +44,7 @@ var (
 	EnvPackageVersion     = "${PACKAGE_VERSION}"
 	EnvPackageRepoName    = "${PACKAGE_REPO_NAME}"
 	EnvPackageRepoVersion = "${PACKAGE_REPO_VERSION}"
+	EnvTestCarvelRelease  = "${TEST_CARVEL_RELEASE}"
 )
 
 // Immediate setting of few environment variables
@@ -79,10 +83,11 @@ func init() {
 		EnvGOARCH: runtime.GOARCH,
 
 		// KIND cluster
-		EnvSetupKindCluster:  "false",
-		EnvKindVersion:       "v0.15.0",
-		EnvArtifactsPathKind: "tmp/artifacts/kind",
-		EnvFileKindCluster:   "kind-cluster.yml",
+		EnvSetupKindCluster:                   "false",
+		EnvKindVersion:                        "v0.15.0",
+		EnvArtifactsPathKind:                  "tmp/artifacts/kind",
+		EnvFileKindCluster:                    "kind-cluster.yml",
+		EnvFileKindConfigLocalRegistryHosting: "local-registry-hosting.yml",
 
 		// container registry
 		EnvSetupLocalRegistry: "false",
@@ -101,6 +106,8 @@ func init() {
 		EnvAppDeploymentLabelVal: appName + "-controller",
 		EnvAppImageName:          "amitnist/tkg-remediator", // should exist
 		EnvAppImageVersion:       "latest",                  // should exist
+		EnvArtifactsPathK8s:      "tmp/artifacts/k8s",
+		EnvFilePackageRepository: "package-repo.yml",
 
 		// carvel
 		EnvKappCtrlVersion:    "v0.40.0",
@@ -110,6 +117,7 @@ func init() {
 		EnvPackageVersion:     version,
 		EnvPackageRepoName:    appName + "-repo." + packageDomain,
 		EnvPackageRepoVersion: version,
+		EnvTestCarvelRelease:  "false",
 	}
 	for k, v := range envs {
 		maybeSetEnv(k, v)

@@ -2,6 +2,7 @@ package shellx_carvel
 
 import (
 	"fmt"
+	"github.com/magefile/mage/sh"
 )
 
 func installKindCLI() error {
@@ -21,28 +22,63 @@ func installKindCLI() error {
 	return nil
 }
 
-func createKindClusterConfigForLocalRegistry() error {
-	if isNotEq(EnvSetupLocalRegistry, "true") {
+func setupKindCluster() error {
+	if isNotEq(EnvSetupKindCluster, "true") {
 		return nil
 	}
+	var fns = []func() error{
+		createKindClusterConfigForLocalRegistry,
+		createKindCluster,
+		createKindNetwork,
+		createKindConfigFileLocalRegistryHosting,
+		applyKindConfigLocalRegistryHosting,
+		printEtcHostsUpdateMsg,
+	}
+	for _, fn := range fns {
+		if err := fn(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func createKindClusterConfigForLocalRegistry() error {
 	if err := mkdir(EnvArtifactsPathKind); err != nil {
 		return err
 	}
 	return file(joinPaths(EnvArtifactsPathKind, EnvFileKindCluster), kindClusterLocalRegistryYML, 0644)
 }
 
-func setupKindCluster() error {
-	if isNotEq(EnvSetupKindCluster, "true") {
-		return nil
-	}
+func createKindCluster() error {
 	kindClusterFilePath := joinPaths(EnvArtifactsPathKind, EnvFileKindCluster)
 	if !exists(kindClusterFilePath) {
 		return fmt.Errorf("file %q not found", kindClusterFilePath)
 	}
-	if err := kubectl("cluster-info", "--context", "kind-kind"); err == nil {
-		// No error implies Kind cluster is up & running
-		// Hence, nothing to do
-		return nil
+	if err := kubectl("cluster-info", "--context", "kind-kind"); err != nil {
+		// Create kind cluster on error
+		// Note: error is swallowed
+		return kind("create", "cluster", "--config", kindClusterFilePath)
 	}
-	return kind("create", "cluster", "--config", kindClusterFilePath)
+	return nil
+}
+
+func createKindNetwork() error {
+	if err := docker("inspect", "-f", "{{json .NetworkSettings.Networks.kind}}", EnvRegistryName); err != nil {
+		// Connect the network on error
+		// Note: error is swallowed
+		return docker("network", "connect", "kind", EnvRegistryName)
+	}
+	return nil
+}
+
+func createKindConfigFileLocalRegistryHosting() error {
+	return file(joinPaths(EnvArtifactsPathKind, EnvFileKindConfigLocalRegistryHosting), kindConfigLocalRegistryHostingYML, 0644)
+}
+
+func applyKindConfigLocalRegistryHosting() error {
+	return kubectl("apply", "-f", joinPaths(EnvArtifactsPathKind, EnvFileKindConfigLocalRegistryHosting))
+}
+
+func printEtcHostsUpdateMsg() error {
+	return sh.RunV("echo", etcHostsUpdateMsg)
 }

@@ -41,4 +41,6 @@ func tryPackageRelease(t *testing.T) {
 	out, outErr := sh.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
 	requireNoErr(t, outErr)
 	requireContains(t, joinPaths("packages", EnvPackageRepoName), out)
+
+	requireNoErr(t, deployKappController())
 }

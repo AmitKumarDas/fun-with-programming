@@ -157,3 +157,45 @@ containerdConfigPatches:
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${REGISTRY_PORT}"]
     endpoint = ["http://${REGISTRY_NAME}:${REGISTRY_PORT}"]
 `
+
+var kindConfigLocalRegistryHostingYML = `
+#!
+#! Note: Do Not EDIT. This file is GENERATED
+#!
+#! https://github.com/kubernetes/enhancements/tree/master/keps/sig-cluster-lifecycle/generic/1755-communicating-a-local-registry
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: local-registry-hosting
+  namespace: kube-public
+data:
+  localRegistryHosting.v1: |
+    host: "localhost:${REGISTRY_PORT}"
+    help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
+`
+
+var etcHostsUpdateMsg = `
+# ---------------------------
+# Ensure below text is appended to /etc/hosts
+# ---------------------------
+
+# Added to set up kind & carvel
+# This forces imgpkg to use http instead of https
+127.0.0.1 ${REGISTRY_NAME}
+# End of section
+`
+
+var packageRepositoryYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageRepository
+metadata:
+  name: ${PACKAGE_REPO_NAME}
+  namespace: ${K8S_NAMESPACE}
+spec:
+  fetch:
+    imgpkgBundle:
+      image: ${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${PACKAGE_REPO_NAME}:${PACKAGE_REPO_VERSION}
+`
