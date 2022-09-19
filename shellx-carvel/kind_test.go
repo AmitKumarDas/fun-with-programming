@@ -9,6 +9,5 @@ func tryInstallKindCLI(t *testing.T) {
 }
 
 func trySetupKindCluster(t *testing.T) {
-	requireNoErr(t, createKindClusterConfigForLocalRegistry())
 	requireNoErr(t, setupKindCluster())
 }

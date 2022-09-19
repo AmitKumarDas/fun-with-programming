@@ -81,3 +81,7 @@ func createPackageRepoBundle(pkgRepoDir, pkgImgpkgFile string) error {
 func publishPackageRepoBundle(releaseDir string) error {
 	return imgpkg("push", "-b", format("%s:%s/packages/%s:%s", EnvRegistryName, EnvRegistryPort, EnvPackageRepoName, EnvPackageRepoVersion), "-f", releaseDir)
 }
+
+func deployKappController() error {
+	return kubectl("apply", "-f", format("https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/%s/release.yml", EnvKappCtrlVersion))
+}
