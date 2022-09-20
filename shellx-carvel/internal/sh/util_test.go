@@ -12,11 +12,11 @@ func TestExpandEnvStrict(t *testing.T) {
 	// mock env k:v pairs
 	EnvWhoAmI := "${WHO_AM_I}"
 	EnvVerbose := "${VERBOSE}"
-	_ = maybeSetEnv(EnvWhoAmI, "none")
-	_ = maybeSetEnv(EnvVerbose, "false")
+	_ = MaybeSetEnv(EnvWhoAmI, "none")
+	_ = MaybeSetEnv(EnvVerbose, "false")
 	defer func() {
-		unsetEnv(EnvWhoAmI)
-		unsetEnv(EnvVerbose)
+		UnsetEnv(EnvWhoAmI)
+		UnsetEnv(EnvVerbose)
 	}()
 	var scenarios = []struct {
 		name      string

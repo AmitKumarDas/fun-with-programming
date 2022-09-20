@@ -11,7 +11,7 @@ func passThroughFn(in string) string {
 	return in
 }
 
-func maybeSetEnv(envKey, defaultVal string) string {
+func MaybeSetEnv(envKey, defaultVal string) string {
 	// set default only if provided env key is not set
 	if value := os.ExpandEnv(envKey); value == "" {
 		// envKey is first expanded such that "$key" or "${key}" if any
@@ -22,11 +22,11 @@ func maybeSetEnv(envKey, defaultVal string) string {
 	return os.ExpandEnv(envKey)
 }
 
-func getEnv(envKey string) string {
+func GetEnv(envKey string) string {
 	return os.ExpandEnv(envKey)
 }
 
-func unsetEnv(envKey string) {
+func UnsetEnv(envKey string) {
 	_ = os.Unsetenv(os.Expand(envKey, passThroughFn))
 }
 
