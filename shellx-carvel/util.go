@@ -1,24 +1,26 @@
 package shellx_carvel
 
 import (
-	"carvel.shellx.dev/internal/sh"
+	shx "carvel.shellx.dev/internal/sh"
 	"fmt"
 	"os"
-	"path"
 	"strings"
 )
 
 // Unix & generic commands as functions
-var mkdir = sh.RunCmdStrict("mkdir", "-p")
-var curl = sh.RunCmdStrict("curl")
-var ls = sh.RunCmdStrict("ls")
-var chmod = sh.RunCmdStrict("chmod")
+var mkdir = shx.RunCmd("mkdir", "-p")
+var curl = shx.RunCmd("curl")
+var ls = shx.RunCmd("ls")
+var chmod = shx.RunCmd("chmod")
 
 // Docker CLI as function
-var docker = sh.RunCmdStrict("docker")
+var docker = shx.RunCmd("docker")
+
+// kubectl CLI as function
+var kubectl = shx.RunCmd("kubectl")
 
 // File creation as a function
-var file = sh.File
+var file = shx.File
 
 // passThroughFn returns the provided input. It is useful
 // as a custom mapper function for os.Expand
@@ -32,7 +34,7 @@ func maybeSetEnv(envKey, defaultVal string) string {
 		// envKey is first expanded such that "$key" or "${key}" if any
 		// is trimmed to produce "key" & then this trimmed key is
 		// set as an environment variable
-		os.Setenv(os.Expand(envKey, passThroughFn), defaultVal)
+		_ = os.Setenv(os.Expand(envKey, passThroughFn), defaultVal)
 	}
 	return os.ExpandEnv(envKey)
 }
@@ -43,14 +45,6 @@ func getEnv(envKey string) string {
 
 func exists(file string) bool {
 	return ls(file) == nil
-}
-
-func joinPaths(elem ...string) string {
-	var out = make([]string, len(elem))
-	for _, i := range elem {
-		out = append(out, getEnv(i))
-	}
-	return path.Join(out...)
 }
 
 func isErr(err error, more ...error) bool {

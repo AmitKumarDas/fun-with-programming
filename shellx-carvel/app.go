@@ -1,5 +1,7 @@
 package shellx_carvel
 
+import shx "carvel.shellx.dev/internal/sh"
+
 func verifyApplication() error {
 	if isNotEq(EnvTestCarvelRelease, "true") {
 		return nil
@@ -28,11 +30,18 @@ func createK8sArtifactsDir() error {
 }
 
 func createFilePackageRepo() error {
-	return file(joinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository), packageRepositoryYML, 0644)
+	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
+	if pathErr != nil {
+		return pathErr
+	}
+	return file(fullPath, packageRepositoryYML, 0644)
 }
 
 func deleteThenCreatePackageRepo() error {
-	pkgRepoFilePath := joinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
-	_ = kubectl("delete", "-f", pkgRepoFilePath) // ignore error if any
-	return kubectl("create", "-f", pkgRepoFilePath)
+	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
+	if pathErr != nil {
+		return pathErr
+	}
+	_ = kubectl("delete", "-f", fullPath) // ignore error if any
+	return kubectl("create", "-f", fullPath)
 }

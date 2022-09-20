@@ -8,37 +8,37 @@ import (
 // This file provides functions that cater to releasing a Carvel package
 
 // TODO: Should these be environment variables?
-func getDefaultReleaseDir() string {
-	return joinPaths(getDefaultCarvelPackagingDir(), "release")
-}
-
-func getDefaultPackageImgpkgDir() string {
-	return joinPaths(getDefaultReleaseDir(), ".imgpkg")
-}
-
-func getDefaultPackageRepoDir() string {
-	return joinPaths(getDefaultReleaseDir(), "packages")
-}
-
-func getDefaultPackageDir() string {
-	return joinPaths(getDefaultPackageRepoDir(), EnvPackageName)
-}
-
-func getDefaultPackageMetadataFile() string {
-	return joinPaths(getDefaultPackageDir(), "package-metadata.yml")
-}
-
-func getDefaultPackageTemplateFile() string {
-	return joinPaths(getDefaultPackageDir(), "package-template.yml")
-}
-
-func getDefaultPackageVersionFile() string {
-	return joinPaths(getDefaultPackageDir(), EnvPackageVersion+".yml")
-}
-
-func getDefaultPackageImgpkgFile() string {
-	return joinPaths(getDefaultPackageImgpkgDir(), "images.yml")
-}
+//func getDefaultReleaseDir() string {
+//	return joinPaths(getDefaultCarvelPackagingDir(), "release")
+//}
+//
+//func getDefaultPackageImgpkgDir() string {
+//	return joinPaths(getDefaultReleaseDir(), ".imgpkg")
+//}
+//
+//func getDefaultPackageRepoDir() string {
+//	return joinPaths(getDefaultReleaseDir(), "packages")
+//}
+//
+//func getDefaultPackageDir() string {
+//	return joinPaths(getDefaultPackageRepoDir(), EnvPackageName)
+//}
+//
+//func getDefaultPackageMetadataFile() string {
+//	return joinPaths(getDefaultPackageDir(), "package-metadata.yml")
+//}
+//
+//func getDefaultPackageTemplateFile() string {
+//	return joinPaths(getDefaultPackageDir(), "package-template.yml")
+//}
+//
+//func getDefaultPackageVersionFile() string {
+//	return joinPaths(getDefaultPackageDir(), EnvPackageVersion+".yml")
+//}
+//
+//func getDefaultPackageImgpkgFile() string {
+//	return joinPaths(getDefaultPackageImgpkgDir(), "images.yml")
+//}
 
 func createReleaseDirs(pkgDir, pkgImgpkgDir string) error {
 	if err := mkdir(pkgDir); err != nil {

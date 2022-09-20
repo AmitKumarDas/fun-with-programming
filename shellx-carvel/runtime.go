@@ -2,7 +2,6 @@ package shellx_carvel
 
 import (
 	shx "carvel.shellx.dev/internal/sh"
-	"github.com/magefile/mage/sh"
 	"runtime"
 )
 
@@ -53,19 +52,16 @@ var binPathCarvel = maybeSetEnv(EnvBinPathCarvel, "tmp")
 var binPathKind = maybeSetEnv(EnvBinPathKind, "tmp")
 
 // Carvel binaries / CLIs as functions
-var kbld = shx.RunCmdStrict(binPathCarvel + "/kbld")
-var whichKbld = shx.RunCmdStrict("ls", binPathCarvel+"/kbld")
-var imgpkg = shx.RunCmdStrict(binPathCarvel + "/imgpkg")
-var whichImgpkg = shx.RunCmdStrict("ls", binPathCarvel+"/imgpkg")
-var ytt = shx.RunCmdStrict(binPathCarvel + "/ytt")
-var whichYtt = shx.RunCmdStrict("ls", binPathCarvel+"/ytt")
+var kbld = shx.RunCmd(binPathCarvel + "/kbld")
+var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
+var imgpkg = shx.RunCmd(binPathCarvel + "/imgpkg")
+var whichImgpkg = shx.RunCmd("ls", binPathCarvel+"/imgpkg")
+var ytt = shx.RunCmd(binPathCarvel + "/ytt")
+var whichYtt = shx.RunCmd("ls", binPathCarvel+"/ytt")
 
 // KIND CLI as function
-var kind = shx.RunCmdStrict(binPathKind + "/kind")
-var whichKind = shx.RunCmdStrict("ls", binPathKind+"/kind")
-
-// kubectl cli as function
-var kubectl = shx.RunCmdStrict("kubectl")
+var kind = shx.RunCmd(binPathKind + "/kind")
+var whichKind = shx.RunCmd("ls", binPathKind+"/kind")
 
 func init() {
 	const (
@@ -124,5 +120,5 @@ func init() {
 	}
 
 	// display all the environment variables for debuggability
-	sh.RunV("env")
+	_ = shx.RunV("env")
 }

@@ -1,8 +1,8 @@
 package shellx_carvel
 
 import (
+	shx "carvel.shellx.dev/internal/sh"
 	"fmt"
-	"github.com/magefile/mage/sh"
 )
 
 func installKindCLI() error {
@@ -46,11 +46,18 @@ func createKindClusterConfigForLocalRegistry() error {
 	if err := mkdir(EnvArtifactsPathKind); err != nil {
 		return err
 	}
-	return file(joinPaths(EnvArtifactsPathKind, EnvFileKindCluster), kindClusterLocalRegistryYML, 0644)
+	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathKind, EnvFileKindCluster)
+	if pathErr != nil {
+		return pathErr
+	}
+	return file(fullPath, kindClusterLocalRegistryYML, 0644)
 }
 
 func createKindCluster() error {
-	kindClusterFilePath := joinPaths(EnvArtifactsPathKind, EnvFileKindCluster)
+	kindClusterFilePath, pathErr := shx.JoinPaths(EnvArtifactsPathKind, EnvFileKindCluster)
+	if pathErr != nil {
+		return pathErr
+	}
 	if !exists(kindClusterFilePath) {
 		return fmt.Errorf("file %q not found", kindClusterFilePath)
 	}
@@ -72,13 +79,21 @@ func createKindNetwork() error {
 }
 
 func createKindConfigFileLocalRegistryHosting() error {
-	return file(joinPaths(EnvArtifactsPathKind, EnvFileKindConfigLocalRegistryHosting), kindConfigLocalRegistryHostingYML, 0644)
+	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathKind, EnvFileKindConfigLocalRegistryHosting)
+	if pathErr != nil {
+		return pathErr
+	}
+	return file(fullPath, kindConfigLocalRegistryHostingYML, 0644)
 }
 
 func applyKindConfigLocalRegistryHosting() error {
-	return kubectl("apply", "-f", joinPaths(EnvArtifactsPathKind, EnvFileKindConfigLocalRegistryHosting))
+	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathKind, EnvFileKindConfigLocalRegistryHosting)
+	if pathErr != nil {
+		return pathErr
+	}
+	return kubectl("apply", "-f", fullPath)
 }
 
 func printEtcHostsUpdateMsg() error {
-	return sh.RunV("echo", etcHostsUpdateMsg)
+	return shx.RunV("echo", etcHostsUpdateMsg)
 }

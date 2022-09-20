@@ -1,152 +1,230 @@
 package sh
 
+// Borrowed from https://github.com/magefile/mage/tree/master/sh
+
 import (
+	"bytes"
 	"fmt"
-	"github.com/magefile/mage/sh"
+	"github.com/magefile/mage/mg"
+	"io"
+	"log"
 	"os"
+	"os/exec"
 	"strings"
 )
 
-// isAlphaNum reports whether the byte is an ASCII letter, number, or underscore
-//
-// Note: Borrowed from os package
-func isAlphaNum(c uint8) bool {
-	return c == '_' || '0' <= c && c <= '9' || 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z'
+type MultiError struct {
+	Errors []error
 }
 
-// isShellSpecialVar reports whether the character identifies a special
-// shell variable such as $*.
+func (mErr *MultiError) Error() string {
+	if len(mErr.Errors) == 0 {
+		return fmt.Sprintf("invalid use of %T", mErr)
+	}
+	if len(mErr.Errors) == 1 {
+		return mErr.Errors[0].Error()
+	}
+	var msgs = make([]string, 0, len(mErr.Errors))
+	for _, e := range mErr.Errors {
+		msgs = append(msgs, e.Error())
+	}
+	return strings.Join(msgs, ", ")
+}
+
+type InvalidEnvError struct {
+	Context     string
+	InvalidEnvs []string
+}
+
+func (e *InvalidEnvError) Error() string {
+	msg := fmt.Sprintf("found invalid env(s) [%s]", strings.Join(e.InvalidEnvs, ", "))
+	if e.Context == "" {
+		return msg
+	}
+	return fmt.Sprintf("%s: %s", e.Context, msg)
+}
+
+// RunCmd returns a function that will call Run with the given command. This is
+// useful for creating command aliases to make your scripts easier to read, like
+// this:
 //
-// Note: Borrowed from os package
-func isShellSpecialVar(c uint8) bool {
-	switch c {
-	case '*', '#', '$', '@', '!', '?', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
+//	 // in a helper file somewhere
+//	 var g0 = sh.RunCmd("go")  // go is a keyword :(
+//
+//	 // somewhere in your main code
+//		if err := g0("install", "github.com/gohugo/hugo"); err != nil {
+//			return err
+//	 }
+//
+// Args passed to command get baked in as envs to the command when you run it.
+// Any envs passed in when you run the returned function will be appended to the
+// original envs.  For example, this is equivalent to the above:
+//
+//	var goInstall = sh.RunCmd("go", "install") goInstall("github.com/gohugo/hugo")
+//
+// RunCmd uses Exec underneath, so see those docs for more details.
+func RunCmd(cmd string, args ...string) func(args ...string) error {
+	return func(args2 ...string) error {
+		return Run(cmd, append(args, args2...)...)
+	}
+}
+
+// OutCmd is like RunCmd except the command returns the output of the
+// command.
+func OutCmd(cmd string, args ...string) func(args ...string) (string, error) {
+	return func(args2 ...string) (string, error) {
+		return Output(cmd, append(args, args2...)...)
+	}
+}
+
+// Run is like RunWith, but doesn't specify any environment variables.
+func Run(cmd string, args ...string) error {
+	return RunWith(nil, cmd, args...)
+}
+
+// RunV is like Run, but always sends the command's stdout to os.Stdout.
+func RunV(cmd string, args ...string) error {
+	_, err := Exec(nil, os.Stdout, os.Stderr, cmd, args...)
+	return err
+}
+
+// RunWith runs the given command, directing stderr to this program's stderr and
+// printing stdout to stdout if mage was run with -v.  It adds adds env to the
+// environment variables for the command being run. Environment variables should
+// be in the format name=value.
+func RunWith(env map[string]string, cmd string, args ...string) error {
+	var output io.Writer
+	if mg.Verbose() {
+		output = os.Stdout
+	}
+	_, err := Exec(env, output, os.Stderr, cmd, args...)
+	return err
+}
+
+// RunWithV is like RunWith, but always sends the command's stdout to os.Stdout.
+func RunWithV(env map[string]string, cmd string, args ...string) error {
+	_, err := Exec(env, os.Stdout, os.Stderr, cmd, args...)
+	return err
+}
+
+// Output runs the command and returns the text from stdout.
+func Output(cmd string, args ...string) (string, error) {
+	buf := &bytes.Buffer{}
+	_, err := Exec(nil, buf, os.Stderr, cmd, args...)
+	return strings.TrimSuffix(buf.String(), "\n"), err
+}
+
+// OutputWith is like RunWith, but returns what is written to stdout.
+func OutputWith(env map[string]string, cmd string, args ...string) (string, error) {
+	buf := &bytes.Buffer{}
+	_, err := Exec(env, buf, os.Stderr, cmd, args...)
+	return strings.TrimSuffix(buf.String(), "\n"), err
+}
+
+// Exec executes the command, piping its stderr to mage's stderr and
+// piping its stdout to the given writer. If the command fails, it will return
+// an error that, if returned from a target or mg.Deps call, will cause mage to
+// exit with the same code as the command failed with.  Env is a list of
+// environment variables to set when running the command, these override the
+// current environment variables set (which are also passed to the command). cmd
+// and envs may include references to environment variables in $FOO format, in
+// which case these will be expanded before the command is run.
+//
+// Ran reports if the command ran (rather than was not found or not executable).
+// Code reports the exit code the command returned if it ran. If err == nil, ran
+// is always true and code is always 0.
+func Exec(env map[string]string, stdout, stderr io.Writer, cmd string, args ...string) (ran bool, err error) {
+	var invalidEnvs = make([]string, 0, len(args)+1) // size includes all envs & cmd
+	// a strict expand function that pushes error if
+	// there was no expansion
+	mustExpand := func(s string) string {
+		s2, ok := env[s]
+		if ok {
+			return s2
+		}
+		val := os.Getenv(s)
+		if val == "" {
+			invalidEnvs = append(invalidEnvs, s)
+		}
+		return val
+	}
+	cmd = os.Expand(cmd, mustExpand)
+	for i := range args {
+		args[i] = os.Expand(args[i], mustExpand)
+	}
+	if len(invalidEnvs) != 0 {
+		return false, &InvalidEnvError{
+			Context:     fmt.Sprintf(`failed to run "%s %s"`, cmd, strings.Join(args, " ")),
+			InvalidEnvs: invalidEnvs,
+		}
+	}
+	ran, code, err := run(env, stdout, stderr, cmd, args...)
+	if err == nil {
+		return true, nil
+	}
+	if ran {
+		return ran, mg.Fatalf(code, `running "%s %s" failed with exit code %d`, cmd, strings.Join(args, " "), code)
+	}
+	return ran, fmt.Errorf(`failed to run "%s %s: %v"`, cmd, strings.Join(args, " "), err)
+}
+
+func run(env map[string]string, stdout, stderr io.Writer, cmd string, args ...string) (ran bool, code int, err error) {
+	c := exec.Command(cmd, args...)
+	c.Env = os.Environ()
+	for k, v := range env {
+		c.Env = append(c.Env, k+"="+v)
+	}
+	c.Stderr = stderr
+	c.Stdout = stdout
+	c.Stdin = os.Stdin
+
+	var quoted []string
+	for i := range args {
+		quoted = append(quoted, fmt.Sprintf("%q", args[i]))
+	}
+	// To protect against logging from doing exec in global variables
+	if mg.Verbose() {
+		log.Println("exec:", cmd, strings.Join(quoted, " "))
+	}
+	err = c.Run()
+	return CmdRan(err), ExitStatus(err), err
+}
+
+// CmdRan examines the error to determine if it was generated as a result of a
+// command running via os/exec.Command.  If the error is nil, or the command ran
+// (even if it exited with a non-zero exit code), CmdRan reports true.  If the
+// error is an unrecognized type, or it is an error from exec.Command that says
+// the command failed to run (usually due to the command not existing or not
+// being executable), it reports false.
+func CmdRan(err error) bool {
+	if err == nil {
 		return true
+	}
+	ee, ok := err.(*exec.ExitError)
+	if ok {
+		return ee.Exited()
 	}
 	return false
 }
 
-// getShellName returns the name that begins the string and the number of bytes
-// consumed to extract it. If the name is enclosed in {}, it's part of a ${}
-// expansion and two more bytes are needed than the length of the name.
-//
-// Note: Borrowed from os package
-func getShellName(s string) (string, int) {
-	switch {
-	case s[0] == '{':
-		if len(s) > 2 && isShellSpecialVar(s[1]) && s[2] == '}' {
-			return s[1:2], 3
-		}
-		// Scan to closing brace
-		for i := 1; i < len(s); i++ {
-			if s[i] == '}' {
-				if i == 1 {
-					return "", 2 // Bad syntax; eat "${}"
-				}
-				return s[1:i], i + 1
-			}
-		}
-		return "", 1 // Bad syntax; eat "${"
-	case isShellSpecialVar(s[0]):
-		return s[0:1], 1
-	}
-	// Scan alphanumerics.
-	var i int
-	for i = 0; i < len(s) && isAlphaNum(s[i]); i++ {
-	}
-	return s[:i], i
+type exitStatus interface {
+	ExitStatus() int
 }
 
-type InvalidArgError struct{ Msg string }
-
-func (e *InvalidArgError) Error() string { return e.Msg }
-
-// ExpandEnvStrict replaces ${var} or $var in the string. It returns
-// error for invalid use of $ or env expansion returns empty
-//
-// Note: Borrowed from os.ExpandEnv
-func ExpandEnvStrict(s string) (string, error) {
-	var buf []byte
-	// ${} is all ASCII, so bytes are fine for this operation.
-	i := 0
-	for j := 0; j < len(s); j++ {
-		if s[j] == '$' && j+1 < len(s) {
-			if buf == nil {
-				buf = make([]byte, 0, 2*len(s))
-			}
-			buf = append(buf, s[i:j]...)
-			name, w := getShellName(s[j+1:])
-			if name == "" && w > 0 {
-				// Encountered invalid syntax
-				return "", &InvalidArgError{fmt.Sprintf("invalid %s", s)}
-			} else if name == "" {
-				// Valid syntax, but $ was not followed by a
-				// name. Leave the dollar character untouched.
-				buf = append(buf, s[j])
-			} else {
-				val, found := os.LookupEnv(name)
-				if !found {
-					return "", &InvalidArgError{fmt.Sprintf("%s lookup failed", name)}
-				}
-				buf = append(buf, val...)
-			}
-			j += w
-			i = j + 1
+// ExitStatus returns the exit status of the error if it is an exec.ExitError
+// or if it implements ExitStatus() int.
+// 0 if it is nil or 1 if it is a different error.
+func ExitStatus(err error) int {
+	if err == nil {
+		return 0
+	}
+	if e, ok := err.(exitStatus); ok {
+		return e.ExitStatus()
+	}
+	if e, ok := err.(*exec.ExitError); ok {
+		if ex, ok := e.Sys().(exitStatus); ok {
+			return ex.ExitStatus()
 		}
 	}
-	if buf == nil {
-		return s, nil
-	}
-	return string(buf) + s[i:], nil
-}
-
-// VerifyArgs returns error if the arguments makes use of unset
-// environment variables
-func VerifyArgs(args ...string) ([]string, error) {
-	if len(args) == 0 {
-		return nil, nil
-	}
-	var invalidArgs = make([]string, 0, len(args))
-	var expandedArgs = make([]string, 0, len(args))
-	for _, arg := range args {
-		expanded, expandErr := ExpandEnvStrict(arg)
-		if expandErr != nil {
-			invalidArgs = append(invalidArgs, expandErr.Error())
-			continue
-		}
-		expandedArgs = append(expandedArgs, expanded)
-	}
-	if len(invalidArgs) == 0 {
-		return expandedArgs, nil
-	}
-	return nil, &InvalidArgError{fmt.Sprintf("verify args ['%s']: %s", strings.Join(args, "', '"), strings.Join(invalidArgs, ", "))}
-}
-
-// RunCmdStrict is a wrapper over sh.Run. The returned function
-// returns error if either verification of arguments fails or
-// command execution fails
-func RunCmdStrict(cmd string, args ...string) func(args ...string) error {
-	return func(args2 ...string) error {
-		allArgs := append(args, args2...)
-		if _, err := VerifyArgs(allArgs...); err != nil {
-			return err
-		}
-		return sh.Run(cmd, allArgs...)
-	}
-}
-
-func File(name, data string, perm os.FileMode) error {
-	out, err := VerifyArgs(data)
-	if err != nil {
-		return err
-	}
-	//out, outErr := sh.Output("echo", data)
-	//if outErr != nil {
-	//	return outErr
-	//}
-	if expandedName := os.Getenv(name); expandedName != "" {
-		// mutate the given name
-		name = expandedName
-	}
-	return os.WriteFile(name, []byte(out[0]), perm)
+	return 1
 }
