@@ -13,37 +13,6 @@ import (
 	"strings"
 )
 
-type MultiError struct {
-	Errors []error
-}
-
-func (mErr *MultiError) Error() string {
-	if len(mErr.Errors) == 0 {
-		return fmt.Sprintf("invalid use of %T", mErr)
-	}
-	if len(mErr.Errors) == 1 {
-		return mErr.Errors[0].Error()
-	}
-	var msgs = make([]string, 0, len(mErr.Errors))
-	for _, e := range mErr.Errors {
-		msgs = append(msgs, e.Error())
-	}
-	return strings.Join(msgs, ", ")
-}
-
-type InvalidEnvError struct {
-	Context     string
-	InvalidEnvs []string
-}
-
-func (e *InvalidEnvError) Error() string {
-	msg := fmt.Sprintf("found invalid env(s) [%s]", strings.Join(e.InvalidEnvs, ", "))
-	if e.Context == "" {
-		return msg
-	}
-	return fmt.Sprintf("%s: %s", e.Context, msg)
-}
-
 // RunCmd returns a function that will call Run with the given command. This is
 // useful for creating command aliases to make your scripts easier to read, like
 // this:
@@ -135,7 +104,7 @@ func OutputWith(env map[string]string, cmd string, args ...string) (string, erro
 // is always true and code is always 0.
 func Exec(env map[string]string, stdout, stderr io.Writer, cmd string, args ...string) (ran bool, err error) {
 	var invalidEnvs = make([]string, 0, len(args)+1) // size includes all envs & cmd
-	// a strict expand function that pushes error if
+	// a strict expand function that adds to error if
 	// there was no expansion
 	mustExpand := func(s string) string {
 		s2, ok := env[s]
