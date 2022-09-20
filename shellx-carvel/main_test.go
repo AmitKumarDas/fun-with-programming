@@ -9,5 +9,5 @@ func TestReleaseOfCarvelPackage(t *testing.T) {
 	tryAppBundleCreateAndPublish(t)
 	tryPackageRelease(t)
 	trySetupKindCluster(t)
-	tryAppDeployment(t)
+	tryVerifyApplication(t)
 }

@@ -1,6 +1,7 @@
 package shellx_carvel
 
 import (
+	shx "carvel.shellx.dev/internal/sh"
 	"strings"
 	"testing"
 )
@@ -45,4 +46,12 @@ func requireContains(t *testing.T, expectedSubStr, actual string) {
 		return
 	}
 	t.Fatalf("expected substring %q is not part of actual %q", expectedSubStr, actual)
+}
+
+func mustJoinPaths(paths ...string) string {
+	finalPath, err := shx.JoinPaths(paths...)
+	if err != nil {
+		panic(err)
+	}
+	return finalPath
 }

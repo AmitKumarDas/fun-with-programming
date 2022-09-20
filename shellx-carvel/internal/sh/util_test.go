@@ -65,7 +65,7 @@ func TestFilterInvalidEnvs(t *testing.T) {
 
 	for _, s := range scenarios {
 		t.Run(s.name, func(t *testing.T) {
-			_, got := VerifyArgs(s.envs...)
+			_, got := ExpandAllStrict(s.envs...)
 			if s.isErr {
 				requireErr(t, got)
 			} else {

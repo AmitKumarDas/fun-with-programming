@@ -24,5 +24,5 @@ func tryAppBundleCreateAndPublish(t *testing.T) {
 	requireNoErr(t, publishAppBundle(sourceDir))
 	out, outErr := sh.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
 	requireNoErr(t, outErr)
-	requireContains(t, joinPaths("packages", EnvAppBundleName), out)
+	requireContains(t, mustJoinPaths("packages", EnvAppBundleName), out)
 }

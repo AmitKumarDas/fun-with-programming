@@ -10,7 +10,7 @@ func setupRegistryAsLocalDockerContainer() error {
 		return nil
 	}
 	if err := docker("inspect", "-f", "{{.State.Running}}", EnvRegistryName); err != nil {
-		var envErr *sh.InvalidArgError // Note: Must be a pointer
+		var envErr *sh.InvalidEnvError // Note: Must be a pointer
 		if errors.As(err, &envErr) {
 			return err
 		}
