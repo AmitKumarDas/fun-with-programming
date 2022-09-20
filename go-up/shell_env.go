@@ -8,6 +8,7 @@ import (
 // isAlphaNum reports whether the byte is an ASCII letter, number, or underscore
 //
 // Note: Borrowed from os package
+// Note: These seem to be valid characters to define an ENV variable
 func isAlphaNum(c uint8) bool {
 	return c == '_' || '0' <= c && c <= '9' || 'a' <= c && c <= 'z' || 'A' <= c && c <= 'Z'
 }
@@ -55,15 +56,15 @@ func getShellName(s string) (string, int) {
 	return s[:i], i
 }
 
-type invalidArgError struct{ Msg string }
+type invalidEnvError struct{ Msg string }
 
-func (e *invalidArgError) Error() string { return e.Msg }
+func (e *invalidEnvError) Error() string { return e.Msg }
 
-// expandEnvStrict replaces ${var} or $var in the string. It returns
+// ExpandEnvStrict replaces ${var} or $var in the string. It returns
 // error for invalid use of $ or env expansion returns empty
 //
-// Note: Borrowed from os.ExpandEnv
-func expandEnvStrict(s string) (string, error) {
+// Note: Borrowed from os.Expand
+func ExpandEnvStrict(s string) (string, error) {
 	var buf []byte
 	// ${} is all ASCII, so bytes are fine for this operation.
 	i := 0
@@ -75,16 +76,21 @@ func expandEnvStrict(s string) (string, error) {
 			buf = append(buf, s[i:j]...)
 			name, w := getShellName(s[j+1:])
 			if name == "" && w > 0 {
-				// Encountered invalid syntax
-				return "", &invalidArgError{fmt.Sprintf("invalid syntax %s", s)}
+				// Encountered invalid ENV syntax
+				return "", &invalidEnvError{fmt.Sprintf("invalid syntax %s", s)}
 			} else if name == "" {
 				// Valid syntax, but $ was not followed by a
 				// name. Leave the dollar character untouched.
 				buf = append(buf, s[j])
+			} else if len(name) == 1 && isShellSpecialVar(name[0]) {
+				// A shell special variable.
+				// Leave the dollar as well as special character untouched.
+				buf = append(buf, s[j], name[0])
 			} else {
+				// This is most likely an ENV variable
 				val, found := os.LookupEnv(name)
 				if !found {
-					return "", &invalidArgError{fmt.Sprintf("lookup failed for %s", name)}
+					return "", &invalidEnvError{fmt.Sprintf("lookup failed for %s", name)}
 				}
 				buf = append(buf, val...)
 			}
