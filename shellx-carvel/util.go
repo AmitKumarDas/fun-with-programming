@@ -4,7 +4,6 @@ import (
 	shx "carvel.shellx.dev/internal/sh"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -62,14 +61,6 @@ func isErr(err error, more ...error) bool {
 
 func isNoErr(err error, more ...error) bool {
 	return !isErr(err, more...)
-}
-
-func isEq(a, b string) bool {
-	return strings.ToLower(getEnv(a)) == strings.ToLower(getEnv(b))
-}
-
-func isNotEq(a, b string) bool {
-	return !isEq(a, b)
 }
 
 func format(format string, a ...any) string {

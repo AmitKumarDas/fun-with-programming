@@ -3,7 +3,7 @@ package shellx_carvel
 import shx "carvel.shellx.dev/internal/sh"
 
 func verifyApplication() error {
-	if isNotEq(EnvTestCarvelRelease, "true") {
+	if shx.IsNotEq(EnvTestCarvelRelease, "true") {
 		return nil
 	}
 	var fns = []func() error{

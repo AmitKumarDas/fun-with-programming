@@ -23,7 +23,7 @@ func installKindCLI() error {
 }
 
 func setupKindCluster() error {
-	if isNotEq(EnvSetupKindCluster, "true") {
+	if shx.IsNotEq(EnvSetupKindCluster, "true") {
 		return nil
 	}
 	var fns = []func() error{

@@ -37,3 +37,7 @@ func JoinPaths(paths ...string) (string, error) {
 func IsEq(a, b string) bool {
 	return strings.ToLower(os.ExpandEnv(a)) == strings.ToLower(os.ExpandEnv(b))
 }
+
+func IsNotEq(a, b string) bool {
+	return !IsEq(a, b)
+}
