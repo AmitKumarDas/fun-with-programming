@@ -3,6 +3,7 @@ package shellx_carvel
 import (
 	shx "carvel.shellx.dev/internal/sh"
 	"runtime"
+	"strings"
 )
 
 // Environment variables in a format that can be expanded
@@ -48,6 +49,7 @@ var (
 
 // Immediate setting of few environment variables
 var version = maybeSetEnv(EnvVersion, "v1.0.1")
+var versionSemver = strings.TrimPrefix(version, "v")
 var binPathCarvel = maybeSetEnv(EnvBinPathCarvel, "tmp")
 var binPathKind = maybeSetEnv(EnvBinPathKind, "tmp")
 
@@ -108,11 +110,11 @@ func init() {
 		// carvel
 		EnvKappCtrlVersion:    "v0.40.0",
 		EnvAppBundleName:      appName + "-app",
-		EnvAppBundleVersion:   version,
+		EnvAppBundleVersion:   versionSemver,
 		EnvPackageName:        appName + "." + packageDomain,
-		EnvPackageVersion:     version,
+		EnvPackageVersion:     versionSemver,
 		EnvPackageRepoName:    appName + "-repo." + packageDomain,
-		EnvPackageRepoVersion: version,
+		EnvPackageRepoVersion: versionSemver,
 		EnvTestCarvelRelease:  "false",
 	}
 	for k, v := range envs {

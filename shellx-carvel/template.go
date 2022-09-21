@@ -121,10 +121,10 @@ var packageTemplateYML = `
 apiVersion: data.packaging.carvel.dev/v1alpha1
 kind: Package
 metadata:
-  name: #@ "${PACKAGE_NAME}." + data.values.version
+  name: ${PACKAGE_NAME}.${PACKAGE_VERSION}
 spec:
   refName: ${PACKAGE_NAME}
-  version: #@ data.values.version
+  version: ${PACKAGE_VERSION}
   releaseNotes: |
         Initial release of the tkg-remediator package
   valuesSchema: #! configurable properties that exist for the version
@@ -133,7 +133,7 @@ spec:
     spec:
       fetch:
       - imgpkgBundle: #! fetch workload imgpkg bundle
-          image: #@ "${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${APP_BUNDLE_NAME}:" + data.values.version
+          image: ${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${APP_BUNDLE_NAME}:${APP_BUNDLE_VERSION}
       template:
       - ytt: #! run the templates through ytt
           paths:
