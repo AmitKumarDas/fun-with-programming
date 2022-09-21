@@ -122,5 +122,7 @@ func init() {
 	}
 
 	// display all the environment variables for debuggability
-	_ = shx.RunV("env")
+	if shx.IsDebug() {
+		_ = shx.RunV("env")
+	}
 }

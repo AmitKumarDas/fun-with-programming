@@ -14,18 +14,23 @@ import (
 )
 
 const (
-	CMDLogLevelNone    = "0"
-	CMDLogLevelVerbose = "1"
+	CMDLogLevelNone  = "0"
+	CMDLogLevelInfo  = "1"
+	CMDLogLevelDebug = "2"
 )
 
-const EnvCMDLogLevel = "${CMD_LOG_LEVEL}" // 0 & 1 are the only supported levels
+const EnvCMDLogLevel = "${CMD_LOG_LEVEL}"
 
 func init() {
 	MaybeSetEnv(EnvCMDLogLevel, CMDLogLevelNone)
 }
 
-func isVerbose() bool {
-	return IsEq(EnvCMDLogLevel, CMDLogLevelVerbose)
+func IsDebug() bool {
+	return IsEq(EnvCMDLogLevel, CMDLogLevelDebug)
+}
+
+func IsInfo() bool {
+	return IsEq(EnvCMDLogLevel, CMDLogLevelInfo)
 }
 
 // RunCmd returns a function that will call Run with the given command. This is
@@ -78,7 +83,7 @@ func RunV(cmd string, args ...string) error {
 // be in the format name=value.
 func RunWith(env map[string]string, cmd string, args ...string) error {
 	var output io.Writer
-	if isVerbose() {
+	if IsDebug() {
 		output = os.Stdout
 	}
 	_, err := Exec(env, output, os.Stderr, cmd, args...)
@@ -170,8 +175,8 @@ func run(env map[string]string, stdout, stderr io.Writer, cmd string, args ...st
 	ran = CmdRan(err)
 	code = ExitStatus(err)
 	// To protect against logging from doing exec in global variables
-	if isVerbose() {
-		log.Println("exec:", cmd, strings.Join(quoted, " "), "; run state:", ran, code)
+	if IsInfo() {
+		log.Println("exec:", cmd, strings.Join(quoted, " "), "status:", ran, code)
 	}
 	return ran, code, err
 }
