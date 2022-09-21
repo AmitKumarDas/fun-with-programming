@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 // Unix & generic commands as functions
@@ -73,4 +74,42 @@ func isNotEq(a, b string) bool {
 
 func format(format string, a ...any) string {
 	return fmt.Sprintf(format, a...)
+}
+
+type eventuallyConfig struct {
+	Attempts *int
+	Interval *time.Duration
+}
+
+// eventually runs the given fn till it succeeds or eventually
+// function times out
+func eventually(fn func() error) error {
+	return eventuallyWith(fn, eventuallyConfig{})
+}
+
+// eventuallyWith runs the given fn till it succeeds or eventuallyWith
+// function times out
+func eventuallyWith(fn func() error, config eventuallyConfig) error {
+	if fn == nil {
+		return fmt.Errorf("nil function")
+	}
+	attempts := 10
+	interval := 3 * time.Second
+	if config.Attempts != nil && *config.Attempts != 0 {
+		attempts = *config.Attempts
+	}
+	if config.Interval != nil && config.Interval.Seconds() != 0 {
+		interval = *config.Interval
+	}
+	var start = time.Now()
+	var final error
+	for counter := 1; counter <= attempts; counter++ {
+		curErr := fn()
+		if curErr == nil {
+			return nil
+		}
+		final = curErr
+		time.Sleep(interval)
+	}
+	return fmt.Errorf("%w: func timed out after %s", final, time.Now().Sub(start))
 }
