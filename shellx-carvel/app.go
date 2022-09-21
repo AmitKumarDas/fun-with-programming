@@ -7,10 +7,12 @@ func verifyApplication() error {
 		return nil
 	}
 	var fns = []func() error{
-		deleteThenCreateAppNamespace,
 		createK8sArtifactsDir,
 		createFilePackageRepo,
+		deleteThenCreateAppNamespace,
 		deleteThenCreatePackageRepo,
+		verifyPresenceOfPackageRepository,
+		verifyPresenceOfPackage,
 	}
 	for _, fn := range fns {
 		if err := fn(); err != nil {
@@ -18,11 +20,6 @@ func verifyApplication() error {
 		}
 	}
 	return nil
-}
-
-func deleteThenCreateAppNamespace() error {
-	_ = kubectl("delete", "ns", EnvK8sNamespace) // ignore error if any
-	return kubectl("create", "ns", EnvK8sNamespace)
 }
 
 func createK8sArtifactsDir() error {
@@ -37,11 +34,30 @@ func createFilePackageRepo() error {
 	return file(fullPath, packageRepositoryYML, 0644)
 }
 
+func deleteThenCreateAppNamespace() error {
+	_ = kubectl("delete", "ns", EnvK8sNamespace) // ignore error if any
+	return kubectl("create", "ns", EnvK8sNamespace)
+}
+
 func deleteThenCreatePackageRepo() error {
 	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
 	if pathErr != nil {
 		return pathErr
 	}
 	_ = kubectl("delete", "-f", fullPath) // ignore error if any
-	return kubectl("create", "-f", fullPath)
+	return eventually(func() error {
+		return kubectl("create", "-f", fullPath)
+	})
+}
+
+func verifyPresenceOfPackageRepository() error {
+	return eventually(func() error {
+		return kubectl("get", "packagerepository", "-n", EnvK8sNamespace, EnvPackageRepoName)
+	})
+}
+
+func verifyPresenceOfPackage() error {
+	return eventually(func() error {
+		return kubectl("get", "package", "-n", EnvK8sNamespace, EnvPackageName+"."+EnvPackageVersion)
+	})
 }
