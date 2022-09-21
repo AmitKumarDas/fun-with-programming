@@ -29,7 +29,7 @@ func setupKindCluster() error {
 	var fns = []func() error{
 		createKindClusterConfigForLocalRegistry,
 		createKindCluster,
-		createKindNetwork,
+		disconnectThenConnectNetworkToKindEndpoint,
 		createKindConfigFileLocalRegistryHosting,
 		applyKindConfigLocalRegistryHosting,
 		printEtcHostsUpdateMsg,
@@ -69,13 +69,9 @@ func createKindCluster() error {
 	return nil
 }
 
-func createKindNetwork() error {
-	if err := docker("inspect", "-f", "{{json .NetworkSettings.Networks.kind}}", EnvRegistryName); err != nil {
-		// Connect the network on error
-		// Note: error is swallowed
-		return docker("network", "connect", "kind", EnvRegistryName)
-	}
-	return nil
+func disconnectThenConnectNetworkToKindEndpoint() error {
+	_ = docker("network", "disconnect", "kind", EnvRegistryName) // ignore error if any
+	return docker("network", "connect", "kind", EnvRegistryName)
 }
 
 func createKindConfigFileLocalRegistryHosting() error {
