@@ -13,6 +13,21 @@ import (
 	"strings"
 )
 
+const (
+	CMDLogLevelNone    = "0"
+	CMDLogLevelVerbose = "1"
+)
+
+const EnvCMDLogLevel = "${CMD_LOG_LEVEL}" // 0 & 1 are the only supported levels
+
+func init() {
+	MaybeSetEnv(EnvCMDLogLevel, CMDLogLevelNone)
+}
+
+func isVerbose() bool {
+	return IsEq(EnvCMDLogLevel, CMDLogLevelVerbose)
+}
+
 // RunCmd returns a function that will call Run with the given command. This is
 // useful for creating command aliases to make your scripts easier to read, like
 // this:
@@ -63,7 +78,7 @@ func RunV(cmd string, args ...string) error {
 // be in the format name=value.
 func RunWith(env map[string]string, cmd string, args ...string) error {
 	var output io.Writer
-	if mg.Verbose() {
+	if isVerbose() {
 		output = os.Stdout
 	}
 	_, err := Exec(env, output, os.Stderr, cmd, args...)
@@ -151,12 +166,14 @@ func run(env map[string]string, stdout, stderr io.Writer, cmd string, args ...st
 	for i := range args {
 		quoted = append(quoted, fmt.Sprintf("%q", args[i]))
 	}
-	// To protect against logging from doing exec in global variables
-	if mg.Verbose() {
-		log.Println("exec:", cmd, strings.Join(quoted, " "))
-	}
 	err = c.Run()
-	return CmdRan(err), ExitStatus(err), err
+	ran = CmdRan(err)
+	code = ExitStatus(err)
+	// To protect against logging from doing exec in global variables
+	if isVerbose() {
+		log.Println("exec:", cmd, strings.Join(quoted, " "), "; run state:", ran, code)
+	}
+	return ran, code, err
 }
 
 // CmdRan examines the error to determine if it was generated as a result of a
