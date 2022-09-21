@@ -48,10 +48,10 @@ var (
 )
 
 // Immediate setting of few environment variables
-var version = maybeSetEnv(EnvVersion, "v1.0.1")
+var version = shx.MaybeSetEnv(EnvVersion, "v1.0.1")
 var versionSemver = strings.TrimPrefix(version, "v")
-var binPathCarvel = maybeSetEnv(EnvBinPathCarvel, "tmp")
-var binPathKind = maybeSetEnv(EnvBinPathKind, "tmp")
+var binPathCarvel = shx.MaybeSetEnv(EnvBinPathCarvel, "tmp")
+var binPathKind = shx.MaybeSetEnv(EnvBinPathKind, "tmp")
 
 // Carvel binaries / CLIs as functions
 var kbld = shx.RunCmd(binPathCarvel + "/kbld")
@@ -118,7 +118,7 @@ func init() {
 		EnvTestCarvelRelease:  "false",
 	}
 	for k, v := range envs {
-		maybeSetEnv(k, v)
+		shx.MaybeSetEnv(k, v)
 	}
 
 	// display all the environment variables for debuggability

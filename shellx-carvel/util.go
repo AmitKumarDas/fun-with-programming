@@ -3,7 +3,6 @@ package shellx_carvel
 import (
 	shx "carvel.shellx.dev/internal/sh"
 	"fmt"
-	"os"
 	"time"
 )
 
@@ -21,27 +20,6 @@ var kubectl = shx.RunCmd("kubectl")
 
 // File creation as a function
 var file = shx.File
-
-// passThroughFn returns the provided input. It is useful
-// as a custom mapper function for os.Expand
-func passThroughFn(in string) string {
-	return in
-}
-
-func maybeSetEnv(envKey, defaultVal string) string {
-	// set default only if provided env key is not set
-	if value := os.ExpandEnv(envKey); value == "" {
-		// envKey is first expanded such that "$key" or "${key}" if any
-		// is trimmed to produce "key" & then this trimmed key is
-		// set as an environment variable
-		_ = os.Setenv(os.Expand(envKey, passThroughFn), defaultVal)
-	}
-	return os.ExpandEnv(envKey)
-}
-
-func getEnv(envKey string) string {
-	return os.ExpandEnv(envKey)
-}
 
 func exists(file string) bool {
 	return ls(file) == nil

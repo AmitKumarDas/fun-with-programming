@@ -2,6 +2,7 @@ package shellx_carvel
 
 import (
 	"github.com/magefile/mage/sh"
+	"os"
 	"testing"
 )
 
@@ -14,8 +15,8 @@ func tryPackageRelease(t *testing.T) {
 	// release related
 	pkgRepoDir := releaseDir + "/packages"
 	pkgImgpkgDir := releaseDir + "/.imgpkg"
-	pkgDir := pkgRepoDir + "/" + getEnv(EnvPackageName)
-	pkgVersion := getEnv(EnvPackageVersion)
+	pkgDir := pkgRepoDir + "/" + os.ExpandEnv(EnvPackageName)
+	pkgVersion := os.ExpandEnv(EnvPackageVersion)
 
 	requireNoErr(t, createReleaseDirs(pkgDir, pkgImgpkgDir))
 	requireTrue(t, exists(pkgDir))
