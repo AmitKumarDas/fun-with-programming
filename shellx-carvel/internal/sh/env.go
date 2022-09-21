@@ -22,10 +22,6 @@ func MaybeSetEnv(envKey, defaultVal string) string {
 	return os.ExpandEnv(envKey)
 }
 
-func GetEnv(envKey string) string {
-	return os.ExpandEnv(envKey)
-}
-
 func UnsetEnv(envKey string) {
 	_ = os.Unsetenv(os.Expand(envKey, passThroughFn))
 }
