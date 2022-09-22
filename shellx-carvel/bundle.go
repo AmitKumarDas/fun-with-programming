@@ -3,33 +3,33 @@ package shellx_carvel
 // This file provides functions that cater to Carvel related packaging
 
 // TODO: Should these be environment variables?
-func getDefaultCarvelPackagingDir() string {
-	return "packaging"
-}
-
-func getDefaultSourceDir() string {
-	return getDefaultCarvelPackagingDir() + "/source"
-}
-
-func getDefaultAppConfigDir() string {
-	return getDefaultSourceDir() + "/config"
-}
-
-func getDefaultAppImgpkgDir() string {
-	return getDefaultSourceDir() + "/.imgpkg"
-}
-
-func getDefaultAppConfigFile() string {
-	return getDefaultAppConfigDir() + "/config.yml"
-}
-
-func getDefaultAppValuesFile() string {
-	return getDefaultAppConfigDir() + "/values.yml"
-}
-
-func getDefaultAppImgpkgFile() string {
-	return getDefaultAppImgpkgDir() + "/images.yml"
-}
+//func getDefaultCarvelPackagingDir() string {
+//	return "packaging"
+//}
+//
+//func getDefaultSourceDir() string {
+//	return getDefaultCarvelPackagingDir() + "/source"
+//}
+//
+//func getDefaultAppConfigDir() string {
+//	return getDefaultSourceDir() + "/config"
+//}
+//
+//func getDefaultAppImgpkgDir() string {
+//	return getDefaultSourceDir() + "/.imgpkg"
+//}
+//
+//func getDefaultAppConfigFile() string {
+//	return getDefaultAppConfigDir() + "/config.yml"
+//}
+//
+//func getDefaultAppValuesFile() string {
+//	return getDefaultAppConfigDir() + "/values.yml"
+//}
+//
+//func getDefaultAppImgpkgFile() string {
+//	return getDefaultAppImgpkgDir() + "/images.yml"
+//}
 
 func createAppDirs(appConfigDir, appImgpkgDir string) error {
 	if err := mkdir(appConfigDir); err != nil {
