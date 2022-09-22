@@ -100,7 +100,7 @@ func ExpandStrict(s string) (string, error) {
 			if name == "" && w > 0 {
 				// Encountered invalid syntax
 				return "", &InvalidEnvError{
-					Context:     fmt.Sprintf("failed to expand [%s]", s),
+					Context:     fmt.Sprintf("parse [%s]", s[j:]),
 					InvalidEnvs: []string{s[j+1:]},
 				}
 			} else if name == "" {
@@ -121,7 +121,7 @@ func ExpandStrict(s string) (string, error) {
 				val, found := os.LookupEnv(name)
 				if !found {
 					return "", &InvalidEnvError{
-						Context:     fmt.Sprintf("failed to lookup [%s]", s),
+						Context:     fmt.Sprintf("lookup [%s]", s[j:]),
 						InvalidEnvs: []string{name},
 					}
 				}
