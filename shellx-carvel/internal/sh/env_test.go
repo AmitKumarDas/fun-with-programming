@@ -18,10 +18,10 @@ func TestExpandEnvStrict(t *testing.T) {
 		UnsetEnv(EnvVerbose)
 	}()
 	var scenarios = []struct {
-		name      string
-		data      string
-		isErr     bool
-		isOutEqIn bool
+		name     string
+		data     string
+		isErr    bool
+		expected string
 	}{
 		{
 			name:  "verify error given an unset env",
@@ -34,58 +34,58 @@ func TestExpandEnvStrict(t *testing.T) {
 			isErr: true,
 		},
 		{
-			name:      "verify no error given a var that is not env but has $",
-			data:      "Hi $ How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var that is not env but has $",
+			data:     "Hi $ How are you",
+			isErr:    false,
+			expected: "Hi $ How are you",
 		},
 		{
-			name:      "verify no error given a var with $*",
-			data:      "Hi $* How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var with $*",
+			data:     "Hi $* How are you",
+			isErr:    false,
+			expected: "Hi $* How are you",
 		},
 		{
-			name:      "verify no error given a var with $#",
-			data:      "Hi $# How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var with $#",
+			data:     "Hi $# How are you",
+			isErr:    false,
+			expected: "Hi $# How are you",
 		},
 		{
-			name:      "verify no error given a var with $?",
-			data:      "Hi $? How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var with $?",
+			data:     "Hi $? How are you",
+			isErr:    false,
+			expected: "Hi $? How are you",
 		},
 		{
-			name:      "verify no error given a var with $$",
-			data:      "Hi $$ How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var with $$",
+			data:     "Hi $$ How are you",
+			isErr:    false,
+			expected: "Hi $$ How are you",
 		},
 		{
-			name:      "verify no error given a var with $!",
-			data:      "Hi $! How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var with $!",
+			data:     "Hi $! How are you",
+			isErr:    false,
+			expected: "Hi $! How are you",
 		},
 		{
-			name:      "verify no error given a var with $@",
-			data:      "Hi $@ How are you",
-			isErr:     false,
-			isOutEqIn: true,
+			name:     "verify no error given a var with $@",
+			data:     "Hi $@ How are you",
+			isErr:    false,
+			expected: "Hi $@ How are you",
 		},
 		{
-			name:      "verify no error given a set env",
-			data:      "Hello " + EnvWhoAmI,
-			isErr:     false,
-			isOutEqIn: false,
+			name:     "verify no error given a set env",
+			data:     "Hello " + EnvWhoAmI,
+			isErr:    false,
+			expected: "Hello " + os.ExpandEnv(EnvWhoAmI),
 		},
 		{
-			name:      "verify no error given multiple set envs",
-			data:      fmt.Sprintf("Hello %s; My verbosity is %s", EnvWhoAmI, EnvVerbose),
-			isErr:     false,
-			isOutEqIn: false,
+			name:     "verify no error given multiple set envs",
+			data:     fmt.Sprintf("Hello %s; My verbosity is %s", EnvWhoAmI, EnvVerbose),
+			isErr:    false,
+			expected: fmt.Sprintf("Hello %s; My verbosity is %s", os.ExpandEnv(EnvWhoAmI), os.ExpandEnv(EnvVerbose)),
 		},
 	}
 	for _, s := range scenarios {
@@ -95,15 +95,10 @@ func TestExpandEnvStrict(t *testing.T) {
 			if s.isErr {
 				requireErr(t, err)
 				return
-			} else {
-				requireNoErr(t, err)
-				requireNotEmpty(t, got)
 			}
-			if s.isOutEqIn {
-				requireEqual(t, s.data, got)
-			} else {
-				requireNotEqual(t, s.data, got)
-			}
+			requireNoErr(t, err)
+			requireNotEmpty(t, got)
+			requireEqual(t, s.expected, got)
 		})
 	}
 }
