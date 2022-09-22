@@ -2,7 +2,9 @@ package sh
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"strings"
 )
 
 // passThroughFn returns the provided input. It is useful
@@ -85,6 +87,7 @@ func getShellName(s string) (string, int) {
 // Note: Borrowed from os.Expand
 func ExpandStrict(s string) (string, error) {
 	var buf []byte
+	var removals []string
 	// ${} is all ASCII, so bytes are fine for this operation.
 	i := 0
 	for j := 0; j < len(s); j++ {
@@ -105,9 +108,14 @@ func ExpandStrict(s string) (string, error) {
 				// name. Leave the dollar character untouched.
 				buf = append(buf, s[j])
 			} else if len(name) == 1 && isShellSpecialVar(name[0]) {
-				// A shell special variable.
-				// Leave the dollar as well as special character untouched.
-				buf = append(buf, s[j], name[0])
+				// A shell special variable. E.g.: $#, $@, $%, $?, ${?} etc.
+				// Do nothing i.e. dollar & special character are removed
+				if IsDebug() {
+					if removals == nil {
+						removals = make([]string, 0, len(s))
+					}
+					removals = append(removals, s[j:j+w+1])
+				}
 			} else {
 				// This is most likely an ENV variable
 				val, found := os.LookupEnv(name)
@@ -122,6 +130,9 @@ func ExpandStrict(s string) (string, error) {
 			j += w
 			i = j + 1
 		}
+	}
+	if IsDebug() && len(removals) != 0 {
+		log.Println("given:", s, "removed:", strings.Join(removals, " "))
 	}
 	if buf == nil {
 		return s, nil
