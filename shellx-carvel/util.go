@@ -45,6 +45,15 @@ func format(format string, a ...any) string {
 	return fmt.Sprintf(format, a...)
 }
 
+func mkdirAll(dirs ...string) error {
+	for _, d := range dirs {
+		if err := mkdir(d); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 type eventuallyConfig struct {
 	Attempts *int
 	Interval *time.Duration
