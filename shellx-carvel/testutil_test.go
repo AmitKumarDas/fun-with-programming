@@ -48,6 +48,13 @@ func requireContains(t *testing.T, expectedSubStr, actual string) {
 	t.Fatalf("expected substring %q is not part of actual %q", expectedSubStr, actual)
 }
 
+func assertContains(t *testing.T, expectedSubStr, actual string) {
+	if strings.Contains(actual, expectedSubStr) {
+		return
+	}
+	t.Errorf("expected substring %q is not part of actual %q", expectedSubStr, actual)
+}
+
 func mustJoinPaths(paths ...string) string {
 	finalPath, err := shx.JoinPaths(paths...)
 	if err != nil {
