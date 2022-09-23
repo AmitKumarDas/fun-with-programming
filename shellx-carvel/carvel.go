@@ -48,6 +48,7 @@ var (
 	dirCarvelRelease           string
 	dirCarvelReleaseImgpkg     string
 	dirCarvelReleasePkgRepo    string
+	dirCarvelReleaseTemplates  string
 	dirCarvelReleasePkgRepoPkg string
 	fileConfigValues           string
 	fileConfigValuesOpenAPI    string
@@ -59,16 +60,20 @@ var (
 
 func setupCarvelDirAndFilePaths() error {
 	var err shx.MultiError
+	// directories
 	dirCarvelSource = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "source")
 	dirCarvelSourceConfig = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, "config")
 	dirCarvelSourceImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, ".imgpkg")
 	dirCarvelRelease = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "release")
 	dirCarvelReleaseImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, ".imgpkg")
 	dirCarvelReleasePkgRepo = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "packages")
+	dirCarvelReleaseTemplates = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "templates")
 	dirCarvelReleasePkgRepoPkg = shx.JoinPathsWithErrHandle(&err, dirCarvelReleasePkgRepo, EnvPackageName)
+
+	// files
 	fileConfigValues = dirCarvelSourceConfig + "/values.yml"
-	fileConfigValuesOpenAPI = dirCarvelReleasePkgRepoPkg + "/schema-openapi.yml"
-	filePackageTemplate = dirCarvelReleasePkgRepoPkg + "/package-template.yml"
+	fileConfigValuesOpenAPI = dirCarvelSourceConfig + "/schema-openapi.yml"
+	filePackageTemplate = shx.JoinPathsWithErrHandle(&err, dirCarvelReleaseTemplates, EnvPackageName+"-template.yml")
 	filePackageMetadata = dirCarvelReleasePkgRepoPkg + "/package-metadata.yml"
 	filePackageVerion = shx.JoinPathsWithErrHandle(&err, dirCarvelReleasePkgRepoPkg, EnvPackageVersion+".yml")
 	fileCarvelReleaseImgpkg = dirCarvelReleaseImgpkg + "/images.yml"
@@ -77,10 +82,7 @@ func setupCarvelDirAndFilePaths() error {
 }
 
 func mkdirForCarvelRelease() error {
-	if err := mkdir(dirCarvelReleasePkgRepoPkg); err != nil {
-		return err
-	}
-	return mkdir(dirCarvelReleaseImgpkg)
+	return mkdirAll(dirCarvelReleasePkgRepoPkg, dirCarvelReleaseTemplates, dirCarvelReleaseImgpkg)
 }
 
 func createPackageMetadata() error {
