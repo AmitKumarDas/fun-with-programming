@@ -156,5 +156,5 @@ func ExpandStrictAll(data ...string) ([]string, error) {
 	if len(invalid) == 0 {
 		return expanded, nil
 	}
-	return nil, &MultiError{Errors: invalid}
+	return nil, (&MultiError{}).AddAll(invalid)
 }

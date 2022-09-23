@@ -26,6 +26,20 @@ func JoinPaths(paths ...string) (string, error) {
 	return path.Join(expanded...), nil
 }
 
+// JoinPathsWithErrHandle returns the final path only if there
+// was no error while joining these paths
+func JoinPathsWithErrHandle(mErr *MultiError, paths ...string) string {
+	if mErr.HasError() {
+		return ""
+	}
+	final, err := JoinPaths(paths...)
+	if err != nil {
+		mErr.Add(err)
+		return ""
+	}
+	return final
+}
+
 // IsEq verifies if the provided strings are equal. The string(s)
 // can also be an env variable or consist of an env variable
 // as a substring. ENV variable if any will have its value

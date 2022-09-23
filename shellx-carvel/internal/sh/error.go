@@ -19,19 +19,54 @@ func (e *InvalidEnvError) Error() string {
 }
 
 type MultiError struct {
-	Errors []error
+	errors []error
+}
+
+func (mErr *MultiError) Add(err error) error {
+	if mErr == nil {
+		return nil
+	}
+	mErr.errors = append(mErr.errors, err)
+	return mErr
+}
+
+func (mErr *MultiError) AddAll(errs []error) error {
+	if mErr == nil {
+		return nil
+	}
+	for _, e := range errs {
+		mErr.Add(e)
+	}
+	return mErr
+}
+
+func (mErr *MultiError) HasError() bool {
+	if mErr == nil {
+		return false
+	}
+	return len(mErr.errors) > 0
 }
 
 func (mErr *MultiError) Error() string {
-	if len(mErr.Errors) == 0 {
-		return fmt.Sprintf("invalid use of %T", mErr)
+	if mErr == nil {
+		return ""
 	}
-	if len(mErr.Errors) == 1 {
-		return mErr.Errors[0].Error()
+	if len(mErr.errors) == 0 {
+		return "no errors found"
 	}
-	var msgs = make([]string, 0, len(mErr.Errors))
-	for _, e := range mErr.Errors {
+	if len(mErr.errors) == 1 {
+		return mErr.errors[0].Error()
+	}
+	var msgs = make([]string, 0, len(mErr.errors))
+	for _, e := range mErr.errors {
 		msgs = append(msgs, e.Error())
 	}
 	return strings.Join(msgs, ", ")
+}
+
+func (mErr *MultiError) ErrOrNil() error {
+	if mErr == nil || len(mErr.errors) == 0 {
+		return nil
+	}
+	return mErr
 }
