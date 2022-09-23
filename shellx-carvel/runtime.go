@@ -46,20 +46,7 @@ var (
 	EnvPackageRepoVersion = "${PACKAGE_REPO_VERSION}"
 	EnvTestCarvelRelease  = "${TEST_CARVEL_RELEASE}"
 
-	EnvDirCarvelPackaging         = "${DIR_CARVEL_PACKAGING}" // carvel folders
-	EnvDirCarvelSource            = "${DIR_CARVEL_SOURCE}"
-	EnvDirCarvelSourceConfig      = "${DIR_CARVEL_SOURCE_CONFIG}"
-	EnvDirCarvelSourceImgpkg      = "${DIR_CARVEL_SOURCE_IMGPKG}"
-	EnvDirCarvelRelease           = "${DIR_CARVEL_RELEASE}"
-	EnvDirCarvelReleaseImgpkg     = "${DIR_CARVEL_RELEASE_IMGPKG}"
-	EnvDirCarvelReleasePkgRepo    = "${DIR_CARVEL_RELEASE_PKG_REPO}"
-	EnvDirCarvelReleasePkgRepoPkg = "${DIR_CARVEL_RELEASE_PKG_REPO_PKG}"
-
-	//EnvFileCarvelSourceConfig       = "${FILE_CARVEL_SOURCE_CONFIG}" // carvel files
-	//EnvFileCarvelSourceValues       = "${FILE_CARVEL_SOURCE_VALUES}"
-	//EnvFileCarvelSourceImgpkg       = "${FILE_CARVEL_SOURCE_IMGPKG}"
-	//EnvFileCarvelReleasePkgMetadata = "${FILE_CARVEL_RELEASE_PKG_METADATA}"
-	//EnvFileCarvelReleasePkgTemplate = "${FILE_CARVEL_RELEASE_PKG_TEMPLATE}"
+	EnvDirCarvelPackaging = "${DIR_CARVEL_PACKAGING}" // carvel folders
 )
 
 // Immediate setting of few environment variables
@@ -67,6 +54,7 @@ var version = shx.MaybeSetEnv(EnvVersion, "v1.0.1")
 var versionSemver = strings.TrimPrefix(version, "v")
 var binPathCarvel = shx.MaybeSetEnv(EnvBinPathCarvel, "tmp")
 var binPathKind = shx.MaybeSetEnv(EnvBinPathKind, "tmp")
+var dirCarvelPackaging = shx.MaybeSetEnv(EnvDirCarvelPackaging, "tmp/packaging")
 
 // Carvel binaries / CLIs as functions
 var kbld = shx.RunCmd(binPathCarvel + "/kbld")
@@ -133,7 +121,7 @@ func init() {
 		EnvTestCarvelRelease:  "false",
 	}
 	for k, v := range envs {
-		shx.MaybeSetEnv(k, v)
+		_ = shx.MaybeSetEnv(k, v)
 	}
 
 	// display all the environment variables for debuggability
