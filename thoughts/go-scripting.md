@@ -17,11 +17,17 @@ based executions do not really solve the scripting needs. It might backfire in t
 ### Take 3 (Sep 2022)
 I started digging more into the internals of mage & found its sh package to be quite useful. It is
 not a tool to replace bash but provides just enough functions to make scripting in go effective.
-I started making few changes to mage's sh package to make it aligned for scripting business. 
-For example, I wanted the logic to detect missing ENV variables which are so common in scripts.
-This pushed me to add several utility functions to automagically expand ENV variables if present &
-hence make the whole scripting journey smooth. In addition, I never had to bother about linters, etc.
-since go compiler was more than enough.
+I started making few changes to mage's sh package to make it aligned to scripting. For example,
+I wanted the logic to detect missing ENV variables which are so common in scripts. This further
+pushed me to add several utility functions to automagically expand ENV variables if present &
+hence make the whole scripting journey smooth. In addition, I never had to bother about linters,
+etc. since go compiler was more than enough for my requirements.
 
 ### Take 4 (Sep 2022)
-How about using `go test` as the UX to trigger the newly built go script?
+How about using `go test` as the UX to trigger the newly built go script? After all the new code
+is 100% golang. We get all the advantages that `go test` has to offer by using the same to write
+the blueprint _(read ordered steps that makes the script)_.
+
+## Proof Of Work
+- carvel-packaging folder in this repo contains the original bash script I have talking about
+- shellx-carvel folder is the golang version of the script
