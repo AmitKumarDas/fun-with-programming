@@ -31,3 +31,7 @@ the blueprint _(read ordered steps that makes the script)_.
 ## Proof Of Work
 - carvel-packaging folder in this repo contains the original bash script I have talking about
 - shellx-carvel folder is the golang version of the script
+
+## References
+- https://magefile.org/
+- https://github.com/rogpeppe/go-internal/tree/master/testscript
