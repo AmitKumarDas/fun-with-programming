@@ -7,8 +7,9 @@ func verifyApplication() error {
 		return nil
 	}
 	var fns = []func() error{
+		deployKappController,
 		createK8sArtifactsDir,
-		createFilePackageRepo,
+		createFilePackageRepositoryCR,
 		deleteThenCreateAppNamespace,
 		deleteThenCreatePackageRepo,
 		verifyPresenceOfPackageRepository,
@@ -26,7 +27,11 @@ func createK8sArtifactsDir() error {
 	return mkdir(EnvArtifactsPathK8s)
 }
 
-func createFilePackageRepo() error {
+func deployKappController() error {
+	return kubectl("apply", "-f", format("https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/%s/release.yml", EnvKappCtrlVersion))
+}
+
+func createFilePackageRepositoryCR() error {
 	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
 	if pathErr != nil {
 		return pathErr
