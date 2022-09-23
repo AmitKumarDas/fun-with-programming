@@ -31,6 +31,12 @@
 - 4/ A hard coded string defined in the binary of your program
 - 5/ A string literal have static lifetime - it lasts as long as program is running
 
+### to_string() vs. to_owned()
+- https://users.rust-lang.org/t/to-string-vs-to-owned-for-string-literals/1441/5
+
+### TIPs
+- cargo new unittest-101 --lib
+
 ### References
 - https://blog.thoughtram.io/ownership-in-rust/
 - https://willcrichton.net/notes/rust-memory-safety/
