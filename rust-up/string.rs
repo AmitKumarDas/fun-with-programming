@@ -1,5 +1,9 @@
 fn main(){
-    // let my_name = "Amit"; // &str; a string literal; a string slice that refer to a preallocated text that is stored in read-only memory as part of the executable
+    // &str; a string literal;
+    // a string slice that refers to a preallocated text
+    // that is stored in read-only memory as part of the executable
+    // let my_name = "Amit";
+
     let my_name = "Amit".to_string(); // std::string::String
     greet(my_name.to_string());
     greet_and_drop();
