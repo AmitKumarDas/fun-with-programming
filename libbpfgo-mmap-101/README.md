@@ -47,9 +47,9 @@ int kprobe__sys_mmap(struct pt_regs *ctx)
 - Dropping packets if prog returns 0
 - Trimming packets if returned length is less than original
 
-- We're NOT trimming or dropping the original packet 
+- We're NOT trimming or dropping the original packet
 - Which would still reach the intended socket intact
-- We're working with a COPY of the packet metadata 
+- We're working with a COPY of the packet metadata
 - which RAW SOCKETS can access for observability
 
 - In addition to filtering packet flow to our socket
