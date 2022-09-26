@@ -3,6 +3,7 @@ package shellx_carvel
 import (
 	shx "carvel.shellx.dev/internal/sh"
 	"fmt"
+	"sync"
 )
 
 func installCarvelCLIs() error {
@@ -22,6 +23,89 @@ func installCarvelCLIs() error {
 	return nil
 }
 
+var onlyOnce sync.Once
+
+var (
+	dirCarvelSource            string
+	dirCarvelSourceConfig      string
+	dirCarvelSourceImgpkg      string
+	dirCarvelRelease           string
+	dirCarvelReleaseImgpkg     string
+	dirCarvelReleasePkgRepo    string
+	dirCarvelReleaseTemplates  string
+	dirCarvelReleasePkgRepoPkg string
+	fileConfig                 string
+	fileConfigValues           string
+	fileConfigValuesOpenAPI    string
+	fileCarvelSourceImgpkg     string
+	filePackageTemplate        string
+	filePackageMetadata        string
+	filePackageVerion          string
+	fileCarvelReleaseImgpkg    string
+)
+
+func setupCarvelDirAndFilePaths() error {
+	var err shx.MultiError
+	onlyOnce.Do(func() {
+		// directories
+		dirCarvelSource = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "source")
+		dirCarvelSourceConfig = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, "config")
+		dirCarvelSourceImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, ".imgpkg")
+		dirCarvelRelease = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "release")
+		dirCarvelReleaseImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, ".imgpkg")
+		dirCarvelReleasePkgRepo = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "packages")
+		dirCarvelReleaseTemplates = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "templates")
+		dirCarvelReleasePkgRepoPkg = shx.JoinPathsWithErrHandle(&err, dirCarvelReleasePkgRepo, EnvPackageName)
+
+		// files
+		fileConfig = dirCarvelSourceConfig + "/config.yml"
+		fileConfigValues = dirCarvelSourceConfig + "/values.yml"
+		fileConfigValuesOpenAPI = dirCarvelSourceConfig + "/schema-openapi.yml"
+		fileCarvelSourceImgpkg = dirCarvelSourceImgpkg + "/images.yml"
+		filePackageTemplate = shx.JoinPathsWithErrHandle(&err, dirCarvelReleaseTemplates, EnvPackageName+"-template.yml")
+		filePackageMetadata = dirCarvelReleasePkgRepoPkg + "/package-metadata.yml"
+		filePackageVerion = shx.JoinPathsWithErrHandle(&err, dirCarvelReleasePkgRepoPkg, EnvPackageVersion+".yml")
+		fileCarvelReleaseImgpkg = dirCarvelReleaseImgpkg + "/images.yml"
+	})
+	return (&err).ErrOrNil()
+}
+
+func cutAppBundle() error {
+	var fns = []func() error{
+		setupCarvelDirAndFilePaths,
+		createAppDirs,
+		createAppConfigs,
+		createAppBundle,
+		publishAppBundle,
+	}
+	for _, fn := range fns {
+		if err := fn(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func createAppDirs() error {
+	return mkdirAll(dirCarvelSourceConfig, dirCarvelSourceImgpkg)
+}
+
+func createAppConfigs() error {
+	if err := file(fileConfig, appDeploymentYML, 0644); err != nil {
+		return err
+	}
+	return file(fileConfigValues, appValuesYML, 0644)
+}
+
+func createAppBundle() error {
+	return kbld("-f", dirCarvelSourceConfig, "--imgpkg-lock-output", fileCarvelSourceImgpkg)
+}
+
+func publishAppBundle() error {
+	bundle := format("%s:%s/packages/%s:%s", EnvRegistryName, EnvRegistryPort, EnvAppBundleName, EnvAppBundleVersion)
+	return imgpkg("push", "-b", bundle, "-f", dirCarvelSource)
+}
+
 func cutCarvelRelease() error {
 	var fns = []func() error{
 		setupCarvelDirAndFilePaths,
@@ -39,46 +123,6 @@ func cutCarvelRelease() error {
 		}
 	}
 	return nil
-}
-
-var (
-	dirCarvelSource            string
-	dirCarvelSourceConfig      string
-	dirCarvelSourceImgpkg      string
-	dirCarvelRelease           string
-	dirCarvelReleaseImgpkg     string
-	dirCarvelReleasePkgRepo    string
-	dirCarvelReleaseTemplates  string
-	dirCarvelReleasePkgRepoPkg string
-	fileConfigValues           string
-	fileConfigValuesOpenAPI    string
-	filePackageTemplate        string
-	filePackageMetadata        string
-	filePackageVerion          string
-	fileCarvelReleaseImgpkg    string
-)
-
-func setupCarvelDirAndFilePaths() error {
-	var err shx.MultiError
-	// directories
-	dirCarvelSource = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "source")
-	dirCarvelSourceConfig = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, "config")
-	dirCarvelSourceImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, ".imgpkg")
-	dirCarvelRelease = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "release")
-	dirCarvelReleaseImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, ".imgpkg")
-	dirCarvelReleasePkgRepo = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "packages")
-	dirCarvelReleaseTemplates = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "templates")
-	dirCarvelReleasePkgRepoPkg = shx.JoinPathsWithErrHandle(&err, dirCarvelReleasePkgRepo, EnvPackageName)
-
-	// files
-	fileConfigValues = dirCarvelSourceConfig + "/values.yml"
-	fileConfigValuesOpenAPI = dirCarvelSourceConfig + "/schema-openapi.yml"
-	filePackageTemplate = shx.JoinPathsWithErrHandle(&err, dirCarvelReleaseTemplates, EnvPackageName+"-template.yml")
-	filePackageMetadata = dirCarvelReleasePkgRepoPkg + "/package-metadata.yml"
-	filePackageVerion = shx.JoinPathsWithErrHandle(&err, dirCarvelReleasePkgRepoPkg, EnvPackageVersion+".yml")
-	fileCarvelReleaseImgpkg = dirCarvelReleaseImgpkg + "/images.yml"
-
-	return err.ErrOrNil()
 }
 
 func mkdirForCarvelRelease() error {

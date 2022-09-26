@@ -6,8 +6,8 @@ func TestReleaseOfCarvelPackage(t *testing.T) {
 	tryInstallCarvelCLIs(t)
 	tryInstallKindCLI(t)
 	trySetupRegistryAsLocalDockerContainer(t)
-	tryAppBundleCreateAndPublish(t)
-	tryPackageRelease(t)
+	tryCutAppBundle(t)
+	tryCutPackageRelease(t)
 	trySetupKindCluster(t)
 	tryVerifyApplication(t)
 }

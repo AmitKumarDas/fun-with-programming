@@ -11,7 +11,17 @@ func tryInstallCarvelCLIs(t *testing.T) {
 	requireTrue(t, isNoErr(whichKbld(), whichYtt(), whichImgpkg()))
 }
 
-func tryPackageRelease(t *testing.T) {
+func tryCutAppBundle(t *testing.T) {
+	requireNoErr(t, cutAppBundle())
+
+	out, outErr := shx.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
+	requireNoErr(t, outErr)
+	var mErr shx.MultiError
+	assertContains(t, shx.JoinPathsWithErrHandle(&mErr, "packages", EnvAppBundleName), out)
+	requireNoErr(t, (&mErr).ErrOrNil())
+}
+
+func tryCutPackageRelease(t *testing.T) {
 	requireNoErr(t, cutCarvelRelease())
 
 	out, outErr := shx.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
