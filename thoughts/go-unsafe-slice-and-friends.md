@@ -11,7 +11,7 @@
   - With *b[0] & len(b) we can construct corresponding string or slice
 - Go string builder code can be a useful reference on managing memory allocations
 
-### Proposal - 1
+### Proposal - 1 (Accepted)
 - https://github.com/golang/go/issues/53003
 ```go
 // StringData returns a POINTER to the BYTES of a string
@@ -78,3 +78,14 @@ func cArrToSliceByte(array *C.uint8_t, len int) []byte {
 ### Real World Usage - 4
 - https://go.dev/src/strings/builder.go
 - Go's string builder makes use of unsafe to reduce allocations
+
+### Real World Usage - 5
+- https://github.com/google/brotli/pull/942
+```diff
+- // It is a workaround for non-copying-wrapping of native memory.
+- // C-encoder never pushes output block longer than ((2 << 25) + 502).
+- // TODO(eustas): use natural wrapper, when it becomes available, see
+- //               https://golang.org/issue/13656.
+- output := (*[1 << 30]byte)(unsafe.Pointer(result.output_data))[:length:length]
++ output := unsafe.Slice((*byte)(unsafe.Pointer(result.output_data)), length)
+```
