@@ -1,19 +1,60 @@
 package shellx_carvel
 
-import shx "carvel.shellx.dev/internal/sh"
+import (
+	shx "carvel.shellx.dev/internal/sh"
+	"fmt"
+	"log"
+	"strings"
+)
+
+var (
+	dirK8sDeployments           string
+	fileK8sAppRBAC              string
+	fileK8sCarvelPackageRepo    string
+	fileK8sCarvelPackageRBAC    string
+	fileK8sCarvelPackageInstall string
+)
+
+func setupK8sDeploymentDirAndFilePaths() error {
+	// directories
+	dirK8sDeployments = "artifacts/k8s"
+
+	// files
+	fileK8sCarvelPackageRepo = dirK8sDeployments + "/package-repo.yml"
+	fileK8sAppRBAC = dirK8sDeployments + "/application-rbac.yml"
+	fileK8sCarvelPackageRBAC = dirK8sDeployments + "/package-rbac.yml"
+	fileK8sCarvelPackageInstall = dirK8sDeployments + "/package-install.yml"
+	return nil
+}
 
 func verifyApplication() error {
 	if shx.IsNotEq(EnvTestCarvelRelease, "true") {
 		return nil
 	}
+
+	if err := setupK8sDeploymentDirAndFilePaths(); err != nil {
+		return err
+	}
+
+	if err := cleanK8sResources(); err != nil {
+		log.Println(err)
+	}
+
 	var fns = []func() error{
 		deployKappController,
 		createK8sArtifactsDir,
-		createFilePackageRepositoryCR,
-		deleteThenCreateAppNamespace,
-		deleteThenCreatePackageRepo,
+		createFilePackageRepository,
+		applyAppNamespace,
+		applyPackageRepository,
 		verifyPresenceOfPackageRepository,
 		verifyPresenceOfPackage,
+		createFileAppRBACResources,
+		applyAppRBACResources,
+		createFileCarvelRBACResources,
+		applyCarvelRBACResources,
+		createFilePackageInstallResources,
+		applyPackageInstallResources,
+		isAppPodRunning,
 	}
 	for _, fn := range fns {
 		if err := fn(); err != nil {
@@ -24,34 +65,24 @@ func verifyApplication() error {
 }
 
 func createK8sArtifactsDir() error {
-	return mkdir(EnvArtifactsPathK8s)
+	return mkdir(dirK8sDeployments)
 }
 
 func deployKappController() error {
 	return kubectl("apply", "-f", format("https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/%s/release.yml", EnvKappCtrlVersion))
 }
 
-func createFilePackageRepositoryCR() error {
-	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
-	if pathErr != nil {
-		return pathErr
-	}
-	return file(fullPath, packageRepositoryYML, 0644)
+func createFilePackageRepository() error {
+	return file(fileK8sCarvelPackageRepo, packageRepositoryYML, 0644)
 }
 
-func deleteThenCreateAppNamespace() error {
-	_ = kubectl("delete", "ns", EnvK8sNamespace) // ignore error if any
+func applyAppNamespace() error {
 	return kubectl("create", "ns", EnvK8sNamespace)
 }
 
-func deleteThenCreatePackageRepo() error {
-	fullPath, pathErr := shx.JoinPaths(EnvArtifactsPathK8s, EnvFilePackageRepository)
-	if pathErr != nil {
-		return pathErr
-	}
-	_ = kubectl("delete", "-f", fullPath) // ignore error if any
+func applyPackageRepository() error {
 	return eventually(func() error {
-		return kubectl("create", "-f", fullPath)
+		return kubectl("create", "-f", fileK8sCarvelPackageRepo)
 	})
 }
 
@@ -65,4 +96,67 @@ func verifyPresenceOfPackage() error {
 	return eventually(func() error {
 		return kubectl("get", "package", "-n", EnvK8sNamespace, EnvPackageName+"."+EnvPackageVersion)
 	})
+}
+
+func createFileAppRBACResources() error {
+	return file(fileK8sAppRBAC, applicationRBACYML, 0644)
+}
+
+func applyAppRBACResources() error {
+	return eventually(func() error {
+		return kubectl("create", "-f", fileK8sAppRBAC)
+	})
+}
+
+func createFileCarvelRBACResources() error {
+	return file(fileK8sCarvelPackageRBAC, carvelPackageRBACYML, 0644)
+}
+
+func applyCarvelRBACResources() error {
+	return eventually(func() error {
+		return kubectl("create", "-f", fileK8sCarvelPackageRBAC)
+	})
+}
+
+func createFilePackageInstallResources() error {
+	return file(fileK8sCarvelPackageInstall, carvelPackageInstallYML, 0644)
+}
+
+func applyPackageInstallResources() error {
+	return eventually(func() error {
+		return kubectl("create", "-f", fileK8sCarvelPackageInstall)
+	})
+}
+
+func cleanK8sResources() error {
+	var mErr shx.MultiError
+	(&mErr).Add(kubectl("delete", "app", "-n", EnvK8sNamespace, EnvPackageInstallName))
+	(&mErr).Add(kubectl("delete", "-f", fileK8sCarvelPackageInstall))
+	(&mErr).Add(kubectl("delete", "-f", fileK8sCarvelPackageRBAC))
+	(&mErr).Add(kubectl("delete", "-f", fileK8sAppRBAC))
+	(&mErr).Add(kubectl("delete", "-f", fileK8sCarvelPackageRepo))
+	(&mErr).Add(kubectl("delete", "ns", EnvK8sNamespace))
+	return (&mErr).ErrOrNil()
+}
+
+func isAppPodRunning() error {
+	cmd := "kubectl"
+	args, cmdErr := shx.ExpandStrictAll([]string{"get", "po", "-n", EnvK8sNamespace, "-l", EnvAppDeploymentLabelKey + "=" + EnvAppDeploymentLabelVal, "-o", "custom-columns=:.status.phase"}...)
+	if cmdErr != nil {
+		return cmdErr
+	}
+	err := eventually(func() error {
+		out, err := shx.Output(cmd, args...)
+		if err != nil {
+			return err
+		}
+		if strings.Contains(strings.ToLower(strings.TrimSpace(out)), "running") { // SUCCESS
+			return nil
+		}
+		return fmt.Errorf("found pod with state %q", out)
+	})
+	if err != nil {
+		return fmt.Errorf("%s %s: %w", cmd, format("%s", strings.Join(args, " ")), err)
+	}
+	return nil
 }

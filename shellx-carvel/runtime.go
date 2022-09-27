@@ -23,18 +23,19 @@ var (
 	EnvRegistryPort       = "${REGISTRY_PORT}"
 	EnvSetupLocalRegistry = "${SETUP_LOCAL_REGISTRY}"
 
-	EnvK8sNamespace      = "${K8S_NAMESPACE}" // K8s envs
-	EnvK8sServiceAccount = "${K8S_SERVICE_ACCOUNT}"
-	EnvK8sRole           = "${K8S_ROLE}"
-	EnvK8sRoleBinding    = "${K8S_ROLE_BINDING}"
+	EnvK8sNamespace            = "${K8S_NAMESPACE}" // K8s envs
+	EnvK8sServiceAccount       = "${K8S_SERVICE_ACCOUNT}"
+	EnvK8sRole                 = "${K8S_ROLE}"
+	EnvK8sRoleBinding          = "${K8S_ROLE_BINDING}"
+	EnvK8sServiceAccountCarvel = "${K8S_SERVICE_ACCOUNT_CARVEL}"
+	EnvK8sRoleCarvel           = "${K8S_ROLE_CARVEL}"
+	EnvK8sRoleBindingCarvel    = "${K8S_ROLE_BINDING_CARVEL}"
 
 	EnvAppDeploymentName     = "${APP_DEPLOYMENT_NAME}" // Deploy envs
 	EnvAppDeploymentLabelKey = "${APP_DEPLOYMENT_LABEL_KEY}"
 	EnvAppDeploymentLabelVal = "${APP_DEPLOYMENT_LABEL_VAL}"
 	EnvAppImageName          = "${APP_IMAGE_NAME}"
 	EnvAppImageVersion       = "${APP_IMAGE_VERSION}"
-	EnvArtifactsPathK8s      = "${ARTIFACTS_PATH_K8S}"
-	EnvFilePackageRepository = "${FILE_PACKAGE_REPO}"
 
 	EnvBinPathCarvel      = "${BIN_PATH_CARVEL}" // Carvel envs
 	EnvKappCtrlVersion    = "${KAPP_CTRL_VERSION}"
@@ -44,6 +45,7 @@ var (
 	EnvPackageVersion     = "${PACKAGE_VERSION}"
 	EnvPackageRepoName    = "${PACKAGE_REPO_NAME}"
 	EnvPackageRepoVersion = "${PACKAGE_REPO_VERSION}"
+	EnvPackageInstallName = "${PACKAGE_INSTALL_NAME}"
 	EnvTestCarvelRelease  = "${TEST_CARVEL_RELEASE}"
 
 	EnvDirCarvelPackaging = "${DIR_CARVEL_PACKAGING}" // carvel folders
@@ -96,10 +98,13 @@ func init() {
 		EnvRegistryPort:       "5000",
 
 		// k8s rbac
-		EnvK8sNamespace:      appName + "-system",
-		EnvK8sServiceAccount: appName,
-		EnvK8sRole:           appName + "-role",
-		EnvK8sRoleBinding:    appName + "-role-binding",
+		EnvK8sNamespace:            appName + "-system",
+		EnvK8sServiceAccount:       appName,
+		EnvK8sRole:                 appName + "-role",
+		EnvK8sRoleBinding:          appName + "-role-binding",
+		EnvK8sServiceAccountCarvel: "carvel-pkg-install",
+		EnvK8sRoleCarvel:           "carvel-pkg-install-role",
+		EnvK8sRoleBindingCarvel:    "carvel-pkg-install-role-binding",
 
 		// deployment
 		EnvAppDeploymentName:     appName,
@@ -107,8 +112,6 @@ func init() {
 		EnvAppDeploymentLabelVal: appName + "-controller",
 		EnvAppImageName:          "amitnist/tkg-remediator", // should exist
 		EnvAppImageVersion:       "latest",                  // should exist
-		EnvArtifactsPathK8s:      "tmp/artifacts/k8s",
-		EnvFilePackageRepository: "package-repo.yml",
 
 		// carvel
 		EnvKappCtrlVersion:    "v0.40.0",
@@ -118,6 +121,7 @@ func init() {
 		EnvPackageVersion:     versionSemver,
 		EnvPackageRepoName:    appName + "-repo." + packageDomain,
 		EnvPackageRepoVersion: versionSemver,
+		EnvPackageInstallName: appName + "-install",
 		EnvTestCarvelRelease:  "false",
 	}
 	for k, v := range envs {
