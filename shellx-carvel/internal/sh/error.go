@@ -23,8 +23,8 @@ type MultiError struct {
 }
 
 func (mErr *MultiError) Add(err error) error {
-	if mErr == nil {
-		return nil
+	if mErr == nil || err == nil {
+		return mErr
 	}
 	mErr.errors = append(mErr.errors, err)
 	return mErr
