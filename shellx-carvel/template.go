@@ -36,7 +36,7 @@ spec:
       prometheus.io/scrape: "true"
       prometheus.io/port: "8080"
     spec:
-      serviceAccountName: tkg-remediator
+      serviceAccountName: ${K8S_SERVICE_ACCOUNT}
       terminationGracePeriodSeconds: 60
       #! Required for AWS IAM Role bindings
       #! https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html
