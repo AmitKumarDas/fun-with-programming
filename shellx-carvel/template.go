@@ -199,3 +199,174 @@ spec:
     imgpkgBundle:
       image: ${REGISTRY_NAME}:${REGISTRY_PORT}/packages/${PACKAGE_REPO_NAME}:${PACKAGE_REPO_VERSION}
 `
+
+var applicationRBACYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${K8S_SERVICE_ACCOUNT}
+  namespace: ${K8S_NAMESPACE}
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ${K8S_ROLE}
+  namespace: ${K8S_NAMESPACE}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes #! needed by tkg-remediator
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+  - update
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - get
+  - list
+  - update
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - volumeattachments
+  verbs:
+  - delete
+  - get
+  - watch
+  - list
+  - update
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - volumeattachments/finalizers
+  verbs:
+  - delete
+  - get
+  - patch
+  - update
+- apiGroups:
+  - storage.k8s.io
+  resources:
+  - volumeattachments/status
+  verbs:
+  - get
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ${K8S_ROLE_BINDING}
+  namespace: ${K8S_NAMESPACE}
+subjects:
+- kind: ServiceAccount
+  name: ${K8S_SERVICE_ACCOUNT}
+  namespace: ${K8S_NAMESPACE}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ${K8S_ROLE}
+`
+
+var carvelPackageRBACYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${K8S_SERVICE_ACCOUNT_CARVEL}
+  namespace: ${K8S_NAMESPACE}
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ${K8S_ROLE_CARVEL}
+  namespace: ${K8S_NAMESPACE}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - get
+  - update
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ${K8S_ROLE_BINDING_CARVEL}
+  namespace: ${K8S_NAMESPACE}
+subjects:
+- kind: ServiceAccount
+  name: ${K8S_SERVICE_ACCOUNT_CARVEL}
+  namespace: ${K8S_NAMESPACE}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ${K8S_ROLE_CARVEL}
+`
+
+var carvelPackageInstallYML = `
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  name: ${PACKAGE_INSTALL_NAME}
+  namespace: ${K8S_NAMESPACE}
+spec:
+  serviceAccountName: ${K8S_SERVICE_ACCOUNT_CARVEL}
+  packageRef:
+    refName: ${PACKAGE_NAME}
+    versionSelection: #! provides granular control over version selection
+      constraints: ${PACKAGE_VERSION}
+  values:
+  - secretRef:
+      name: pkg-install-secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pkg-install-secret
+  namespace: ${K8S_NAMESPACE}
+stringData:
+  #! This provides customized values to package installation template
+  #! Users can discover more details on the configurable properties of a
+  #! package by inspecting the Package CR’s valuesSchema
+  values.yml: |
+    ---
+    metrics_port: 8080
+    health_port: 9440
+`
