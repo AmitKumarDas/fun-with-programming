@@ -29,6 +29,7 @@ var (
 	dirCarvelSource            string
 	dirCarvelSourceConfig      string
 	dirCarvelSourceImgpkg      string
+	dirCarvelSourceSchema      string
 	dirCarvelRelease           string
 	dirCarvelReleaseImgpkg     string
 	dirCarvelReleasePkgRepo    string
@@ -51,6 +52,7 @@ func setupCarvelDirAndFilePaths() error {
 		dirCarvelSource = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "source")
 		dirCarvelSourceConfig = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, "config")
 		dirCarvelSourceImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, ".imgpkg")
+		dirCarvelSourceSchema = shx.JoinPathsWithErrHandle(&err, dirCarvelSource, "schema")
 		dirCarvelRelease = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "release")
 		dirCarvelReleaseImgpkg = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, ".imgpkg")
 		dirCarvelReleasePkgRepo = shx.JoinPathsWithErrHandle(&err, dirCarvelRelease, "packages")
@@ -60,7 +62,7 @@ func setupCarvelDirAndFilePaths() error {
 		// files
 		fileConfig = dirCarvelSourceConfig + "/config.yml"
 		fileConfigValues = dirCarvelSourceConfig + "/values.yml"
-		fileConfigValuesOpenAPI = dirCarvelSourceConfig + "/schema-openapi.yml"
+		fileConfigValuesOpenAPI = dirCarvelSourceSchema + "/schema-openapi.yml"
 		fileCarvelSourceImgpkg = dirCarvelSourceImgpkg + "/images.yml"
 		filePackageTemplate = shx.JoinPathsWithErrHandle(&err, dirCarvelReleaseTemplates, EnvPackageName+"-template.yml")
 		filePackageMetadata = dirCarvelReleasePkgRepoPkg + "/package-metadata.yml"
@@ -87,7 +89,7 @@ func cutAppBundle() error {
 }
 
 func createAppDirs() error {
-	return mkdirAll(dirCarvelSourceConfig, dirCarvelSourceImgpkg)
+	return mkdirAll(dirCarvelSourceConfig, dirCarvelSourceImgpkg, dirCarvelSourceSchema)
 }
 
 func createAppConfigs() error {
