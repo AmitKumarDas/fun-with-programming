@@ -1,0 +1,11 @@
+---
+apiVersion: imgpkg.carvel.dev/v1alpha1
+images:
+- annotations:
+    kbld.carvel.dev/id: amitnist/tkg-remediator:latest
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: latest
+          url: amitnist/tkg-remediator:latest
+  image: index.docker.io/amitnist/tkg-remediator@sha256:ef7ca61c4381d595accfff707652c8e190197cae46ea2a8abb550089a47864cd
+kind: ImagesLock

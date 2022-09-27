@@ -8,7 +8,6 @@ import (
 )
 
 var (
-	dirK8sDeployments           string
 	fileK8sAppRBAC              string
 	fileK8sCarvelPackageRepo    string
 	fileK8sCarvelPackageRBAC    string
@@ -16,14 +15,11 @@ var (
 )
 
 func setupK8sDeploymentDirAndFilePaths() error {
-	// directories
-	dirK8sDeployments = "artifacts/k8s"
-
 	// files
-	fileK8sCarvelPackageRepo = dirK8sDeployments + "/package-repo.yml"
-	fileK8sAppRBAC = dirK8sDeployments + "/application-rbac.yml"
-	fileK8sCarvelPackageRBAC = dirK8sDeployments + "/package-rbac.yml"
-	fileK8sCarvelPackageInstall = dirK8sDeployments + "/package-install.yml"
+	fileK8sCarvelPackageRepo = dirK8sArtifacts + "/package-repo.yml"
+	fileK8sAppRBAC = dirK8sArtifacts + "/application-rbac.yml"
+	fileK8sCarvelPackageRBAC = dirK8sArtifacts + "/package-rbac.yml"
+	fileK8sCarvelPackageInstall = dirK8sArtifacts + "/package-install.yml"
 	return nil
 }
 
@@ -65,7 +61,7 @@ func verifyApplication() error {
 }
 
 func createK8sArtifactsDir() error {
-	return mkdir(dirK8sDeployments)
+	return mkdir(dirK8sArtifacts)
 }
 
 func deployKappController() error {

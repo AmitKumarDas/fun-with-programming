@@ -1,0 +1,37 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: k8s-remediator.experiment.dev.com.1.0.1
+spec:
+  refName: k8s-remediator.experiment.dev.com
+  version: 1.0.1
+  releaseNotes: |
+    Initial release of the tkg-remediator package
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        metrics_port:
+          type: integer
+          description: Port for metrics
+          default: 8080
+        health_port:
+          type: integer
+          description: Port for health
+          default: 9440
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: kind-registry.local:5000/packages/k8s-remediator-app:1.0.1
+      template:
+      - ytt:
+          paths:
+          - config/
+      - kbld:
+          paths:
+          - .imgpkg/images.yml
+          - '-'
+      deploy:
+      - kapp: {}

@@ -8,22 +8,22 @@ import (
 
 // Environment variables in a format that can be expanded
 var (
-	EnvGOOS    = "${GOOS}" // Generic envs
+	EnvGOOS    = "${GOOS}" // Generic
 	EnvGOARCH  = "${GOARCH}"
 	EnvVersion = "${VERSION}"
 
-	EnvBinPathKind                        = "${BIN_PATH_KIND}" // Kind envs
+	EnvBinPathKind                        = "${BIN_PATH_KIND}" // KIND
 	EnvArtifactsPathKind                  = "${ARTIFACTS_PATH_KIND}"
 	EnvFileKindCluster                    = "${FILE_KIND_CLUSTER}"
 	EnvFileKindConfigLocalRegistryHosting = "${FILE_KIND_CONFIG_LOCAL_REGISTRY_HOSTING}"
 	EnvSetupKindCluster                   = "${SETUP_KIND_CLUSTER}"
 	EnvKindVersion                        = "${KIND_VERSION}"
 
-	EnvRegistryName       = "${REGISTRY_NAME}" // Registry envs
+	EnvRegistryName       = "${REGISTRY_NAME}" // Registry
 	EnvRegistryPort       = "${REGISTRY_PORT}"
 	EnvSetupLocalRegistry = "${SETUP_LOCAL_REGISTRY}"
 
-	EnvK8sNamespace            = "${K8S_NAMESPACE}" // K8s envs
+	EnvK8sNamespace            = "${K8S_NAMESPACE}" // K8s RBAC
 	EnvK8sServiceAccount       = "${K8S_SERVICE_ACCOUNT}"
 	EnvK8sRole                 = "${K8S_ROLE}"
 	EnvK8sRoleBinding          = "${K8S_ROLE_BINDING}"
@@ -31,13 +31,13 @@ var (
 	EnvK8sRoleCarvel           = "${K8S_ROLE_CARVEL}"
 	EnvK8sRoleBindingCarvel    = "${K8S_ROLE_BINDING_CARVEL}"
 
-	EnvAppDeploymentName     = "${APP_DEPLOYMENT_NAME}" // Deploy envs
+	EnvAppDeploymentName     = "${APP_DEPLOYMENT_NAME}" // Application
 	EnvAppDeploymentLabelKey = "${APP_DEPLOYMENT_LABEL_KEY}"
 	EnvAppDeploymentLabelVal = "${APP_DEPLOYMENT_LABEL_VAL}"
 	EnvAppImageName          = "${APP_IMAGE_NAME}"
 	EnvAppImageVersion       = "${APP_IMAGE_VERSION}"
 
-	EnvBinPathCarvel      = "${BIN_PATH_CARVEL}" // Carvel envs
+	EnvBinPathCarvel      = "${BIN_PATH_CARVEL}" // Carvel
 	EnvKappCtrlVersion    = "${KAPP_CTRL_VERSION}"
 	EnvAppBundleName      = "${APP_BUNDLE_NAME}"
 	EnvAppBundleVersion   = "${APP_BUNDLE_VERSION}"
@@ -48,7 +48,8 @@ var (
 	EnvPackageInstallName = "${PACKAGE_INSTALL_NAME}"
 	EnvTestCarvelRelease  = "${TEST_CARVEL_RELEASE}"
 
-	EnvDirCarvelPackaging = "${DIR_CARVEL_PACKAGING}" // carvel folders
+	EnvDirCarvelPackaging = "${DIR_CARVEL_PACKAGING}" // Folder to store carvel artifacts
+	EnvDirK8sArtifacts    = "${DIR_K8S_ARTIFACTS}"    // Folder to store K8s artifacts
 )
 
 // Immediate setting of few environment variables
@@ -56,7 +57,8 @@ var version = shx.MaybeSetEnv(EnvVersion, "v1.0.1")
 var versionSemver = strings.TrimPrefix(version, "v")
 var binPathCarvel = shx.MaybeSetEnv(EnvBinPathCarvel, "tmp")
 var binPathKind = shx.MaybeSetEnv(EnvBinPathKind, "tmp")
-var dirCarvelPackaging = shx.MaybeSetEnv(EnvDirCarvelPackaging, "tmp/packaging")
+var dirCarvelPackaging = shx.MaybeSetEnv(EnvDirCarvelPackaging, "packaging")
+var dirK8sArtifacts = shx.MaybeSetEnv(EnvDirK8sArtifacts, "artifacts/k8s")
 
 // Carvel binaries / CLIs as functions
 var kbld = shx.RunCmd(binPathCarvel + "/kbld")

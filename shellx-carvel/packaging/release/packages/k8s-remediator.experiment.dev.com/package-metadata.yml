@@ -1,0 +1,15 @@
+
+#!
+#! Note: Do not EDIT. This file is GENERATED
+#!
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  #! This will be the name of our package
+  name: k8s-remediator.experiment.dev.com
+spec:
+  displayName: "K8s remediator"
+  longDescription: "Package consists of a K8s controller as a K8s deployment "
+  shortDescription: ""
+  categories:
+  - release

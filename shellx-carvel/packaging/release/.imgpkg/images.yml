@@ -1,0 +1,11 @@
+---
+apiVersion: imgpkg.carvel.dev/v1alpha1
+images:
+- annotations:
+    kbld.carvel.dev/id: kind-registry.local:5000/packages/k8s-remediator-app:1.0.1
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 1.0.1
+          url: kind-registry.local:5000/packages/k8s-remediator-app:1.0.1
+  image: kind-registry.local:5000/packages/k8s-remediator-app@sha256:353aa0cfb7b8ecdb924606000b602fd6efae8845610b63658695cc57a7de1855
+kind: ImagesLock
