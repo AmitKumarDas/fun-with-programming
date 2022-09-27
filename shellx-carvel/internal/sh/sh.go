@@ -175,7 +175,7 @@ func run(env map[string]string, stdout, stderr io.Writer, cmd string, args ...st
 	ran = CmdRan(err)
 	code = ExitStatus(err)
 	// To protect against logging from doing exec in global variables
-	if IsInfo() {
+	if IsDebug() {
 		log.Println("exec:", cmd, strings.Join(quoted, " "), "status:", ran, code)
 	}
 	return ran, code, err
