@@ -17,3 +17,21 @@ test-carvel-release-e2e-debug:
 carvel-publish:
 	go clean -testcache
 	go test ./... -run TestCarvelPublish
+
+.PHONY: unit-test
+unit-test:
+	go clean -testcache
+	go test ./internal/...
+
+.PHONY: go-tidy
+go-tidy:
+	go mod tidy
+
+.PHONY: go-fmt
+go-fmt:
+	go fmt ./...
+
+.PHONY: go-vet
+go-vet:
+	go vet ./...
+
