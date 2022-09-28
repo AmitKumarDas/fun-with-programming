@@ -57,7 +57,7 @@ var version = shx.MaybeSetEnv(EnvVersion, "v1.0.1")
 var versionSemver = strings.TrimPrefix(version, "v")
 var binPathCarvel = shx.MaybeSetEnv(EnvBinPathCarvel, "tmp")
 var binPathKind = shx.MaybeSetEnv(EnvBinPathKind, "tmp")
-var dirCarvelPackaging = shx.MaybeSetEnv(EnvDirCarvelPackaging, "packaging")
+var dirCarvelPackaging = shx.MaybeSetEnv(EnvDirCarvelPackaging, "artifacts/packaging")
 var dirK8sArtifacts = shx.MaybeSetEnv(EnvDirK8sArtifacts, "artifacts/k8s")
 
 // Carvel binaries / CLIs as functions
