@@ -32,6 +32,7 @@ func verifyApplication() error {
 		return err
 	}
 
+	// clean up resources from previous run if any
 	if err := cleanK8sResources(); err != nil {
 		log.Println(err)
 	}
@@ -57,6 +58,13 @@ func verifyApplication() error {
 			return err
 		}
 	}
+
+	if shx.IsEq(EnvTeardownK8sResourcesPostVerify, "true") {
+		if err := cleanK8sResources(); err != nil {
+			log.Println(err)
+		}
+	}
+
 	return nil
 }
 
@@ -132,6 +140,7 @@ func cleanK8sResources() error {
 	(&mErr).Add(kubectl("delete", "-f", fileK8sAppRBAC))
 	(&mErr).Add(kubectl("delete", "-f", fileK8sCarvelPackageRepo))
 	(&mErr).Add(kubectl("delete", "ns", EnvK8sNamespace))
+	(&mErr).Add(kubectl("delete", "-f", format("https://github.com/vmware-tanzu/carvel-kapp-controller/releases/download/%s/release.yml", EnvKappCtrlVersion)))
 	return (&mErr).ErrOrNil()
 }
 

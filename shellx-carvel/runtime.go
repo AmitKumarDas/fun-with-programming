@@ -50,6 +50,8 @@ var (
 
 	EnvDirCarvelPackaging = "${DIR_CARVEL_PACKAGING}" // Folder to store carvel artifacts
 	EnvDirK8sArtifacts    = "${DIR_K8S_ARTIFACTS}"    // Folder to store K8s artifacts
+
+	EnvTeardownK8sResourcesPostVerify = "${TEARDOWN_K8S_RESOURCES_POST_VERIFY}" // Verification
 )
 
 // Immediate setting of few environment variables
@@ -125,6 +127,9 @@ func init() {
 		EnvPackageRepoVersion: versionSemver,
 		EnvPackageInstallName: appName + "-install",
 		EnvTestCarvelRelease:  "false",
+
+		// verification
+		EnvTeardownK8sResourcesPostVerify: "true",
 	}
 	for k, v := range envs {
 		_ = shx.MaybeSetEnv(k, v)
