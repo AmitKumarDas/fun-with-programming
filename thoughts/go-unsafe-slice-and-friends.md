@@ -19,44 +19,57 @@
 ```
 
 ```yaml
-- REFER: Go string builder code can be a useful reference on managing memory allocations
+- Go string builder code can be a useful reference on managing memory allocations
 ```
 
-### Proposal - 1 (Accepted)
+### Example - 101
 ```yaml
-- https://github.com/golang/go/issues/53003
+- convert a string to a []byte by reusing the string memory i.e. no allocation
+- https://dev.to/jlauinger/sliceheader-literals-in-go-create-a-gc-race-and-flawed-escape-analysis-exploitation-with-unsafe-pointer-on-real-world-code-4mh7
 ```
 
 ```go
-// StringData returns a POINTER to the BYTES of a string
-//
-// The bytes MUST NOT be modified
-// Doing so can cause the program to crash or behave unpredictably
-func StringData(string) *byte
+func unsafeStringToBytes(s *string) []byte { // given a string pointer
+    sh := (*reflect.StringHeader)(unsafe.Pointer(s)) // cast & cast
+    sliceHeader := &reflect.SliceHeader{
+        Data: sh.Data,
+        Len:  sh.Len,
+        Cap:  sh.Len,
+    }
 
-// String constructs a string VALUE from a pointer and a length
-//
-// The BYTES passed to String must NOT be modified
-// Doing so can cause the program to crash or behave unpredictably
-func String(*byte, int) string
-```
-
-```yaml
-- To use above unsafe functions; we might resort to following
+    // At this point, s is no longer used. 
+	// However, there is a copy of the address of its underlying array
+	// in sliceHeader.Data. Since sliceHeader was not created from an
+	// actual slice, the GC does not treat the address as a reference. 
+	// Therefore, IF the GC runs here it will FREE s.
+	//
+	// When GC runs, it will free string s because it is no longer used
+	// When the []byte slice is created in the next line, its Data
+	// field will contain an invalid address. It might now point
+	// to an unmapped memory page, or simply to some undefined
+	// position in the heap that might get reused later on.
+    return *(*[]byte)(unsafe.Pointer(sliceHeader)) // star & star
+}
 ```
 
 ```go
-func StringToBytes(s string) []byte {
-    return unsafe.Slice(unsafe.StringData(s), len(s))
-}
-
-func BytesToString(b []byte) string {
-    return unsafe.String(&b[0], len(b))
+func main() {
+    s := "Hello"
+    b := unsafeStringToBytes(&s)
+  
+    // Attempt to change a read-only memory page
+	// The operating system will prevent this 
+	// And the result is a SIGSEGV segmentation fault, crashing the program 
+    b[1] = "a"
+    fmt.Println(b)
 }
 ```
 
-### Real World Usage - 1
+### Example - 1
+```yaml
 - refer - https://github.com/DanEngelbrecht/golongtail/pull/231
+```
+
 ```go
 package xyz
 
@@ -81,23 +94,33 @@ func cArrToSliceByte(array *C.uint8_t, len int) []byte {
 }
 ```
 
-### Real World Usage - 2
+### Example - 2
+```yaml
 - https://github.com/tetratelabs/tinymem/pull/3
+```
+
 ```diff
 - buf := *(*[]byte)(unsafe.Pointer(internal.SliceHeader(ptr, size)))
 + buf := unsafe.Slice((*byte)(unsafe.Pointer(ptr)), size) 
 ```
 
-### Real World Usage - 3
+### Example - 3
+```yaml
 - https://github.com/olivere/elastic/pull/1434
-  - Use unsafe bytes to string to reuse memory i.e. reduce allocations
+- Use unsafe bytes to string to reuse memory i.e. reduce allocations
+```
 
-### Real World Usage - 4
+### Example - 4
+```yaml
 - https://go.dev/src/strings/builder.go
 - Go's string builder makes use of unsafe to reduce allocations
+```
 
-### Real World Usage - 5
+### Example - 5
+```yaml
 - https://github.com/google/brotli/pull/942
+```
+
 ```diff
 - // It is a workaround for non-copying-wrapping of native memory.
 - // C-encoder never pushes output block longer than ((2 << 25) + 502).
