@@ -1,18 +1,32 @@
 ## Teaching unsafe's slice & friends to mortals
 
-### TIPs
+### NOTES
+```yaml
 - Use unsafe.Slice to create a slice whose BACKING array is a memory buffer returned
-  - from C code
-  - from call such as syscall.MMap
+- from C code
+- from call such as syscall.MMap
+```
+
+```yaml
 - *byte is NOT the ONLY way to POINTER to underlying data
-  - *uint16, *uint32, *uint64, *unit8 can also be pointers to underlying data
-  - *uint8 is same as *byte
+- *uint16, *uint32, *uint64, *unit8 can also be pointers to underlying data
+- *uint8 is same as *byte
+```
+
+```yaml
 - If b is []byte then *b[0] is the POINTER to underlying data
-  - With *b[0] & len(b) we can construct corresponding string or slice
-- Go string builder code can be a useful reference on managing memory allocations
+- With *b[0] & len(b) we can construct corresponding string or slice
+```
+
+```yaml
+- REFER: Go string builder code can be a useful reference on managing memory allocations
+```
 
 ### Proposal - 1 (Accepted)
+```yaml
 - https://github.com/golang/go/issues/53003
+```
+
 ```go
 // StringData returns a POINTER to the BYTES of a string
 //
@@ -27,7 +41,10 @@ func StringData(string) *byte
 func String(*byte, int) string
 ```
 
+```yaml
 - To use above unsafe functions; we might resort to following
+```
+
 ```go
 func StringToBytes(s string) []byte {
     return unsafe.Slice(unsafe.StringData(s), len(s))
