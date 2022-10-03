@@ -14,14 +14,15 @@ func passThroughFn(in string) string {
 }
 
 func MaybeSetEnv(envKey, defaultVal string) string {
+	// This treats the expanded forms such as "$key" or "${key}" if any
+	// to "key". There is no change to key chars if it was not in any
+	// of above expansion forms.
+	trimmedKey := os.Expand(envKey, passThroughFn)
 	// set default only if provided env key is not set
-	if value := os.ExpandEnv(envKey); value == "" {
-		// envKey is first expanded such that "$key" or "${key}" if any
-		// is trimmed to produce "key" & then this trimmed key is
-		// set as an environment variable
-		_ = os.Setenv(os.Expand(envKey, passThroughFn), defaultVal)
+	if value := os.Getenv(trimmedKey); value == "" {
+		_ = os.Setenv(trimmedKey, defaultVal)
 	}
-	return os.ExpandEnv(envKey)
+	return os.Getenv(trimmedKey)
 }
 
 func UnsetEnv(envKey string) {
