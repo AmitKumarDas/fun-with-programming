@@ -51,8 +51,6 @@ var (
 
 	EnvDirCarvelPackaging = "${DIR_CARVEL_PACKAGING}" // Folder to store carvel artifacts
 	EnvDirK8sArtifacts    = "${DIR_K8S_ARTIFACTS}"    // Folder to store K8s artifacts
-
-	EnvTeardownK8sResourcesPostVerify = "${TEARDOWN_K8S_RESOURCES_POST_VERIFY}" // Verification
 )
 
 // Immediate setting of few environment variables
@@ -64,17 +62,22 @@ var dirCarvelPackaging = shx.MaybeSetEnv(EnvDirCarvelPackaging, "artifacts/packa
 var dirK8sArtifacts = shx.MaybeSetEnv(EnvDirK8sArtifacts, "artifacts/k8s")
 
 // Carvel binaries / CLIs as functions
-var kbld = shx.RunCmd(binPathCarvel + "/kbld")
-var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
 var insecureRegistry = shx.MaybeSetEnv("${INSECURE_REGISTRY}", "true")
 var isInsecureRegistry, _ = strconv.ParseBool(insecureRegistry)
+var kbld = func(args ...string) error {
+	binKbld := binPathCarvel + "/kbld"
+	if !isInsecureRegistry {
+		return shx.Run(binKbld, args...)
+	}
+	return shx.Run(binKbld, append(args, "--registry-insecure")...)
+}
+var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
 var imgpkg = func(args ...string) error {
 	binImgpkg := binPathCarvel + "/imgpkg"
 	if !isInsecureRegistry {
 		return shx.Run(binImgpkg, args...)
 	}
-	newArgs := append(args, "--registry-insecure")
-	return shx.Run(binImgpkg, newArgs...)
+	return shx.Run(binImgpkg, append(args, "--registry-insecure")...)
 }
 var whichImgpkg = shx.RunCmd("ls", binPathCarvel+"/imgpkg")
 var ytt = shx.RunCmd(binPathCarvel + "/ytt")
@@ -137,9 +140,6 @@ func init() {
 		EnvPackageRepoVersion: versionSemver,
 		EnvPackageInstallName: appName + "-install",
 		EnvTestCarvelRelease:  "false",
-
-		// verification
-		EnvTeardownK8sResourcesPostVerify: "true",
 	}
 	for k, v := range envs {
 		_ = shx.MaybeSetEnv(k, v)

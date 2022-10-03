@@ -33,7 +33,7 @@ func verifyApplication() error {
 	}
 
 	// clean up resources from previous run if any
-	if err := cleanK8sResources(); err != nil {
+	if err := cleanK8sResources(); err != nil && shx.IsDebug() {
 		log.Println(err)
 	}
 
@@ -55,16 +55,10 @@ func verifyApplication() error {
 	}
 	for _, fn := range fns {
 		if err := fn(); err != nil {
+			debugK8sResources()
 			return err
 		}
 	}
-
-	if shx.IsEq(EnvTeardownK8sResourcesPostVerify, "true") {
-		if err := cleanK8sResources(); err != nil {
-			log.Println(err)
-		}
-	}
-
 	return nil
 }
 
@@ -130,6 +124,12 @@ func applyPackageInstallResources() error {
 	return eventually(func() error {
 		return kubectl("create", "-f", fileK8sCarvelPackageInstall)
 	})
+}
+
+func debugK8sResources() {
+	_ = shx.RunV("kubectl", "describe", "pkgr", "-n", EnvK8sNamespace)
+	_ = shx.RunV("kubectl", "describe", "package", "-n", EnvK8sNamespace)
+	_ = shx.RunV("kubectl", "describe", "pkgi", "-n", EnvK8sNamespace)
 }
 
 func cleanK8sResources() error {
