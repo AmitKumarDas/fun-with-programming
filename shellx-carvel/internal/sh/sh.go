@@ -36,21 +36,14 @@ func IsInfo() bool {
 // useful for creating command aliases to make your scripts easier to read, like
 // this:
 //
-//	 // in a helper file somewhere
-//	 var g0 = sh.RunCmd("go")  // go is a keyword :(
+// In a helper file somewhere
+// var g0 = sh.RunCmd("go")  // go is a keyword :(
 //
-//	 // somewhere in your main code
-//		if err := g0("install", "github.com/gohugo/hugo"); err != nil {
-//			return err
-//	 }
+// Somewhere in your main code
 //
-// Args passed to command get baked in as envs to the command when you run it.
-// Any envs passed in when you run the returned function will be appended to the
-// original envs.  For example, this is equivalent to the above:
-//
-//	var goInstall = sh.RunCmd("go", "install") goInstall("github.com/gohugo/hugo")
-//
-// RunCmd uses Exec underneath, so see those docs for more details.
+//	if err := g0("install", "github.com/gohugo/hugo"); err != nil {
+//	 return err
+//	}
 func RunCmd(cmd string, args ...string) func(args ...string) error {
 	return func(args2 ...string) error {
 		return Run(cmd, append(args, args2...)...)
@@ -70,22 +63,18 @@ func Run(cmd string, args ...string) error {
 	return RunWith(nil, cmd, args...)
 }
 
-// RunV is like Run, but always sends the command's stdout to os.Stdout.
-func RunV(cmd string, args ...string) error {
-	_, err := Exec(nil, os.Stdout, os.Stderr, cmd, args...)
+// RunWith runs the given command with the environment variables for
+// the command being run.
+//
+// Note: Environment variables should be in the format name=value.
+func RunWith(env map[string]string, cmd string, args ...string) error {
+	_, err := OutputWith(env, cmd, args...)
 	return err
 }
 
-// RunWith runs the given command, directing stderr to this program's stderr and
-// printing stdout to stdout if mage was run with -v.  It adds adds env to the
-// environment variables for the command being run. Environment variables should
-// be in the format name=value.
-func RunWith(env map[string]string, cmd string, args ...string) error {
-	var output io.Writer
-	if IsDebug() {
-		output = os.Stdout
-	}
-	_, err := Exec(env, output, os.Stderr, cmd, args...)
+// RunV is like Run, but always sends the command's stdout to os.Stdout.
+func RunV(cmd string, args ...string) error {
+	_, err := Exec(nil, os.Stdout, os.Stderr, cmd, args...)
 	return err
 }
 
@@ -97,16 +86,21 @@ func RunWithV(env map[string]string, cmd string, args ...string) error {
 
 // Output runs the command and returns the text from stdout.
 func Output(cmd string, args ...string) (string, error) {
-	buf := &bytes.Buffer{}
-	_, err := Exec(nil, buf, os.Stderr, cmd, args...)
-	return strings.TrimSuffix(buf.String(), "\n"), err
+	return OutputWith(nil, cmd, args...)
 }
 
-// OutputWith is like RunWith, but returns what is written to stdout.
+// OutputWith returns what is written to stdout. Its error handling
+// suits debuggability.
 func OutputWith(env map[string]string, cmd string, args ...string) (string, error) {
-	buf := &bytes.Buffer{}
-	_, err := Exec(env, buf, os.Stderr, cmd, args...)
-	return strings.TrimSuffix(buf.String(), "\n"), err
+	bufOut := &bytes.Buffer{}
+	bufErr := &bytes.Buffer{}
+	if _, err := Exec(env, bufOut, bufErr, cmd, args...); err != nil {
+		msg1 := strings.TrimSuffix(bufErr.String(), "\n")
+		msg2 := strings.TrimSuffix(bufOut.String(), "\n")
+		newErr := fmt.Errorf("%w : %s : %s", err, msg1, msg2)
+		return "", newErr
+	}
+	return strings.TrimSuffix(bufOut.String(), "\n"), nil
 }
 
 // Exec executes the command, piping its stderr to mage's stderr and
@@ -173,8 +167,8 @@ func run(env map[string]string, stdout, stderr io.Writer, cmd string, args ...st
 	err = c.Run()
 	ran = CmdRan(err)
 	code = ExitStatus(err)
-	// To protect against logging from doing exec in global variables
-	if IsDebug() {
+	// When logging is required irrespective of successful or unsuccessful runs
+	if IsInfo() {
 		log.Println("exec:", cmd, strings.Join(quoted, " "), "status:", ran, code)
 	}
 	return ran, code, err
