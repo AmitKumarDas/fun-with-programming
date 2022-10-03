@@ -3,6 +3,7 @@ package shellx_carvel
 import (
 	shx "carvel.shellx.dev/internal/sh"
 	"runtime"
+	"strconv"
 	"strings"
 )
 
@@ -65,7 +66,16 @@ var dirK8sArtifacts = shx.MaybeSetEnv(EnvDirK8sArtifacts, "artifacts/k8s")
 // Carvel binaries / CLIs as functions
 var kbld = shx.RunCmd(binPathCarvel + "/kbld")
 var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
-var imgpkg = shx.RunCmd(binPathCarvel + "/imgpkg")
+var insecureRegistry = shx.MaybeSetEnv("${INSECURE_REGISTRY}", "true")
+var isInsecureRegistry, _ = strconv.ParseBool(insecureRegistry)
+var imgpkg = func(args ...string) error {
+	binImgpkg := binPathCarvel + "/imgpkg"
+	if !isInsecureRegistry {
+		return shx.Run(binImgpkg, args...)
+	}
+	newArgs := append(args, "--registry-insecure")
+	return shx.Run(binImgpkg, newArgs...)
+}
 var whichImgpkg = shx.RunCmd("ls", binPathCarvel+"/imgpkg")
 var ytt = shx.RunCmd(binPathCarvel + "/ytt")
 var whichYtt = shx.RunCmd("ls", binPathCarvel+"/ytt")
