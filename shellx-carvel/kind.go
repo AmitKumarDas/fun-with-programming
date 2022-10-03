@@ -61,12 +61,8 @@ func createKindCluster() error {
 	if !exists(kindClusterFilePath) {
 		return fmt.Errorf("file %q not found", kindClusterFilePath)
 	}
-	if err := kubectl("cluster-info", "--context", "kind-kind"); err != nil {
-		// Create kind cluster on error
-		// Note: error is swallowed
-		return kind("create", "cluster", "--config", kindClusterFilePath)
-	}
-	return nil
+	_ = kind("delete", "cluster")
+	return kind("create", "cluster", "--config", kindClusterFilePath)
 }
 
 func disconnectThenConnectNetworkToKindEndpoint() error {
