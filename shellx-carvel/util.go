@@ -54,6 +54,14 @@ func mkdirAll(dirs ...string) error {
 	return nil
 }
 
+func ptrInt(i int) *int {
+	return &i
+}
+
+func ptrDuration(d time.Duration) *time.Duration {
+	return &d
+}
+
 type eventuallyConfig struct {
 	Attempts *int
 	Interval *time.Duration

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 )
 
 var (
@@ -91,8 +92,11 @@ func verifyPresenceOfPackageRepository() error {
 }
 
 func verifyPresenceOfPackage() error {
-	return eventually(func() error {
+	return eventuallyWith(func() error {
 		return kubectl("get", "package", "-n", EnvK8sNamespace, EnvPackageName+"."+EnvPackageVersion)
+	}, eventuallyConfig{
+		Attempts: ptrInt(20),
+		Interval: ptrDuration(3 * time.Second),
 	})
 }
 
