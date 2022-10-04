@@ -4,7 +4,7 @@ docker registry. This log book gives enough hints & ideas for someone to underst
 & get comfortable to contribute to shellx-carvel codebase.
 
 ## Journal
-### Attempt 1/
+### Start 1/
 - **GIVEN**: `/etc/hosts`
 ```shell
 127.0.0.1	localhost
@@ -34,7 +34,7 @@ docker registry. This log book gives enough hints & ideas for someone to underst
 
 ### Attempt 3/
 - **IDEA**: Use `kubernetes.docker.internal` as the registry name since it is set in `/etc/hosts`
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.internal make`
 - **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (52.92s)
@@ -89,7 +89,7 @@ docker registry. This log book gives enough hints & ideas for someone to underst
  }
 ```
 - **MANUAL**: Delete docker containers that serve as image registry & KIND cluster
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.internal make`
 - **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (6.36s)
@@ -150,7 +150,7 @@ func setupRegistryAsLocalDockerContainer() error {
 +       return shx.Run(binImgpkg, newArgs...)
 +}
 ```
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.internal make`
 - **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (5.13s)
@@ -180,7 +180,7 @@ FAIL
 +}
 +var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
 ```
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.internal make`
 - **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (80.05s)
@@ -238,8 +238,8 @@ Events:  <none>
 - **CAUSE**: kapp-controller reconciliation seems to fail
 
 ### Attempt 7/
-- **TRY**: `*.localhost` & check if host is automatically resolved to 127.0.0.1 
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.localhost make`
+- **IDEA**: Try `*.localhost` & check if host is automatically resolved to 127.0.0.1 
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.localhost make`
 - **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (4.71s)
@@ -252,7 +252,7 @@ FAIL
 
 ### Attempt 8/
 - **CHANGE**: Add `127.0.0.1 kubernetes.docker.localhost` entry in /etc/hosts
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.localhost make`
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.localhost make`
 - **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (78.53s)
@@ -290,7 +290,7 @@ No resources found
         })
  }
 ```
-- **RETRY**: `REGISTRY_NAME=kubernetes.docker.localhost make`
+- **WHEN**: `REGISTRY_NAME=kubernetes.docker.localhost make`
 - **THEN**:
 ```shell
 go clean -testcache
