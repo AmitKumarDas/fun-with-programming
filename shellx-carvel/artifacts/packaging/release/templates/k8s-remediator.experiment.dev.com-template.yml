@@ -20,7 +20,7 @@ spec:
     spec:
       fetch:
       - imgpkgBundle: #! fetch workload imgpkg bundle
-          image: kind-registry.local:5000/packages/k8s-remediator-app:1.0.1
+          image: kubernetes.docker.localhost:5000/packages/k8s-remediator-app:1.0.1
       template:
       - ytt: #! run the templates through ytt
           paths:
