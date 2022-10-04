@@ -133,7 +133,7 @@ func debugK8sResources() {
 }
 
 func cleanK8sResources() error {
-	var mErr shx.MultiError
+	var mErr shx.Error
 	(&mErr).Add(kubectl("delete", "app", "-n", EnvK8sNamespace, EnvPackageInstallName))
 	(&mErr).Add(kubectl("delete", "-f", fileK8sCarvelPackageInstall))
 	(&mErr).Add(kubectl("delete", "-f", fileK8sCarvelPackageRBAC))

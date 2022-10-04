@@ -16,7 +16,7 @@ func tryCutAppBundle(t *testing.T) {
 
 	out, outErr := shx.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
 	requireNoErr(t, outErr)
-	var mErr shx.MultiError
+	var mErr shx.Error
 	assertContains(t, shx.JoinPathsWithErrHandle(&mErr, "packages", EnvAppBundleName), out)
 	requireNoErr(t, (&mErr).ErrOrNil())
 }
@@ -26,7 +26,7 @@ func tryCutPackageRelease(t *testing.T) {
 
 	out, outErr := shx.Output("curl", format("%s:%s/v2/_catalog", EnvRegistryName, EnvRegistryPort))
 	requireNoErr(t, outErr)
-	var mErr shx.MultiError
+	var mErr shx.Error
 	assertContains(t, shx.JoinPathsWithErrHandle(&mErr, "packages", EnvPackageRepoName), out)
 	requireNoErr(t, (&mErr).ErrOrNil())
 }

@@ -28,7 +28,7 @@ func JoinPaths(paths ...string) (string, error) {
 
 // JoinPathsWithErrHandle returns the final path only if there
 // was no error while joining these paths
-func JoinPathsWithErrHandle(mErr *MultiError, paths ...string) string {
+func JoinPathsWithErrHandle(mErr *Error, paths ...string) string {
 	if mErr.HasError() {
 		return ""
 	}

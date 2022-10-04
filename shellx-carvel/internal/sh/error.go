@@ -18,11 +18,11 @@ func (e *InvalidEnvError) Error() string {
 	return fmt.Sprintf("%s: %s", e.Context, msg)
 }
 
-type MultiError struct {
+type Error struct {
 	errors []error
 }
 
-func (mErr *MultiError) Add(err error) error {
+func (mErr *Error) Add(err error) error {
 	if mErr == nil || err == nil {
 		return mErr
 	}
@@ -30,7 +30,7 @@ func (mErr *MultiError) Add(err error) error {
 	return mErr
 }
 
-func (mErr *MultiError) AddAll(errs []error) error {
+func (mErr *Error) AddAll(errs []error) error {
 	if mErr == nil {
 		return nil
 	}
@@ -40,14 +40,14 @@ func (mErr *MultiError) AddAll(errs []error) error {
 	return mErr
 }
 
-func (mErr *MultiError) HasError() bool {
+func (mErr *Error) HasError() bool {
 	if mErr == nil {
 		return false
 	}
 	return len(mErr.errors) > 0
 }
 
-func (mErr *MultiError) Error() string {
+func (mErr *Error) Error() string {
 	if mErr == nil {
 		return ""
 	}
@@ -64,7 +64,7 @@ func (mErr *MultiError) Error() string {
 	return strings.Join(msgs, ", ")
 }
 
-func (mErr *MultiError) ErrOrNil() error {
+func (mErr *Error) ErrOrNil() error {
 	if mErr == nil || len(mErr.errors) == 0 {
 		return nil
 	}

@@ -46,7 +46,7 @@ var (
 )
 
 func setupCarvelDirAndFilePaths() error {
-	var err shx.MultiError
+	var err shx.Error
 	onlyOnce.Do(func() {
 		// directories
 		dirCarvelSource = shx.JoinPathsWithErrHandle(&err, dirCarvelPackaging, "source")
