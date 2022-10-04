@@ -78,6 +78,39 @@ func RunV(cmd string, args ...string) error {
 	return err
 }
 
+// RunE accepts error if any and execute the provided
+// command iff there was no previous error(s).
+//
+// This function might be helpful to avoiding error handling
+// after each invocation. This enables handling the error
+// only once at the end of all invocations.
+//
+//	func workflow() error {
+//		var e Error
+//		RunE(&e, "kubectl", "get", "po", "-n", "kube-system", "pod-a")
+//		RunE(&e, "kubectl", "describe", "po", "-n", "kube-system", "pod-a")
+//		RunE(&e, "kubectl", "get", "svc", "-n", "kube-system", "svc-a")
+//		return e.ErrOrNil()
+//	}
+//
+// Note that there can be alternative approaches such as:
+//
+//	func workflow() error {
+//		var e Error
+//		try := (&e).Add
+//		try(kubectl("get", "po", "-n", "kube-system", "pod-a"))
+//		try(kubectl("describe", "po", "-n", "kube-system", "pod-a"))
+//		try(kubectl("get", "svc", "-n", "kube-system", "svc-a"))
+//		return e.ErrOrNil()
+//	}
+func RunE(shErr *Error, cmd string, args ...string) {
+	if shErr.HasError() {
+		return
+	}
+	_, err := OutputWith(nil, cmd, args...)
+	_ = shErr.Add(err)
+}
+
 // RunWithV is like RunWith, but always sends the command's stdout to os.Stdout.
 func RunWithV(env map[string]string, cmd string, args ...string) error {
 	_, err := Exec(env, os.Stdout, os.Stderr, cmd, args...)
