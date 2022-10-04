@@ -3,9 +3,9 @@ A journal that records the issues I faced while trying Carvel tools with KIND & 
 docker registry. This log book gives enough hints & ideas for someone to understand
 & get comfortable to contribute to shellx-carvel codebase.
 
-### Journey
-#### Attempt 1/
-- GIVEN: /etc/hosts
+## Journal
+### Attempt 1/
+- **GIVEN**: `/etc/hosts`
 ```shell
 127.0.0.1	localhost
 255.255.255.255	broadcasthost
@@ -15,9 +15,9 @@ docker registry. This log book gives enough hints & ideas for someone to underst
 127.0.0.1 kubernetes.docker.internal
 ```
 
-#### Attempt 2/
-- WHEN: `make`
-- THEN:
+### Attempt 2/
+- **WHEN**: `make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (83.65s)
     --- FAIL: TestCarvelReleaseE2E/publishing_the_app_bundle (4.98s)
@@ -32,10 +32,10 @@ docker registry. This log book gives enough hints & ideas for someone to underst
         testutil_test.go:27: expected no err got: running "kubectl get package -n k8s-remediator-system k8s-remediator.experiment.dev.com.1.0.1" failed with exit code 1 : error: the server doesn't have a resource type "package" : : func timed out after 47.010980958s
 ```
 
-#### Attempt 3/
-- IDEA: Use `kubernetes.docker.internal` as the registry name since it is set in `/etc/hosts`
-- RETRY: `REGISTRY_NAME=kubernetes.docker.internal make`
-- THEN:
+### Attempt 3/
+- **IDEA**: Use `kubernetes.docker.internal` as the registry name since it is set in `/etc/hosts`
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (52.92s)
     --- FAIL: TestCarvelReleaseE2E/setting_up_local_docker_container_as_an_OCI_registry (0.32s)
@@ -51,11 +51,11 @@ docker registry. This log book gives enough hints & ideas for someone to underst
     --- FAIL: TestCarvelReleaseE2E/verifying_app_deployment (47.34s)
         testutil_test.go:27: expected no err got: running "kubectl get package -n k8s-remediator-system k8s-remediator.experiment.dev.com.1.0.1" failed with exit code 1 : Error from server (NotFound): internalpackages.internal.packaging.carvel.dev "dcs76bbiclmmap39c5q6ushecls70pbid5mmarjk5pi6athecdnmqbhh5oo2sc8" not found : : func timed out after 31.087228208s
 ```
-- CAUSE: 127.0.0.1:5000 failed: port is already allocated
+- **CAUSE**: 127.0.0.1:5000 failed: port is already allocated
 
-#### Attempt 4/
-- WHY: If a test fails then subsequent tests should not run & clutter the whole output
-- CHANGE: Remove subtests to exit test in case of failure
+### Attempt 4/
+- **WHY**: If a test fails then subsequent tests should not run & clutter the whole output
+- **CHANGE**: Remove subtests to exit test in case of failure
 ```diff
  func TestCarvelReleaseE2E(t *testing.T) {
 -       t.Run("installing carvel CLIs", func(t *testing.T) {
@@ -88,9 +88,9 @@ docker registry. This log book gives enough hints & ideas for someone to underst
 +       tryVerifyApplication(t)
  }
 ```
-- MANUAL: Delete docker containers that serve as image registry & KIND cluster
-- RETRY: `REGISTRY_NAME=kubernetes.docker.internal make`
-- THEN:
+- **MANUAL**: Delete docker containers that serve as image registry & KIND cluster
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (6.36s)
     testutil_test.go:27: expected no err got: running "tmp/imgpkg push -b kubernetes.docker.internal:5000/packages/k8s-remediator-app:1.0.1 -f artifacts/packaging/source" failed with exit code 1 : imgpkg: Error: Writing 'kubernetes.docker.internal:5000/packages/k8s-remediator-app:1.0.1':
@@ -99,12 +99,12 @@ docker registry. This log book gives enough hints & ideas for someone to underst
               Get "https://kubernetes.docker.internal:5000/v2/": http: server gave HTTP response to HTTPS client : 
 FAIL
 ```
-- CAUSE: Error says `http: server gave HTTP response to HTTPS client`
-- CAUSE: imgpkg is the CLI that fails
+- **CAUSE**: Error says `http: server gave HTTP response to HTTPS client`
+- **CAUSE**: imgpkg is the CLI that fails
 
-#### Attempt 5/
-- NOTE: Automate to always start a test run on a clean test setup 
-- CHANGE: Ensure test runs are idiomatic by first deleting & then creating local registry
+### Attempt 5/
+- **NOTE**: Automate to always start a test run on a clean test setup 
+- **CHANGE**: Ensure test runs are idiomatic by first deleting & then creating local registry
 ```diff
 func setupRegistryAsLocalDockerContainer() error {
         if shx.IsNotEq(EnvSetupLocalRegistry, "true") {
@@ -125,7 +125,7 @@ func setupRegistryAsLocalDockerContainer() error {
 +       return docker("run", "-d", "--restart", "always", "-p", format("127.0.0.1:%s:5000", EnvRegistryPort), "--name", EnvRegistryName, "registry:2")
  }
 ```
-- CHANGE: Ensure test runs are idiomatic by first deleting & then creating KIND cluster
+- **CHANGE**: Ensure test runs are idiomatic by first deleting & then creating KIND cluster
 ```diff
 -       if err := kubectl("cluster-info", "--context", "kind-kind"); err != nil {
 -               // Create kind cluster on error
@@ -136,7 +136,7 @@ func setupRegistryAsLocalDockerContainer() error {
 +       _ = kind("delete", "cluster")
 +       return kind("create", "cluster", "--config", kindClusterFilePath)
 ```
-- FIX: Set imgpkg to run with insecure registry to solve above https transport issue
+- **FIX**: Set imgpkg to run with insecure registry to solve above https transport issue
 ```diff
 -var imgpkg = shx.RunCmd(binPathCarvel + "/imgpkg")
 +var insecureRegistry = shx.MaybeSetEnv("${INSECURE_REGISTRY}", "true")
@@ -150,8 +150,8 @@ func setupRegistryAsLocalDockerContainer() error {
 +       return shx.Run(binImgpkg, newArgs...)
 +}
 ```
-- RETRY: `REGISTRY_NAME=kubernetes.docker.internal make`
-- THEN:
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (5.13s)
     testutil_test.go:27: expected no err got: running "tmp/kbld -f artifacts/packaging/release/packages --imgpkg-lock-output artifacts/packaging/release/.imgpkg/images.yml" failed with exit code 1 : kbld: Error: 
@@ -161,11 +161,11 @@ FAIL	carvel.shellx.dev	5.370s
 ok  	carvel.shellx.dev/internal/sh	0.294s [no tests to run]
 FAIL
 ```
-- CAUSE: Error says `http: server gave HTTP response to HTTPS client`
-- CAUSE: kbld is the CLI that fails
+- **CAUSE**: Error says `http: server gave HTTP response to HTTPS client`
+- **CAUSE**: kbld is the CLI that fails
 
-#### Attempt 6/
-- FIX: Set kbld to run with insecure registry to solve above https transport issue
+### Attempt 6/
+- **FIX**: Set kbld to run with insecure registry to solve above https transport issue
 ```diff
 -var kbld = shx.RunCmd(binPathCarvel + "/kbld")
 -var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
@@ -180,14 +180,14 @@ FAIL
 +}
 +var whichKbld = shx.RunCmd("ls", binPathCarvel+"/kbld")
 ```
-- RETRY: `REGISTRY_NAME=kubernetes.docker.internal make`
-- THEN:
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.internal make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (80.05s)
     testutil_test.go:27: expected no err got: running "kubectl get package -n k8s-remediator-system k8s-remediator.experiment.dev.com.1.0.1" failed with exit code 1 : error: the server doesn't have a resource type "package" : : func timed out after 46.052309208s
 FAIL
 ```
-- DEBUG: `kubectl describe pkgr -A`
+- **DEBUG**: `kubectl describe pkgr -A`
 ```shell
 Name:         k8s-remediator-repo.experiment.dev.com
 Namespace:    k8s-remediator-system
@@ -234,13 +234,13 @@ Status:
 
 Events:  <none>
 ```
-- CAUSE: Error says `http: server gave HTTP response to HTTPS client`
-- CAUSE: kapp-controller reconciliation seems to fail
+- **CAUSE**: Error says `http: server gave HTTP response to HTTPS client`
+- **CAUSE**: kapp-controller reconciliation seems to fail
 
-#### Attempt 7/
-- TRY: `*.localhost` & check if host is automatically resolved to 127.0.0.1 
-- RETRY: `REGISTRY_NAME=kubernetes.docker.localhost make`
-- THEN:
+### Attempt 7/
+- **TRY**: `*.localhost` & check if host is automatically resolved to 127.0.0.1 
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.localhost make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (4.71s)
     testutil_test.go:27: expected no err got: running "tmp/imgpkg push -b kubernetes.docker.localhost:5000/packages/k8s-remediator-app:1.0.1 -f artifacts/packaging/source --registry-insecure" failed with exit code 1 : imgpkg: Error: Writing 'kubernetes.docker.localhost:5000/packages/k8s-remediator-app:1.0.1':
@@ -250,35 +250,35 @@ Events:  <none>
 FAIL
 ```
 
-#### Attempt 8/
-- CHANGE: Add `127.0.0.1 kubernetes.docker.localhost` entry in /etc/hosts
-- RETRY: `REGISTRY_NAME=kubernetes.docker.localhost make`
-- THEN:
+### Attempt 8/
+- **CHANGE**: Add `127.0.0.1 kubernetes.docker.localhost` entry in /etc/hosts
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.localhost make`
+- **THEN**:
 ```shell
 --- FAIL: TestCarvelReleaseE2E (78.53s)
     testutil_test.go:27: expected no err got: running "kubectl get package -n k8s-remediator-system k8s-remediator.experiment.dev.com.1.0.1" failed with exit code 1 : Error from server (NotFound): internalpackages.internal.packaging.carvel.dev "dcs76bbiclmmap39c5q6ushecls70pbid5mmarjk5pi6athecdnmqbhh5oo2sc8" not found : : func timed out after 44.744728542s
 FAIL
 ```
-- DEBUG: `kubectl get pkgr -A`
+- **DEBUG**: `kubectl get pkgr -A`
 ```shell
 NAMESPACE               NAME                                     AGE     DESCRIPTION
 k8s-remediator-system   k8s-remediator-repo.experiment.dev.com   3m11s   Reconcile succeeded
 ```
-- DEBUG: `kubectl get package -A`
+- **DEBUG**: `kubectl get package -A`
 ```shell
 kubectl get package -A
 NAMESPACE               NAME                                      PACKAGEMETADATA NAME                VERSION   AGE
 k8s-remediator-system   k8s-remediator.experiment.dev.com.1.0.1   k8s-remediator.experiment.dev.com   1.0.1     2m35s
 ```
-- DEBUG: `kubectl get pkgi -A`
+- **DEBUG**: `kubectl get pkgi -A`
 ```shell
 No resources found
 ```
-- CAUSE: Running "kubectl get package -n k8s-remediator-system k8s-remediator.experiment.dev.com.1.0.1": func timed out after 44.744728542s
-- CAUSE: Logic might be timing out early without waiting for reconciliation to succeed
+- **CAUSE**: Running "kubectl get package -n k8s-remediator-system k8s-remediator.experiment.dev.com.1.0.1": func timed out after 44.744728542s
+- **CAUSE**: Logic might be timing out early without giving a chance for reconciliation to succeed
 
-#### Attempt 9/
-- FIX: Increase the timeout to verify availability of package
+### Attempt 9/
+- **FIX**: Increase the timeout to verify availability of package
 ```diff
  func verifyPresenceOfPackage() error {
 -       return eventually(func() error {
@@ -290,20 +290,20 @@ No resources found
         })
  }
 ```
-- RETRY: `REGISTRY_NAME=kubernetes.docker.localhost make`
-- THEN:
+- **RETRY**: `REGISTRY_NAME=kubernetes.docker.localhost make`
+- **THEN**:
 ```shell
 go clean -testcache
 SETUP_LOCAL_REGISTRY=true SETUP_KIND_CLUSTER=true TEST_CARVEL_RELEASE=true go test ./... -run TestCarvelReleaseE2E
 ok  	carvel.shellx.dev	99.869s
 ok  	carvel.shellx.dev/internal/sh	0.540s [no tests to run]
 ```
-- PROOF: `kubectl get po -A`
+- **PROOF**: `kubectl get po -A`
 ```shell
 NAMESPACE               NAME                                         READY   STATUS    RESTARTS   AGE
 k8s-remediator-system   k8s-remediator-7fbb84fff6-5f5vl              1/1     Running   0          65s
 ```
-- PROOF: `kubectl logs -n k8s-remediator-system   k8s-remediator-7fbb84fff6-5f5vl`
+- **PROOF**: `kubectl logs -n k8s-remediator-system   k8s-remediator-7fbb84fff6-5f5vl`
 ```shell
 {"level":"info","ts":"2022-10-04T06:52:31.313Z","logger":"controller-runtime.metrics","msg":"Metrics server is starting to listen","addr":":8080"}
 {"level":"info","ts":"2022-10-04T06:52:31.318Z","msg":"controller-vagc-va is enabled"}
