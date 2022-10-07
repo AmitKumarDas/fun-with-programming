@@ -1,4 +1,4 @@
-## Notes
+## RUST for the starters
 ### Generic
 - Rust avoids storing data on heap
 - Complier does not implicitly store data on heap
@@ -9,7 +9,7 @@
 - When program leaves a block in which variable is declared, that variable will be dropped, dropping its value with it
 
 ### Vec
-- Vector is dynamic in size, allows pushing values to it at runtime
+- Vector is dynamic (in size), allows pushing values to it at runtime
 - Vector of string objects is interesting; do you notice the nested heap management
 
 ### String
@@ -34,7 +34,7 @@
 ### to_string() vs. to_owned()
 - https://users.rust-lang.org/t/to-string-vs-to-owned-for-string-literals/1441/5
 
-### TIPs
+### Useful Commands
 - cargo new unittest-101 --lib
 
 ### References
