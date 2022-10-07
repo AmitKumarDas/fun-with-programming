@@ -30,3 +30,12 @@ this works better when the project follows atomic commits.
 - PR: https://github.com/containerd/containerd/pull/7260
 - FILE: .github/workflows/release.yml
 - FILE: .github/workflows/release/Dockerfile
+
+### allow ptrace(2) by default for kernel >= 4.8
+- FILE: contrib/seccomp/kernelversion/kernel_linux.go
+- FILE: contrib/seccomp/seccomp_default.go
+- PR: https://github.com/containerd/containerd/pull/7171
+
+### Experimental CRI Sandbox server - Enable / Disable
+- PR: https://github.com/containerd/containerd/pull/7169
+- ENABLE_CRI_SANDBOXES
