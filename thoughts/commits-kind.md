@@ -6,7 +6,7 @@ or spending weeks &/ months may not be feasible unless it is part of my day job.
 this works better when the project follows atomic commits.
 
 ## Commits
-### Issues when a new node re-uses PodCIDR of deleted node
+### Issue: When a new node re-uses PodCIDR of deleted node
 ```yaml
 - Pod to Pod communication is broken
 - Node route via the old node is problematic
@@ -15,7 +15,7 @@ this works better when the project follows atomic commits.
 - PR: https://github.com/kubernetes-sigs/kind/pull/2941
 ```
 
-### Install open-iscsi & impact on image size
+### Install: open-iscsi & impact on image size
 ```yaml
 - TIL: Maintain custom KIND images via Dockerfiles
 - PR: https://github.com/kubernetes-sigs/kind/pull/2905
@@ -32,4 +32,24 @@ this works better when the project follows atomic commits.
 - ISSUE: https://github.com/kubernetes-sigs/kind/issues/2884
 - FILE: pkg/cluster/internal/providers/podman/provision.go
 - PR: https://github.com/kubernetes-sigs/kind/pull/2885
+```
+
+### Support: netavark backed rootless podman
+```yaml
+- PR: https://github.com/kubernetes-sigs/kind/issues/2882
+```
+
+### CI: Increase Vagrant allocation
+```yaml
+PR: https://github.com/kubernetes-sigs/kind/pull/2850
+```
+
+### CI: Cgroup v2 & MacOS & GitHub Actions
+```yaml
+- PR: https://github.com/kubernetes-sigs/kind/pull/2847
+```
+
+### Build: From debian to distroless iptables
+```yaml
+- PR: https://github.com/kubernetes-sigs/kind/pull/2841
 ```
