@@ -92,17 +92,6 @@ func RunV(cmd string, args ...string) error {
 //		RunE(&e, "kubectl", "get", "svc", "-n", "kube-system", "svc-a")
 //		return e.ErrOrNil()
 //	}
-//
-// Note that there can be alternative approaches such as:
-//
-//	func workflow() error {
-//		var e Error
-//		try := (&e).Add
-//		try(kubectl("get", "po", "-n", "kube-system", "pod-a"))
-//		try(kubectl("describe", "po", "-n", "kube-system", "pod-a"))
-//		try(kubectl("get", "svc", "-n", "kube-system", "svc-a"))
-//		return e.ErrOrNil()
-//	}
 func RunE(shErr *Error, cmd string, args ...string) {
 	if shErr.HasError() {
 		return
